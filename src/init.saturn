@@ -1,24 +1,24 @@
 // Generated root love bindings
-use audio;
-use data;
-use event;
-use filesystem;
-use font;
-use graphics;
-use image;
-use joystick;
-use keyboard;
-use math;
-use mouse;
-use physics;
-use sound;
-use system;
-use thread;
-use timer;
-use touch;
-use video;
-use window;
-use hooks;
+use love2d.audio;
+use love2d.data;
+use love2d.event;
+use love2d.filesystem;
+use love2d.font;
+use love2d.graphics;
+use love2d.image;
+use love2d.joystick;
+use love2d.keyboard;
+use love2d.math;
+use love2d.mouse;
+use love2d.physics;
+use love2d.sound;
+use love2d.system;
+use love2d.thread;
+use love2d.timer;
+use love2d.touch;
+use love2d.video;
+use love2d.window;
+use love2d.hooks;
 
 let core = {
   get_version: love.getVersion,

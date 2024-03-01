@@ -3,11 +3,12 @@ use { rtti: { arguments } } in std;
 
 class Timer {
   /**
-   * Returns the average delta time (seconds per frame) over the last second.
+   * Returns the value of a timer with an unspecified starting time.
+   * This function should only be used to calculate differences between points in time, as the starting time of the timer is unknown.
    */
   @arguments()
-  fn get_average_delta() {
-    return love.timer.getAverageDelta();
+  fn get_time() {
+    return love.timer.getTime();
   }
   /**
    * Pauses the current thread for the specified amount of time.
@@ -17,12 +18,18 @@ class Timer {
     return love.timer.sleep(s);
   }
   /**
-   * Returns the value of a timer with an unspecified starting time.
-   * This function should only be used to calculate differences between points in time, as the starting time of the timer is unknown.
+   * Returns the average delta time (seconds per frame) over the last second.
    */
   @arguments()
-  fn get_time() {
-    return love.timer.getTime();
+  fn get_average_delta() {
+    return love.timer.getAverageDelta();
+  }
+  /**
+   * Returns the current frames per second.
+   */
+  @arguments()
+  fn get_f_p_s() {
+    return love.timer.getFPS();
   }
   /**
    * Measures the time between two frames.
@@ -38,13 +45,6 @@ class Timer {
   @arguments()
   fn get_delta() {
     return love.timer.getDelta();
-  }
-  /**
-   * Returns the current frames per second.
-   */
-  @arguments()
-  fn get_f_p_s() {
-    return love.timer.getFPS();
   }
 }
 

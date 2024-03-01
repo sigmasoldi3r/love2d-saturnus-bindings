@@ -3,6 +3,14 @@ use { rtti: { arguments } } in std;
 
 class Thread {
   /**
+   * Create a new unnamed thread channel.
+   * One use for them is to pass new unnamed channels to other threads via Channel:push on a named channel.
+   */
+  @arguments()
+  fn new_channel() {
+    return love.thread.newChannel();
+  }
+  /**
    * Creates a new Thread from a filename, string or FileData object containing Lua code.
    */
   @arguments(("filename", "any"))
@@ -15,14 +23,6 @@ class Thread {
   @arguments(("name", "any"))
   fn get_channel(name) {
     return love.thread.getChannel(name);
-  }
-  /**
-   * Create a new unnamed thread channel.
-   * One use for them is to pass new unnamed channels to other threads via Channel:push on a named channel.
-   */
-  @arguments()
-  fn new_channel() {
-    return love.thread.newChannel();
   }
 }
 

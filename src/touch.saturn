@@ -3,6 +3,13 @@ use { rtti: { arguments } } in std;
 
 class Touch {
   /**
+   * Gets the current pressure of the specified touch-press.
+   */
+  @arguments(("id", "any"))
+  fn get_pressure(id) {
+    return love.touch.getPressure(id);
+  }
+  /**
    * Gets the current position of the specified touch-press, in pixels.
    */
   @arguments(("id", "any"))
@@ -15,13 +22,6 @@ class Touch {
   @arguments()
   fn get_touches() {
     return love.touch.getTouches();
-  }
-  /**
-   * Gets the current pressure of the specified touch-press.
-   */
-  @arguments(("id", "any"))
-  fn get_pressure(id) {
-    return love.touch.getPressure(id);
   }
 }
 

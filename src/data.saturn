@@ -3,20 +3,6 @@ use { rtti: { arguments } } in std;
 
 class Data {
   /**
-   * Creates a new Data referencing a subsection of an existing Data object.
-   */
-  @arguments(("data", "any"), ("offset", "any"), ("size", "any"))
-  fn new_data_view(data, offset, size) {
-    return love.data.newDataView(data, offset, size);
-  }
-  /**
-   * Decode Data or a string from any of the EncodeFormats to Data or string.
-   */
-  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"))
-  fn decode(container, format, sourceString) {
-    return love.data.decode(container, format, sourceString);
-  }
-  /**
    * Unpacks (deserializes) a byte-string or Data into simple Lua values.
    * This function behaves the same as Lua 5.3's string.unpack.
    */
@@ -25,11 +11,12 @@ class Data {
     return love.data.unpack(format, datastring, pos);
   }
   /**
-   * Encode Data or a string to a Data or string in one of the EncodeFormats.
+   * Gets the size in bytes that a given format used with love.data.pack will use.
+   * This function behaves the same as Lua 5.3's string.packsize.
    */
-  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any"))
-  fn encode(container, format, sourceString, linelength) {
-    return love.data.encode(container, format, sourceString, linelength);
+  @arguments(("format", "any"))
+  fn get_packed_size(format) {
+    return love.data.getPackedSize(format);
   }
   /**
    * Decompresses a CompressedData or previously compressed string or Data object.
@@ -54,11 +41,25 @@ class Data {
     return love.data.hash(hashFunction, string);
   }
   /**
-   * Compresses a string or data using a specific compression algorithm.
+   * Encode Data or a string to a Data or string in one of the EncodeFormats.
    */
-  @arguments(("container", "any"), ("format", "any"), ("rawstring", "any"), ("level", "any"))
-  fn compress(container, format, rawstring, level) {
-    return love.data.compress(container, format, rawstring, level);
+  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any"))
+  fn encode(container, format, sourceString, linelength) {
+    return love.data.encode(container, format, sourceString, linelength);
+  }
+  /**
+   * Creates a new Data referencing a subsection of an existing Data object.
+   */
+  @arguments(("data", "any"), ("offset", "any"), ("size", "any"))
+  fn new_data_view(data, offset, size) {
+    return love.data.newDataView(data, offset, size);
+  }
+  /**
+   * Decode Data or a string from any of the EncodeFormats to Data or string.
+   */
+  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"))
+  fn decode(container, format, sourceString) {
+    return love.data.decode(container, format, sourceString);
   }
   /**
    * Packs (serializes) simple Lua values.
@@ -69,12 +70,11 @@ class Data {
     return love.data.pack(container, format, v1, ...args);
   }
   /**
-   * Gets the size in bytes that a given format used with love.data.pack will use.
-   * This function behaves the same as Lua 5.3's string.packsize.
+   * Compresses a string or data using a specific compression algorithm.
    */
-  @arguments(("format", "any"))
-  fn get_packed_size(format) {
-    return love.data.getPackedSize(format);
+  @arguments(("container", "any"), ("format", "any"), ("rawstring", "any"), ("level", "any"))
+  fn compress(container, format, rawstring, level) {
+    return love.data.compress(container, format, rawstring, level);
   }
 }
 

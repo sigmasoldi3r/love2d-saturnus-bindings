@@ -157,11 +157,11 @@ for k in pairs(modules) {
   let file = io.open("src/" ++ data.name ++ ".saturn", "w");
   file->write(mod_src);
   file->close();
-  init->write("use " ++ data.name ++ ";\n");
+  init->write("use love2d." ++ data.name ++ ";\n");
 }
 
 // Extra import: hooks
-init->write("use hooks;\n");
+init->write("use love2d.hooks;\n");
 
 // Generate core module
 init->write("\nlet core = {\n");
