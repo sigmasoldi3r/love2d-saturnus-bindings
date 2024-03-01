@@ -1,0 +1,205 @@
+// Generated module: Audio
+
+class Audio {
+  fn new(mod) {
+    return Audio { mod };
+  }
+  /**
+   * Sets the velocity of the listener.
+   */
+  @arguments([("x", "any"), ("y", "any"), ("z", "any")])
+  fn set_velocity(self, x, y, z) {
+    return self.mod.setVelocity(x, y, z);
+  }
+  /**
+   * Plays the specified Source.
+   */
+  @arguments([("source", "any")])
+  fn play(self, source) {
+    return self.mod.play(source);
+  }
+  /**
+   * Pauses specific or all currently played Sources.
+   */
+  @arguments([])
+  fn pause(self) {
+    return self.mod.pause();
+  }
+  /**
+   * Gets the settings associated with an effect.
+   */
+  @arguments([("name", "any")])
+  fn get_effect(self, name) {
+    return self.mod.getEffect(name);
+  }
+  /**
+   * Stops currently played sources.
+   */
+  @arguments([])
+  fn stop(self) {
+    return self.mod.stop();
+  }
+  /**
+   * Sets the master volume.
+   */
+  @arguments([("volume", "any")])
+  fn set_volume(self, volume) {
+    return self.mod.setVolume(volume);
+  }
+  /**
+   * Gets the maximum number of active Effects in a single Source object, that the system can support.
+   */
+  @arguments([])
+  fn get_max_source_effects(self) {
+    return self.mod.getMaxSourceEffects();
+  }
+  /**
+   * Creates a new Source from a filepath, File, Decoder or SoundData.
+   * Sources created from SoundData are always static.
+   */
+  @arguments([("filename", "any"), ("type", "any")])
+  fn new_source(self, filename, type) {
+    return self.mod.newSource(filename, type);
+  }
+  /**
+   * Gets the maximum number of active effects supported by the system.
+   */
+  @arguments([])
+  fn get_max_scene_effects(self) {
+    return self.mod.getMaxSceneEffects();
+  }
+  /**
+   * Sets the position of the listener, which determines how sounds play.
+   */
+  @arguments([("x", "any"), ("y", "any"), ("z", "any")])
+  fn set_position(self, x, y, z) {
+    return self.mod.setPosition(x, y, z);
+  }
+  /**
+   * Sets the orientation of the listener.
+   */
+  @arguments([("fx, fy, fz", "any"), ("ux, uy, uz", "any")])
+  fn set_orientation(self, fx, fy, fz, ux, uy, uz) {
+    return self.mod.setOrientation(fx, fy, fz, ux, uy, uz);
+  }
+  /**
+   * Returns the master volume.
+   */
+  @arguments([])
+  fn get_volume(self) {
+    return self.mod.getVolume();
+  }
+  /**
+   * Sets whether the system should mix the audio with the system's audio.
+   */
+  @arguments([("mix", "any")])
+  fn set_mix_with_system(self, mix) {
+    return self.mod.setMixWithSystem(mix);
+  }
+  /**
+   * Gets the current number of simultaneously playing sources.
+   */
+  @arguments([])
+  fn get_active_source_count(self) {
+    return self.mod.getActiveSourceCount();
+  }
+  /**
+   * Defines an effect that can be applied to a Source.
+   * Not all system supports audio effects. Use love.audio.isEffectsSupported to check.
+   */
+  @arguments([("name", "any"), ("settings", "any")])
+  fn set_effect(self, name, settings) {
+    return self.mod.setEffect(name, settings);
+  }
+  /**
+   * Returns the orientation of the listener.
+   */
+  @arguments([])
+  fn get_orientation(self) {
+    return self.mod.getOrientation();
+  }
+  /**
+   * Sets the distance attenuation model.
+   */
+  @arguments([("model", "any")])
+  fn set_distance_model(self, model) {
+    return self.mod.setDistanceModel(model);
+  }
+  /**
+   * Sets a global scale factor for velocity-based doppler effects. The default scale value is 1.
+   */
+  @arguments([("scale", "any")])
+  fn set_doppler_scale(self, scale) {
+    return self.mod.setDopplerScale(scale);
+  }
+  /**
+   * Gets whether audio effects are supported in the system.
+   */
+  @arguments([])
+  fn is_effects_supported(self) {
+    return self.mod.isEffectsSupported();
+  }
+  /**
+   * Gets a list of RecordingDevices on the system.
+   * The first device in the list is the user's default recording device. The list may be empty if there are no microphones connected to the system.
+   * Audio recording is currently not supported on iOS.
+   */
+  @arguments([])
+  fn get_recording_devices(self) {
+    return self.mod.getRecordingDevices();
+  }
+  /**
+   * Gets the current number of simultaneously playing sources.
+   */
+  @arguments([])
+  fn get_source_count(self) {
+    return self.mod.getSourceCount();
+  }
+  /**
+   * Creates a new Source usable for real-time generated sound playback with Source:queue.
+   */
+  @arguments([("samplerate", "any"), ("bitdepth", "any"), ("channels", "any"), ("buffercount", "any")])
+  fn new_queueable_source(self, samplerate, bitdepth, channels, buffercount) {
+    return self.mod.newQueueableSource(samplerate, bitdepth, channels, buffercount);
+  }
+  /**
+   * Gets the current global scale factor for velocity-based doppler effects.
+   */
+  @arguments([])
+  fn get_doppler_scale(self) {
+    return self.mod.getDopplerScale();
+  }
+  /**
+   * Gets a list of the names of the currently enabled effects.
+   */
+  @arguments([])
+  fn get_active_effects(self) {
+    return self.mod.getActiveEffects();
+  }
+  /**
+   * Returns the position of the listener. Please note that positional audio only works for mono (i.e. non-stereo) sources.
+   */
+  @arguments([])
+  fn get_position(self) {
+    return self.mod.getPosition();
+  }
+  /**
+   * Returns the velocity of the listener.
+   */
+  @arguments([])
+  fn get_velocity(self) {
+    return self.mod.getVelocity();
+  }
+  /**
+   * Returns the distance attenuation model.
+   */
+  @arguments([])
+  fn get_distance_model(self) {
+    return self.mod.getDistanceModel();
+  }
+}
+
+let audio = Audio.new(love.audio);
+audio.Audio = Audio;
+
+return audio;

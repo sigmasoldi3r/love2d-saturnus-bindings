@@ -1,0 +1,225 @@
+#!saturnus
+// This script scraps the Löve2D API definition
+// in order to create and update bindings.
+
+print("Starting API walker...");
+
+class Module {
+  fn new(root) {
+    return Module { root };
+  }
+  fn open(self) {
+    let last = self.root->gsub(".+/", "");
+    let mod_name = last->sub(1, 1)->upper() ++ last->sub(2);
+    let full = self.root ++ "/" ++ mod_name;
+    return require(full);
+  }
+}
+
+let MODULES = [
+  "audio", "data", "event", "filesystem", "font", "graphics", "image",
+  "joystick", "keyboard", "math", "mouse", "physics", "sound", "system",
+  "thread", "timer", "touch", "video", "window"
+];
+class ApiWalker {
+  fn new(root) {
+    return ApiWalker { root };
+  }
+  fn list_modules(self) {
+    let mods = [];
+    for key in pairs(MODULES) {
+      let path = MODULES[key];
+      mods[#?mods+1] = Module.new(self.root ++ "/modules/" ++ path);
+    }
+    return mods;
+  }
+}
+
+class CodeGen {
+  fn new() {
+    return CodeGen { level: 0, src: "" };
+  }
+  fn push(self) {
+    self.level += 1;
+    return self;
+  }
+  fn pop(self) {
+    self.level -= 1;
+    return self;
+  }
+  fn indent(self) {
+    return ("  ")->rep(self.level);
+  }
+  fn line(self, line) {
+    self.src = self.src ++ self->indent() ++ line ++ "\n";
+    return self;
+  }
+  fn build(self, info) {
+    self
+      ->line("// Generated module: " ++ info.name)
+      ->line("")
+      ->line("class " ++ info.name ++ " {")
+      ->push()->line("fn new(mod) {")
+      ->push()->line("return " ++ info.name ++ " { mod };")
+      ->pop()->line("}");
+    for k in pairs(info.methods) {
+      let func = info.methods[k];
+      self
+        ->line("/**");
+      for str in string.gmatch(func->description, "([^\n]+)") {
+        if #?str > 0 {
+          self->line(" * " ++ str);
+        }
+      }
+      self
+        ->line(" */");
+      let args = [];
+      if func.variants[1]->arguments <> () {
+        for arg_key in pairs(func.variants[1].arguments) {
+          let arg = func.variants[1].arguments[arg_key];
+          args[#?args+1] = arg.name;
+        }
+      }
+      let arg_src = "";
+      for key in pairs(args) {
+        let arg = args[key];
+        arg_src = arg_src ++ ", (\"" ++ arg ++ "\", \"any\")";
+      }
+      arg_src = arg_src->sub(3);
+      self
+        ->line("@arguments([" ++ arg_src ++ "])");
+      arg_src = "";
+      for key in pairs(args) {
+        let arg = args[key];
+        if arg <> "..." {
+          arg_src = arg_src ++ ", " ++ arg;
+        }
+      }
+      self
+        ->line("fn " ++ func->name ++ "(self" ++ arg_src ++ ") {");
+      arg_src = "";
+      for key in pairs(args) {
+        let arg = args[key];
+        if arg <> "..." {
+          arg_src = arg_src ++ ", " ++ arg;
+        } else {
+          arg_src = arg_src ++ ", table.unpack(argv)";
+        }
+      }
+      arg_src = arg_src->sub(3);
+      self
+        ->push()->line("return self.mod." ++ func->original_name ++ "(" ++ arg_src ++ ");")
+        ->pop()->line("}");
+    }
+    self
+      ->pop()->line("}")
+      ->line("")
+      ->line(
+        "let " ++ info.var_name ++ " = " ++ info.name
+        ++ ".new(love." ++ info.original_name ++ ");"
+      )
+      ->line(info.var_name ++ "." ++ info.name ++ " = " ++ info.name ++ ";")
+      ->line("")
+      ->line("return " ++ info.var_name ++ ";");
+    return self.src;
+  }
+}
+
+let api = ApiWalker.new("love-api");
+let modules = api->list_modules();
+let core = require("love-api/love_api");
+
+fn to_kebab(str) {
+  return str->gsub("(%u)", (x) => "_" ++ x->lower());
+}
+
+let init = io.open("src/init.saturn", "w");
+init->write("// Generated root love bindings\n");
+
+// Generate imports
+for k in pairs(modules) {
+  let mod = modules[k];
+  let data = mod->open();
+  print("Loading module " ++ data.name ++ "...");
+  let mod_info = {
+    name: data.name->sub(1,1)->upper() ++ data.name->sub(2),
+    var_name: to_kebab(data.name),
+    original_name: data.name,
+    methods: {}
+  };
+  for k in pairs(data.functions) {
+    let def = data.functions[k];
+    let name = to_kebab(def.name);
+    let out = {
+      description: def.description,
+      name,
+      original_name: def.name,
+      variants: def.variants
+    };
+    mod_info.methods[name] = out;
+  }
+  let builder = CodeGen.new();
+  let mod_src = builder->build(mod_info);
+  let file = io.open("src/" ++ data.name ++ ".saturn", "w");
+  file->write(mod_src);
+  file->close();
+  init->write("use " ++ data.name ++ ";\n");
+}
+
+// Extra import: hooks
+init->write("use hooks;\n");
+
+// Generate core module
+init->write("\nlet core = {\n");
+for key in pairs(core.functions) {
+  let func = core.functions[key];
+  init->write("  " ++ to_kebab(func.name) ++ ": love." ++ func.name ++ ",\n");
+}
+init->write("  __entries: " ++ #? core.functions ++ ",\n");
+init->write("  love\n");
+init->write("};\n");
+
+// Callback code gen
+// for key in pairs(core.functions) {
+//   let func = core.functions[key];
+//   init->write("love." ++ func.name ++ " = core." ++ func.name ++ ";\n");
+// }
+
+// Collect modules and return them
+init->write("\nreturn {\n");
+for k in pairs(modules) {
+  let mod = modules[k];
+  let data = mod->open();
+  print("Exporting module " ++ data.name ++ "...");
+  init->write("  " ++ data.name ++ ",\n");
+}
+init->write("  hooks,\n");
+init->write("  core\n");
+init->write("};\n");
+init->close();
+
+// Hooks module
+let hooks = io.open("src/hooks.saturn", "w");
+hooks->write(
+    "// Hooks module\n\n
+let root_draw = () => ();\n
+let root_update = () => ();\n\n
+fn update(doc) {\n
+  return (target, name) => {\n
+    if love.update <> root_update {\n
+      print(\"WARNING: Update hook is defined twice! One will be ignored.\");\n
+    }\n
+    love.update = target;\n
+  };\n
+}\n\n
+fn draw(doc) {\n
+  return (target, name) => {\n
+    if love.draw <> root_draw {\n
+      print(\"WARNING: draw hook is defined twice! One will be ignored.\");\n
+    }\n
+    love.draw = target;\n
+  };\n
+}\n\n
+return { update, draw };\n"
+);
+hooks->close();

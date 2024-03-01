@@ -1,0 +1,43 @@
+// Hooks module
+
+
+let root_draw = () => ();
+
+let root_update = () => ();
+
+
+fn update(doc) {
+
+  return (target, name) => {
+
+    if love.update <> root_update {
+
+      print("WARNING: Update hook is defined twice! One will be ignored.");
+
+    }
+
+    love.update = target;
+
+  };
+
+}
+
+
+fn draw(doc) {
+
+  return (target, name) => {
+
+    if love.draw <> root_draw {
+
+      print("WARNING: draw hook is defined twice! One will be ignored.");
+
+    }
+
+    love.draw = target;
+
+  };
+
+}
+
+
+return { update, draw };

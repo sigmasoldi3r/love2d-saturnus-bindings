@@ -1,0 +1,33 @@
+// Generated module: Touch
+
+class Touch {
+  fn new(mod) {
+    return Touch { mod };
+  }
+  /**
+   * Gets a list of all active touch-presses.
+   */
+  @arguments([])
+  fn get_touches(self) {
+    return self.mod.getTouches();
+  }
+  /**
+   * Gets the current position of the specified touch-press, in pixels.
+   */
+  @arguments([("id", "any")])
+  fn get_position(self, id) {
+    return self.mod.getPosition(id);
+  }
+  /**
+   * Gets the current pressure of the specified touch-press.
+   */
+  @arguments([("id", "any")])
+  fn get_pressure(self, id) {
+    return self.mod.getPressure(id);
+  }
+}
+
+let touch = Touch.new(love.touch);
+touch.Touch = Touch;
+
+return touch;

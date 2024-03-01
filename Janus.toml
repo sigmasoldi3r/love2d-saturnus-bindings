@@ -1,0 +1,10 @@
+[project]
+author = "SigmaSoldi3R"
+name = "Löve2D Saturnus Bindings"
+description = "Contains bindings automatically generated to make Löve2D ready to use within a Saturnus project."
+version = "1.0.0"
+exclude = [ "generate-sources.saturn" ]
+
+[build]
+# Use default build flags
+

@@ -1,0 +1,47 @@
+// Generated module: Font
+
+class Font {
+  fn new(mod) {
+    return Font { mod };
+  }
+  /**
+   * Creates a new TrueType Rasterizer.
+   */
+  @arguments([("size", "any"), ("hinting", "any"), ("dpiscale", "any")])
+  fn new_true_type_rasterizer(self, size, hinting, dpiscale) {
+    return self.mod.newTrueTypeRasterizer(size, hinting, dpiscale);
+  }
+  /**
+   * Creates a new Image Rasterizer.
+   */
+  @arguments([("imageData", "any"), ("glyphs", "any"), ("extraSpacing", "any"), ("dpiscale", "any")])
+  fn new_image_rasterizer(self, imageData, glyphs, extraSpacing, dpiscale) {
+    return self.mod.newImageRasterizer(imageData, glyphs, extraSpacing, dpiscale);
+  }
+  /**
+   * Creates a new GlyphData.
+   */
+  @arguments([("rasterizer", "any"), ("glyph", "any")])
+  fn new_glyph_data(self, rasterizer, glyph) {
+    return self.mod.newGlyphData(rasterizer, glyph);
+  }
+  /**
+   * Creates a new Rasterizer.
+   */
+  @arguments([("filename", "any")])
+  fn new_rasterizer(self, filename) {
+    return self.mod.newRasterizer(filename);
+  }
+  /**
+   * Creates a new BMFont Rasterizer.
+   */
+  @arguments([("imageData", "any"), ("glyphs", "any"), ("dpiscale", "any")])
+  fn new_b_m_font_rasterizer(self, imageData, glyphs, dpiscale) {
+    return self.mod.newBMFontRasterizer(imageData, glyphs, dpiscale);
+  }
+}
+
+let font = Font.new(love.font);
+font.Font = Font;
+
+return font;

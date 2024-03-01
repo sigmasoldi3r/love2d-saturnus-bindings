@@ -1,0 +1,33 @@
+// Generated module: Image
+
+class Image {
+  fn new(mod) {
+    return Image { mod };
+  }
+  /**
+   * Create a new CompressedImageData object from a compressed image file. LÖVE supports several compressed texture formats, enumerated in the CompressedImageFormat page.
+   */
+  @arguments([("filename", "any")])
+  fn new_compressed_data(self, filename) {
+    return self.mod.newCompressedData(filename);
+  }
+  /**
+   * Determines whether a file can be loaded as CompressedImageData.
+   */
+  @arguments([("filename", "any")])
+  fn is_compressed(self, filename) {
+    return self.mod.isCompressed(filename);
+  }
+  /**
+   * Creates a new ImageData object.
+   */
+  @arguments([("width", "any"), ("height", "any")])
+  fn new_image_data(self, width, height) {
+    return self.mod.newImageData(width, height);
+  }
+}
+
+let image = Image.new(love.image);
+image.Image = Image;
+
+return image;

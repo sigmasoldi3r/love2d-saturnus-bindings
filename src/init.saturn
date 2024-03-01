@@ -1,0 +1,54 @@
+// Generated root love bindings
+use audio;
+use data;
+use event;
+use filesystem;
+use font;
+use graphics;
+use image;
+use joystick;
+use keyboard;
+use math;
+use mouse;
+use physics;
+use sound;
+use system;
+use thread;
+use timer;
+use touch;
+use video;
+use window;
+use hooks;
+
+let core = {
+  get_version: love.getVersion,
+  has_deprecation_output: love.hasDeprecationOutput,
+  is_version_compatible: love.isVersionCompatible,
+  set_deprecation_output: love.setDeprecationOutput,
+  __entries: 4,
+  love
+};
+
+return {
+  audio,
+  data,
+  event,
+  filesystem,
+  font,
+  graphics,
+  image,
+  joystick,
+  keyboard,
+  math,
+  mouse,
+  physics,
+  sound,
+  system,
+  thread,
+  timer,
+  touch,
+  video,
+  window,
+  hooks,
+  core
+};
