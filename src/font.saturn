@@ -3,18 +3,18 @@ use { rtti: { arguments } } in std;
 
 class Font {
   /**
-   * Creates a new GlyphData.
-   */
-  @arguments(("rasterizer", "any"), ("glyph", "any"))
-  fn new_glyph_data(rasterizer, glyph) {
-    return love.font.newGlyphData(rasterizer, glyph);
-  }
-  /**
    * Creates a new Rasterizer.
    */
   @arguments(("filename", "any"))
   fn new_rasterizer(filename) {
     return love.font.newRasterizer(filename);
+  }
+  /**
+   * Creates a new GlyphData.
+   */
+  @arguments(("rasterizer", "any"), ("glyph", "any"))
+  fn new_glyph_data(rasterizer, glyph) {
+    return love.font.newGlyphData(rasterizer, glyph);
   }
   /**
    * Creates a new BMFont Rasterizer.
@@ -24,18 +24,18 @@ class Font {
     return love.font.newBMFontRasterizer(imageData, glyphs, dpiscale);
   }
   /**
-   * Creates a new Image Rasterizer.
-   */
-  @arguments(("imageData", "any"), ("glyphs", "any"), ("extraSpacing", "any"), ("dpiscale", "any"))
-  fn new_image_rasterizer(imageData, glyphs, extraSpacing, dpiscale) {
-    return love.font.newImageRasterizer(imageData, glyphs, extraSpacing, dpiscale);
-  }
-  /**
    * Creates a new TrueType Rasterizer.
    */
   @arguments(("size", "any"), ("hinting", "any"), ("dpiscale", "any"))
   fn new_true_type_rasterizer(size, hinting, dpiscale) {
     return love.font.newTrueTypeRasterizer(size, hinting, dpiscale);
+  }
+  /**
+   * Creates a new Image Rasterizer.
+   */
+  @arguments(("imageData", "any"), ("glyphs", "any"), ("extraSpacing", "any"), ("dpiscale", "any"))
+  fn new_image_rasterizer(imageData, glyphs, extraSpacing, dpiscale) {
+    return love.font.newImageRasterizer(imageData, glyphs, extraSpacing, dpiscale);
   }
 }
 

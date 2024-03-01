@@ -3,15 +3,6 @@ use { rtti: { arguments } } in std;
 
 class Joystick {
   /**
-   * Binds a virtual gamepad input to a button, axis or hat for all Joysticks of a certain type. For example, if this function is used with a GUID returned by a Dualshock 3 controller in OS X, the binding will affect Joystick:getGamepadAxis and Joystick:isGamepadDown for ''all'' Dualshock 3 controllers used with the game when run in OS X.
-   * LÖVE includes built-in gamepad bindings for many common controllers. This function lets you change the bindings or add new ones for types of Joysticks which aren't recognized as gamepads by default.
-   * The virtual gamepad buttons and axes are designed around the Xbox 360 controller layout.
-   */
-  @arguments(("guid", "any"), ("button", "any"), ("inputtype", "any"), ("inputindex", "any"), ("hatdir", "any"))
-  fn set_gamepad_mapping(guid, button, inputtype, inputindex, hatdir) {
-    return love.joystick.setGamepadMapping(guid, button, inputtype, inputindex, hatdir);
-  }
-  /**
    * Gets the full gamepad mapping string of the Joysticks which have the given GUID, or nil if the GUID isn't recognized as a gamepad.
    * The mapping string contains binding information used to map the Joystick's buttons an axes to the standard gamepad layout, and can be used later with love.joystick.loadGamepadMappings.
    */
@@ -28,6 +19,22 @@ class Joystick {
     return love.joystick.saveGamepadMappings(filename);
   }
   /**
+   * Gets the number of connected joysticks.
+   */
+  @arguments()
+  fn get_joystick_count() {
+    return love.joystick.getJoystickCount();
+  }
+  /**
+   * Binds a virtual gamepad input to a button, axis or hat for all Joysticks of a certain type. For example, if this function is used with a GUID returned by a Dualshock 3 controller in OS X, the binding will affect Joystick:getGamepadAxis and Joystick:isGamepadDown for ''all'' Dualshock 3 controllers used with the game when run in OS X.
+   * LÖVE includes built-in gamepad bindings for many common controllers. This function lets you change the bindings or add new ones for types of Joysticks which aren't recognized as gamepads by default.
+   * The virtual gamepad buttons and axes are designed around the Xbox 360 controller layout.
+   */
+  @arguments(("guid", "any"), ("button", "any"), ("inputtype", "any"), ("inputindex", "any"), ("hatdir", "any"))
+  fn set_gamepad_mapping(guid, button, inputtype, inputindex, hatdir) {
+    return love.joystick.setGamepadMapping(guid, button, inputtype, inputindex, hatdir);
+  }
+  /**
    * Gets a list of connected Joysticks.
    */
   @arguments()
@@ -41,13 +48,6 @@ class Joystick {
   @arguments(("filename", "any"))
   fn load_gamepad_mappings(filename) {
     return love.joystick.loadGamepadMappings(filename);
-  }
-  /**
-   * Gets the number of connected joysticks.
-   */
-  @arguments()
-  fn get_joystick_count() {
-    return love.joystick.getJoystickCount();
   }
 }
 

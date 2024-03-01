@@ -3,6 +3,13 @@ use { rtti: { arguments } } in std;
 
 class Image {
   /**
+   * Create a new CompressedImageData object from a compressed image file. LÖVE supports several compressed texture formats, enumerated in the CompressedImageFormat page.
+   */
+  @arguments(("filename", "any"))
+  fn new_compressed_data(filename) {
+    return love.image.newCompressedData(filename);
+  }
+  /**
    * Creates a new ImageData object.
    */
   @arguments(("width", "any"), ("height", "any"))
@@ -15,13 +22,6 @@ class Image {
   @arguments(("filename", "any"))
   fn is_compressed(filename) {
     return love.image.isCompressed(filename);
-  }
-  /**
-   * Create a new CompressedImageData object from a compressed image file. LÖVE supports several compressed texture formats, enumerated in the CompressedImageFormat page.
-   */
-  @arguments(("filename", "any"))
-  fn new_compressed_data(filename) {
-    return love.image.newCompressedData(filename);
   }
 }
 

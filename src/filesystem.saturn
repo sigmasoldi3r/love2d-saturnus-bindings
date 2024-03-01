@@ -3,57 +3,11 @@ use { rtti: { arguments } } in std;
 
 class Filesystem {
   /**
-   * Append data to an existing file.
+   * Read the contents of a file.
    */
-  @arguments(("name", "any"), ("data", "any"), ("size", "any"))
-  fn append(name, data, size) {
-    return love.filesystem.append(name, data, size);
-  }
-  /**
-   * Initializes love.filesystem, will be called internally, so should not be used explicitly.
-   */
-  @arguments(("appname", "any"))
-  fn init(appname) {
-    return love.filesystem.init(appname);
-  }
-  /**
-   * Mounts a zip file or folder in the game's save directory for reading.
-   * It is also possible to mount love.filesystem.getSourceBaseDirectory if the game is in fused mode.
-   */
-  @arguments(("archive", "any"), ("mountpoint", "any"), ("appendToPath", "any"))
-  fn mount(archive, mountpoint, appendToPath) {
-    return love.filesystem.mount(archive, mountpoint, appendToPath);
-  }
-  /**
-   * Gets information about the specified file or directory.
-   */
-  @arguments(("path", "any"), ("filtertype", "any"))
-  fn get_info(path, filtertype) {
-    return love.filesystem.getInfo(path, filtertype);
-  }
-  /**
-   * Gets the filesystem paths that will be searched for c libraries when require is called.
-   * The paths string returned by this function is a sequence of path templates separated by semicolons. The argument passed to ''require'' will be inserted in place of any question mark ('?') character in each template (after the dot characters in the argument passed to ''require'' are replaced by directory separators.) Additionally, any occurrence of a double question mark ('??') will be replaced by the name passed to require and the default library extension for the platform.
-   * The paths are relative to the game's source and save directories, as well as any paths mounted with love.filesystem.mount.
-   */
-  @arguments()
-  fn get_c_require_path() {
-    return love.filesystem.getCRequirePath();
-  }
-  /**
-   * Write data to a file in the save directory. If the file existed already, it will be completely replaced by the new contents.
-   */
-  @arguments(("name", "any"), ("data", "any"), ("size", "any"))
-  fn write(name, data, size) {
-    return love.filesystem.write(name, data, size);
-  }
-  /**
-   * Returns the full path to the directory containing the .love file. If the game is fused to the LÖVE executable, then the directory containing the executable is returned.
-   * If love.filesystem.isFused is true, the path returned by this function can be passed to love.filesystem.mount, which will make the directory containing the main game (e.g. C:\Program Files\coolgame\) readable by love.filesystem.
-   */
-  @arguments()
-  fn get_source_base_directory() {
-    return love.filesystem.getSourceBaseDirectory();
+  @arguments(("name", "any"), ("size", "any"))
+  fn read(name, size) {
+    return love.filesystem.read(name, size);
   }
   /**
    * Unmounts a zip file or folder previously mounted for reading with love.filesystem.mount.
@@ -63,18 +17,25 @@ class Filesystem {
     return love.filesystem.unmount(archive);
   }
   /**
-   * Gets the current working directory.
-   */
-  @arguments()
-  fn get_working_directory() {
-    return love.filesystem.getWorkingDirectory();
-  }
-  /**
    * Returns the application data directory (could be the same as getUserDirectory)
    */
   @arguments()
   fn get_appdata_directory() {
     return love.filesystem.getAppdataDirectory();
+  }
+  /**
+   * Sets whether love.filesystem follows symbolic links. It is enabled by default in version 0.10.0 and newer, and disabled by default in 0.9.2.
+   */
+  @arguments(("enable", "any"))
+  fn set_symlinks_enabled(enable) {
+    return love.filesystem.setSymlinksEnabled(enable);
+  }
+  /**
+   * Sets the source of the game, where the code is present. This function can only be called once, and is normally automatically done by LÖVE.
+   */
+  @arguments(("path", "any"))
+  fn set_source(path) {
+    return love.filesystem.setSource(path);
   }
   /**
    * Gets the filesystem paths that will be searched when require is called.
@@ -86,97 +47,25 @@ class Filesystem {
     return love.filesystem.getRequirePath();
   }
   /**
-   * Sets the source of the game, where the code is present. This function can only be called once, and is normally automatically done by LÖVE.
-   */
-  @arguments(("path", "any"))
-  fn set_source(path) {
-    return love.filesystem.setSource(path);
-  }
-  /**
-   * Sets the filesystem paths that will be searched when require is called.
-   * The paths string given to this function is a sequence of path templates separated by semicolons. The argument passed to ''require'' will be inserted in place of any question mark ('?') character in each template (after the dot characters in the argument passed to ''require'' are replaced by directory separators.)
-   * The paths are relative to the game's source and save directories, as well as any paths mounted with love.filesystem.mount.
-   */
-  @arguments(("paths", "any"))
-  fn set_require_path(paths) {
-    return love.filesystem.setRequirePath(paths);
-  }
-  /**
-   * Removes a file or empty directory.
+   * Loads a Lua file (but does not run it).
    */
   @arguments(("name", "any"))
-  fn remove(name) {
-    return love.filesystem.remove(name);
+  fn load(name) {
+    return love.filesystem.load(name);
   }
   /**
-   * Creates a new File object. 
-   * It needs to be opened before it can be accessed.
+   * Append data to an existing file.
    */
-  @arguments(("filename", "any"))
-  fn new_file(filename) {
-    return love.filesystem.newFile(filename);
+  @arguments(("name", "any"), ("data", "any"), ("size", "any"))
+  fn append(name, data, size) {
+    return love.filesystem.append(name, data, size);
   }
   /**
-   * Gets the platform-specific absolute path of the directory containing a filepath.
-   * This can be used to determine whether a file is inside the save directory or the game's source .love.
+   * Write data to a file in the save directory. If the file existed already, it will be completely replaced by the new contents.
    */
-  @arguments(("filepath", "any"))
-  fn get_real_directory(filepath) {
-    return love.filesystem.getRealDirectory(filepath);
-  }
-  /**
-   * Iterate over the lines in a file.
-   */
-  @arguments(("name", "any"))
-  fn lines(name) {
-    return love.filesystem.lines(name);
-  }
-  /**
-   * Returns the path of the user's directory
-   */
-  @arguments()
-  fn get_user_directory() {
-    return love.filesystem.getUserDirectory();
-  }
-  /**
-   * Sets the filesystem paths that will be searched for c libraries when require is called.
-   * The paths string returned by this function is a sequence of path templates separated by semicolons. The argument passed to ''require'' will be inserted in place of any question mark ('?') character in each template (after the dot characters in the argument passed to ''require'' are replaced by directory separators.) Additionally, any occurrence of a double question mark ('??') will be replaced by the name passed to require and the default library extension for the platform.
-   * The paths are relative to the game's source and save directories, as well as any paths mounted with love.filesystem.mount.
-   */
-  @arguments(("paths", "any"))
-  fn set_c_require_path(paths) {
-    return love.filesystem.setCRequirePath(paths);
-  }
-  /**
-   * Sets the write directory for your game. 
-   * Note that you can only set the name of the folder to store your files in, not the location.
-   */
-  @arguments(("name", "any"))
-  fn set_identity(name) {
-    return love.filesystem.setIdentity(name);
-  }
-  /**
-   * Returns the full path to the the .love file or directory. If the game is fused to the LÖVE executable, then the executable is returned.
-   */
-  @arguments()
-  fn get_source() {
-    return love.filesystem.getSource();
-  }
-  /**
-   * Gets the full path to the designated save directory.
-   * This can be useful if you want to use the standard io library (or something else) to
-   * read or write in the save directory.
-   */
-  @arguments()
-  fn get_save_directory() {
-    return love.filesystem.getSaveDirectory();
-  }
-  /**
-   * Sets whether love.filesystem follows symbolic links. It is enabled by default in version 0.10.0 and newer, and disabled by default in 0.9.2.
-   */
-  @arguments(("enable", "any"))
-  fn set_symlinks_enabled(enable) {
-    return love.filesystem.setSymlinksEnabled(enable);
+  @arguments(("name", "any"), ("data", "any"), ("size", "any"))
+  fn write(name, data, size) {
+    return love.filesystem.write(name, data, size);
   }
   /**
    * Gets whether the game is in fused mode or not.
@@ -188,27 +77,105 @@ class Filesystem {
     return love.filesystem.isFused();
   }
   /**
-   * Loads a Lua file (but does not run it).
+   * Creates a new File object. 
+   * It needs to be opened before it can be accessed.
    */
-  @arguments(("name", "any"))
-  fn load(name) {
-    return love.filesystem.load(name);
+  @arguments(("filename", "any"))
+  fn new_file(filename) {
+    return love.filesystem.newFile(filename);
   }
   /**
-   * Recursively creates a directory.
-   * When called with 'a/b' it creates both 'a' and 'a/b', if they don't exist already.
-   */
-  @arguments(("name", "any"))
-  fn create_directory(name) {
-    return love.filesystem.createDirectory(name);
-  }
-  /**
-   * Gets the write directory name for your game. 
-   * Note that this only returns the name of the folder to store your files in, not the full path.
+   * Returns the full path to the directory containing the .love file. If the game is fused to the LÖVE executable, then the directory containing the executable is returned.
+   * If love.filesystem.isFused is true, the path returned by this function can be passed to love.filesystem.mount, which will make the directory containing the main game (e.g. C:\Program Files\coolgame\) readable by love.filesystem.
    */
   @arguments()
-  fn get_identity() {
-    return love.filesystem.getIdentity();
+  fn get_source_base_directory() {
+    return love.filesystem.getSourceBaseDirectory();
+  }
+  /**
+   * Gets the full path to the designated save directory.
+   * This can be useful if you want to use the standard io library (or something else) to
+   * read or write in the save directory.
+   */
+  @arguments()
+  fn get_save_directory() {
+    return love.filesystem.getSaveDirectory();
+  }
+  /**
+   * Gets information about the specified file or directory.
+   */
+  @arguments(("path", "any"), ("filtertype", "any"))
+  fn get_info(path, filtertype) {
+    return love.filesystem.getInfo(path, filtertype);
+  }
+  /**
+   * Gets the current working directory.
+   */
+  @arguments()
+  fn get_working_directory() {
+    return love.filesystem.getWorkingDirectory();
+  }
+  /**
+   * Sets the filesystem paths that will be searched for c libraries when require is called.
+   * The paths string returned by this function is a sequence of path templates separated by semicolons. The argument passed to ''require'' will be inserted in place of any question mark ('?') character in each template (after the dot characters in the argument passed to ''require'' are replaced by directory separators.) Additionally, any occurrence of a double question mark ('??') will be replaced by the name passed to require and the default library extension for the platform.
+   * The paths are relative to the game's source and save directories, as well as any paths mounted with love.filesystem.mount.
+   */
+  @arguments(("paths", "any"))
+  fn set_c_require_path(paths) {
+    return love.filesystem.setCRequirePath(paths);
+  }
+  /**
+   * Removes a file or empty directory.
+   */
+  @arguments(("name", "any"))
+  fn remove(name) {
+    return love.filesystem.remove(name);
+  }
+  /**
+   * Sets the filesystem paths that will be searched when require is called.
+   * The paths string given to this function is a sequence of path templates separated by semicolons. The argument passed to ''require'' will be inserted in place of any question mark ('?') character in each template (after the dot characters in the argument passed to ''require'' are replaced by directory separators.)
+   * The paths are relative to the game's source and save directories, as well as any paths mounted with love.filesystem.mount.
+   */
+  @arguments(("paths", "any"))
+  fn set_require_path(paths) {
+    return love.filesystem.setRequirePath(paths);
+  }
+  /**
+   * Initializes love.filesystem, will be called internally, so should not be used explicitly.
+   */
+  @arguments(("appname", "any"))
+  fn init(appname) {
+    return love.filesystem.init(appname);
+  }
+  /**
+   * Creates a new FileData object from a file on disk, or from a string in memory.
+   */
+  @arguments(("contents", "any"), ("name", "any"))
+  fn new_file_data(contents, name) {
+    return love.filesystem.newFileData(contents, name);
+  }
+  /**
+   * Sets the write directory for your game. 
+   * Note that you can only set the name of the folder to store your files in, not the location.
+   */
+  @arguments(("name", "any"))
+  fn set_identity(name) {
+    return love.filesystem.setIdentity(name);
+  }
+  /**
+   * Mounts a zip file or folder in the game's save directory for reading.
+   * It is also possible to mount love.filesystem.getSourceBaseDirectory if the game is in fused mode.
+   */
+  @arguments(("archive", "any"), ("mountpoint", "any"), ("appendToPath", "any"))
+  fn mount(archive, mountpoint, appendToPath) {
+    return love.filesystem.mount(archive, mountpoint, appendToPath);
+  }
+  /**
+   * Iterate over the lines in a file.
+   */
+  @arguments(("name", "any"))
+  fn lines(name) {
+    return love.filesystem.lines(name);
   }
   /**
    * Returns a table with the names of files and subdirectories in the specified path. The table is not sorted in any way; the order is undefined.
@@ -219,11 +186,12 @@ class Filesystem {
     return love.filesystem.getDirectoryItems(dir);
   }
   /**
-   * Creates a new FileData object from a file on disk, or from a string in memory.
+   * Gets the write directory name for your game. 
+   * Note that this only returns the name of the folder to store your files in, not the full path.
    */
-  @arguments(("contents", "any"), ("name", "any"))
-  fn new_file_data(contents, name) {
-    return love.filesystem.newFileData(contents, name);
+  @arguments()
+  fn get_identity() {
+    return love.filesystem.getIdentity();
   }
   /**
    * Gets whether love.filesystem follows symbolic links.
@@ -233,11 +201,43 @@ class Filesystem {
     return love.filesystem.areSymlinksEnabled();
   }
   /**
-   * Read the contents of a file.
+   * Gets the platform-specific absolute path of the directory containing a filepath.
+   * This can be used to determine whether a file is inside the save directory or the game's source .love.
    */
-  @arguments(("name", "any"), ("size", "any"))
-  fn read(name, size) {
-    return love.filesystem.read(name, size);
+  @arguments(("filepath", "any"))
+  fn get_real_directory(filepath) {
+    return love.filesystem.getRealDirectory(filepath);
+  }
+  /**
+   * Returns the path of the user's directory
+   */
+  @arguments()
+  fn get_user_directory() {
+    return love.filesystem.getUserDirectory();
+  }
+  /**
+   * Recursively creates a directory.
+   * When called with 'a/b' it creates both 'a' and 'a/b', if they don't exist already.
+   */
+  @arguments(("name", "any"))
+  fn create_directory(name) {
+    return love.filesystem.createDirectory(name);
+  }
+  /**
+   * Gets the filesystem paths that will be searched for c libraries when require is called.
+   * The paths string returned by this function is a sequence of path templates separated by semicolons. The argument passed to ''require'' will be inserted in place of any question mark ('?') character in each template (after the dot characters in the argument passed to ''require'' are replaced by directory separators.) Additionally, any occurrence of a double question mark ('??') will be replaced by the name passed to require and the default library extension for the platform.
+   * The paths are relative to the game's source and save directories, as well as any paths mounted with love.filesystem.mount.
+   */
+  @arguments()
+  fn get_c_require_path() {
+    return love.filesystem.getCRequirePath();
+  }
+  /**
+   * Returns the full path to the the .love file or directory. If the game is fused to the LÖVE executable, then the executable is returned.
+   */
+  @arguments()
+  fn get_source() {
+    return love.filesystem.getSource();
   }
 }
 

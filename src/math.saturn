@@ -3,32 +3,11 @@ use { rtti: { arguments } } in std;
 
 class Math {
   /**
-   * Converts a color from 0..255 to 0..1 range.
-   */
-  @arguments(("rb", "any"), ("gb", "any"), ("bb", "any"), ("ab", "any"))
-  fn color_from_bytes(rb, gb, bb, ab) {
-    return love.math.colorFromBytes(rb, gb, bb, ab);
-  }
-  /**
-   * Creates a new RandomGenerator object which is completely independent of other RandomGenerator objects and random functions.
+   * Creates a new Transform object.
    */
   @arguments()
-  fn new_random_generator() {
-    return love.math.newRandomGenerator();
-  }
-  /**
-   * Get a normally distributed pseudo random number.
-   */
-  @arguments(("stddev", "any"), ("mean", "any"))
-  fn random_normal(stddev, mean) {
-    return love.math.randomNormal(stddev, mean);
-  }
-  /**
-   * Compresses a string or data using a specific compression algorithm.
-   */
-  @arguments(("rawstring", "any"), ("format", "any"), ("level", "any"))
-  fn compress(rawstring, format, level) {
-    return love.math.compress(rawstring, format, level);
+  fn new_transform() {
+    return love.math.newTransform();
   }
   /**
    * Creates a new BezierCurve object.
@@ -39,21 +18,56 @@ class Math {
     return love.math.newBezierCurve(vertices);
   }
   /**
-   * Sets the seed of the random number generator using the specified integer number. This is called internally at startup, so you generally don't need to call it yourself.
+   * Gets the current state of the random number generator. This returns an opaque implementation-dependent string which is only useful for later use with love.math.setRandomState or RandomGenerator:setState.
+   * This is different from love.math.getRandomSeed in that getRandomState gets the random number generator's current state, whereas getRandomSeed gets the previously set seed number.
    */
-  @arguments(("seed", "any"))
-  fn set_random_seed(seed) {
-    return love.math.setRandomSeed(seed);
+  @arguments()
+  fn get_random_state() {
+    return love.math.getRandomState();
   }
   /**
-   * Converts a color from linear-space (RGB) to gamma-space (sRGB). This is useful when storing linear RGB color values in an image, because the linear RGB color space has less precision than sRGB for dark colors, which can result in noticeable color banding when drawing.
-   * In general, colors chosen based on what they look like on-screen are already in gamma-space and should not be double-converted. Colors calculated using math are often in the linear RGB space.
-   * Read more about gamma-correct rendering here, here, and here.
-   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   * Converts a color from 0..1 to 0..255 range.
    */
-  @arguments(("lr", "any"), ("lg", "any"), ("lb", "any"))
-  fn linear_to_gamma(lr, lg, lb) {
-    return love.math.linearToGamma(lr, lg, lb);
+  @arguments(("r", "any"), ("g", "any"), ("b", "any"), ("a", "any"))
+  fn color_to_bytes(r, g, b, a) {
+    return love.math.colorToBytes(r, g, b, a);
+  }
+  /**
+   * Creates a new RandomGenerator object which is completely independent of other RandomGenerator objects and random functions.
+   */
+  @arguments()
+  fn new_random_generator() {
+    return love.math.newRandomGenerator();
+  }
+  /**
+   * Sets the current state of the random number generator. The value used as an argument for this function is an opaque implementation-dependent string and should only originate from a previous call to love.math.getRandomState.
+   * This is different from love.math.setRandomSeed in that setRandomState directly sets the random number generator's current implementation-dependent state, whereas setRandomSeed gives it a new seed value.
+   */
+  @arguments(("state", "any"))
+  fn set_random_state(state) {
+    return love.math.setRandomState(state);
+  }
+  /**
+   * Compresses a string or data using a specific compression algorithm.
+   */
+  @arguments(("rawstring", "any"), ("format", "any"), ("level", "any"))
+  fn compress(rawstring, format, level) {
+    return love.math.compress(rawstring, format, level);
+  }
+  /**
+   * Generates a pseudo-random number in a platform independent manner. The default love.run seeds this function at startup, so you generally don't need to seed it yourself.
+   */
+  @arguments()
+  fn random() {
+    return love.math.random();
+  }
+  /**
+   * Checks whether a polygon is convex.
+   * PolygonShapes in love.physics, some forms of Meshes, and polygons drawn with love.graphics.polygon must be simple convex polygons.
+   */
+  @arguments(("vertices", "any"))
+  fn is_convex(vertices) {
+    return love.math.isConvex(vertices);
   }
   /**
    * Decompresses a CompressedData or previously compressed string or Data object.
@@ -70,44 +84,14 @@ class Math {
     return love.math.triangulate(polygon);
   }
   /**
-   * Converts a color from gamma-space (sRGB) to linear-space (RGB). This is useful when doing gamma-correct rendering and you need to do math in linear RGB in the few cases where LÖVE doesn't handle conversions automatically.
+   * Converts a color from linear-space (RGB) to gamma-space (sRGB). This is useful when storing linear RGB color values in an image, because the linear RGB color space has less precision than sRGB for dark colors, which can result in noticeable color banding when drawing.
+   * In general, colors chosen based on what they look like on-screen are already in gamma-space and should not be double-converted. Colors calculated using math are often in the linear RGB space.
    * Read more about gamma-correct rendering here, here, and here.
    * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
    */
-  @arguments(("r", "any"), ("g", "any"), ("b", "any"))
-  fn gamma_to_linear(r, g, b) {
-    return love.math.gammaToLinear(r, g, b);
-  }
-  /**
-   * Sets the current state of the random number generator. The value used as an argument for this function is an opaque implementation-dependent string and should only originate from a previous call to love.math.getRandomState.
-   * This is different from love.math.setRandomSeed in that setRandomState directly sets the random number generator's current implementation-dependent state, whereas setRandomSeed gives it a new seed value.
-   */
-  @arguments(("state", "any"))
-  fn set_random_state(state) {
-    return love.math.setRandomState(state);
-  }
-  /**
-   * Gets the current state of the random number generator. This returns an opaque implementation-dependent string which is only useful for later use with love.math.setRandomState or RandomGenerator:setState.
-   * This is different from love.math.getRandomSeed in that getRandomState gets the random number generator's current state, whereas getRandomSeed gets the previously set seed number.
-   */
-  @arguments()
-  fn get_random_state() {
-    return love.math.getRandomState();
-  }
-  /**
-   * Creates a new Transform object.
-   */
-  @arguments()
-  fn new_transform() {
-    return love.math.newTransform();
-  }
-  /**
-   * Checks whether a polygon is convex.
-   * PolygonShapes in love.physics, some forms of Meshes, and polygons drawn with love.graphics.polygon must be simple convex polygons.
-   */
-  @arguments(("vertices", "any"))
-  fn is_convex(vertices) {
-    return love.math.isConvex(vertices);
+  @arguments(("lr", "any"), ("lg", "any"), ("lb", "any"))
+  fn linear_to_gamma(lr, lg, lb) {
+    return love.math.linearToGamma(lr, lg, lb);
   }
   /**
    * Gets the seed of the random number generator.
@@ -116,6 +100,29 @@ class Math {
   @arguments()
   fn get_random_seed() {
     return love.math.getRandomSeed();
+  }
+  /**
+   * Sets the seed of the random number generator using the specified integer number. This is called internally at startup, so you generally don't need to call it yourself.
+   */
+  @arguments(("seed", "any"))
+  fn set_random_seed(seed) {
+    return love.math.setRandomSeed(seed);
+  }
+  /**
+   * Converts a color from 0..255 to 0..1 range.
+   */
+  @arguments(("rb", "any"), ("gb", "any"), ("bb", "any"), ("ab", "any"))
+  fn color_from_bytes(rb, gb, bb, ab) {
+    return love.math.colorFromBytes(rb, gb, bb, ab);
+  }
+  /**
+   * Converts a color from gamma-space (sRGB) to linear-space (RGB). This is useful when doing gamma-correct rendering and you need to do math in linear RGB in the few cases where LÖVE doesn't handle conversions automatically.
+   * Read more about gamma-correct rendering here, here, and here.
+   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   */
+  @arguments(("r", "any"), ("g", "any"), ("b", "any"))
+  fn gamma_to_linear(r, g, b) {
+    return love.math.gammaToLinear(r, g, b);
   }
   /**
    * Generates a Simplex or Perlin noise value in 1-4 dimensions. The return value will always be the same, given the same arguments.
@@ -127,18 +134,11 @@ class Math {
     return love.math.noise(x);
   }
   /**
-   * Converts a color from 0..1 to 0..255 range.
+   * Get a normally distributed pseudo random number.
    */
-  @arguments(("r", "any"), ("g", "any"), ("b", "any"), ("a", "any"))
-  fn color_to_bytes(r, g, b, a) {
-    return love.math.colorToBytes(r, g, b, a);
-  }
-  /**
-   * Generates a pseudo-random number in a platform independent manner. The default love.run seeds this function at startup, so you generally don't need to seed it yourself.
-   */
-  @arguments()
-  fn random() {
-    return love.math.random();
+  @arguments(("stddev", "any"), ("mean", "any"))
+  fn random_normal(stddev, mean) {
+    return love.math.randomNormal(stddev, mean);
   }
 }
 

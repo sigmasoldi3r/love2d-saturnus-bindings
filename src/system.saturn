@@ -3,11 +3,11 @@ use { rtti: { arguments } } in std;
 
 class System {
   /**
-   * Causes the device to vibrate, if possible. Currently this will only work on Android and iOS devices that have a built-in vibration motor.
+   * Gets information about the system's power supply.
    */
-  @arguments(("seconds", "any"))
-  fn vibrate(seconds) {
-    return love.system.vibrate(seconds);
+  @arguments()
+  fn get_power_info() {
+    return love.system.getPowerInfo();
   }
   /**
    * Puts text in the clipboard.
@@ -17,19 +17,18 @@ class System {
     return love.system.setClipboardText(text);
   }
   /**
-   * Gets the amount of logical processor in the system.
+   * Gets the current operating system. In general, LÖVE abstracts away the need to know the current operating system, but there are a few cases where it can be useful (especially in combination with os.execute.)
    */
   @arguments()
-  fn get_processor_count() {
-    return love.system.getProcessorCount();
+  fn get_o_s() {
+    return love.system.getOS();
   }
   /**
-   * Gets whether another application on the system is playing music in the background.
-   * Currently this is implemented on iOS and Android, and will always return false on other operating systems. The t.audio.mixwithsystem flag in love.conf can be used to configure whether background audio / music from other apps should play while LÖVE is open.
+   * Causes the device to vibrate, if possible. Currently this will only work on Android and iOS devices that have a built-in vibration motor.
    */
-  @arguments()
-  fn has_background_music() {
-    return love.system.hasBackgroundMusic();
+  @arguments(("seconds", "any"))
+  fn vibrate(seconds) {
+    return love.system.vibrate(seconds);
   }
   /**
    * Opens a URL with the user's web or file browser.
@@ -39,6 +38,13 @@ class System {
     return love.system.openURL(url);
   }
   /**
+   * Gets the amount of logical processor in the system.
+   */
+  @arguments()
+  fn get_processor_count() {
+    return love.system.getProcessorCount();
+  }
+  /**
    * Gets text from the clipboard.
    */
   @arguments()
@@ -46,18 +52,12 @@ class System {
     return love.system.getClipboardText();
   }
   /**
-   * Gets information about the system's power supply.
+   * Gets whether another application on the system is playing music in the background.
+   * Currently this is implemented on iOS and Android, and will always return false on other operating systems. The t.audio.mixwithsystem flag in love.conf can be used to configure whether background audio / music from other apps should play while LÖVE is open.
    */
   @arguments()
-  fn get_power_info() {
-    return love.system.getPowerInfo();
-  }
-  /**
-   * Gets the current operating system. In general, LÖVE abstracts away the need to know the current operating system, but there are a few cases where it can be useful (especially in combination with os.execute.)
-   */
-  @arguments()
-  fn get_o_s() {
-    return love.system.getOS();
+  fn has_background_music() {
+    return love.system.hasBackgroundMusic();
   }
 }
 

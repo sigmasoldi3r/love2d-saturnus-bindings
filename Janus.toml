@@ -1,3 +1,5 @@
+type = "lib"
+
 [project]
 author = "SigmaSoldi3R"
 name = "Löve2D Saturnus Bindings"

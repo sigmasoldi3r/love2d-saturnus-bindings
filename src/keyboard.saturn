@@ -3,11 +3,27 @@ use { rtti: { arguments } } in std;
 
 class Keyboard {
   /**
-   * Checks whether a certain key is down. Not to be confused with love.keypressed or love.keyreleased.
+   * Enables or disables key repeat for love.keypressed. It is disabled by default.
+   */
+  @arguments(("enable", "any"))
+  fn set_key_repeat(enable) {
+    return love.keyboard.setKeyRepeat(enable);
+  }
+  /**
+   * Gets whether key repeat is enabled.
+   */
+  @arguments()
+  fn has_key_repeat() {
+    return love.keyboard.hasKeyRepeat();
+  }
+  /**
+   * Gets the hardware scancode corresponding to the given key.
+   * Unlike key constants, Scancodes are keyboard layout-independent. For example the scancode 'w' will be generated if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
+   * Scancodes are useful for creating default controls that have the same physical locations on on all systems.
    */
   @arguments(("key", "any"))
-  fn is_down(key) {
-    return love.keyboard.isDown(key);
+  fn get_scancode_from_key(key) {
+    return love.keyboard.getScancodeFromKey(key);
   }
   /**
    * Gets the key corresponding to the given hardware scancode.
@@ -26,11 +42,19 @@ class Keyboard {
     return love.keyboard.hasScreenKeyboard();
   }
   /**
-   * Gets whether key repeat is enabled.
+   * Enables or disables text input events. It is enabled by default on Windows, Mac, and Linux, and disabled by default on iOS and Android.
+   * On touch devices, this shows the system's native on-screen keyboard when it's enabled.
+   */
+  @arguments(("enable", "any"))
+  fn set_text_input(enable) {
+    return love.keyboard.setTextInput(enable);
+  }
+  /**
+   * Gets whether text input events are enabled.
    */
   @arguments()
-  fn has_key_repeat() {
-    return love.keyboard.hasKeyRepeat();
+  fn has_text_input() {
+    return love.keyboard.hasTextInput();
   }
   /**
    * Checks whether the specified Scancodes are pressed. Not to be confused with love.keypressed or love.keyreleased.
@@ -41,35 +65,11 @@ class Keyboard {
     return love.keyboard.isScancodeDown(scancode, ...args);
   }
   /**
-   * Enables or disables text input events. It is enabled by default on Windows, Mac, and Linux, and disabled by default on iOS and Android.
-   * On touch devices, this shows the system's native on-screen keyboard when it's enabled.
-   */
-  @arguments(("enable", "any"))
-  fn set_text_input(enable) {
-    return love.keyboard.setTextInput(enable);
-  }
-  /**
-   * Enables or disables key repeat for love.keypressed. It is disabled by default.
-   */
-  @arguments(("enable", "any"))
-  fn set_key_repeat(enable) {
-    return love.keyboard.setKeyRepeat(enable);
-  }
-  /**
-   * Gets whether text input events are enabled.
-   */
-  @arguments()
-  fn has_text_input() {
-    return love.keyboard.hasTextInput();
-  }
-  /**
-   * Gets the hardware scancode corresponding to the given key.
-   * Unlike key constants, Scancodes are keyboard layout-independent. For example the scancode 'w' will be generated if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
-   * Scancodes are useful for creating default controls that have the same physical locations on on all systems.
+   * Checks whether a certain key is down. Not to be confused with love.keypressed or love.keyreleased.
    */
   @arguments(("key", "any"))
-  fn get_scancode_from_key(key) {
-    return love.keyboard.getScancodeFromKey(key);
+  fn is_down(key) {
+    return love.keyboard.isDown(key);
   }
 }
 
