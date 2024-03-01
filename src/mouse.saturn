@@ -1,149 +1,144 @@
 // Generated module: Mouse
+use { rtti: { arguments } } in std;
 
 class Mouse {
-  fn new(mod) {
-    return Mouse { mod };
+  /**
+   * Returns the current y-position of the mouse.
+   */
+  @arguments()
+  fn get_y() {
+    return love.mouse.getY();
   }
   /**
-   * Sets whether relative mode is enabled for the mouse.
-   * When relative mode is enabled, the cursor is hidden and doesn't move when the mouse does, but relative mouse motion events are still generated via love.mousemoved. This lets the mouse move in any direction indefinitely without the cursor getting stuck at the edges of the screen.
-   * The reported position of the mouse may not be updated while relative mode is enabled, even when relative mouse motion events are generated.
+   * Checks if the cursor is visible.
    */
-  @arguments([("enable", "any")])
-  fn set_relative_mode(self, enable) {
-    return self.mod.setRelativeMode(enable);
+  @arguments()
+  fn is_visible() {
+    return love.mouse.isVisible();
   }
   /**
-   * Sets the current Y position of the mouse.
-   * Non-integer values are floored.
+   * Sets the current visibility of the cursor.
    */
-  @arguments([("y", "any")])
-  fn set_y(self, y) {
-    return self.mod.setY(y);
-  }
-  /**
-   * Gets a Cursor object representing a system-native hardware cursor.
-   * Hardware cursors are framerate-independent and work the same way as normal operating system cursors. Unlike drawing an image at the mouse's current coordinates, hardware cursors never have visible lag between when the mouse is moved and when the cursor position updates, even at low framerates.
-   */
-  @arguments([("ctype", "any")])
-  fn get_system_cursor(self, ctype) {
-    return self.mod.getSystemCursor(ctype);
-  }
-  /**
-   * Gets the current Cursor.
-   */
-  @arguments([])
-  fn get_cursor(self) {
-    return self.mod.getCursor();
-  }
-  /**
-   * Gets whether cursor functionality is supported.
-   * If it isn't supported, calling love.mouse.newCursor and love.mouse.getSystemCursor will cause an error. Mobile devices do not support cursors.
-   */
-  @arguments([])
-  fn is_cursor_supported(self) {
-    return self.mod.isCursorSupported();
+  @arguments(("visible", "any"))
+  fn set_visible(visible) {
+    return love.mouse.setVisible(visible);
   }
   /**
    * Sets the current position of the mouse. Non-integer values are floored.
    */
-  @arguments([("x", "any"), ("y", "any")])
-  fn set_position(self, x, y) {
-    return self.mod.setPosition(x, y);
-  }
-  /**
-   * Checks whether a certain mouse button is down.
-   * This function does not detect mouse wheel scrolling; you must use the love.wheelmoved (or love.mousepressed in version 0.9.2 and older) callback for that. 
-   */
-  @arguments([("button", "any"), ("...", "any")])
-  fn is_down(self, button) {
-    return self.mod.isDown(button, table.unpack(argv));
-  }
-  /**
-   * Returns the current x-position of the mouse.
-   */
-  @arguments([])
-  fn get_x(self) {
-    return self.mod.getX();
+  @arguments(("x", "any"), ("y", "any"))
+  fn set_position(x, y) {
+    return love.mouse.setPosition(x, y);
   }
   /**
    * Sets the current mouse cursor.
    */
-  @arguments([("cursor", "any")])
-  fn set_cursor(self, cursor) {
-    return self.mod.setCursor(cursor);
+  @arguments(("cursor", "any"))
+  fn set_cursor(cursor) {
+    return love.mouse.setCursor(cursor);
   }
   /**
    * Gets whether relative mode is enabled for the mouse.
    * If relative mode is enabled, the cursor is hidden and doesn't move when the mouse does, but relative mouse motion events are still generated via love.mousemoved. This lets the mouse move in any direction indefinitely without the cursor getting stuck at the edges of the screen.
    * The reported position of the mouse is not updated while relative mode is enabled, even when relative mouse motion events are generated.
    */
-  @arguments([])
-  fn get_relative_mode(self) {
-    return self.mod.getRelativeMode();
+  @arguments()
+  fn get_relative_mode() {
+    return love.mouse.getRelativeMode();
   }
   /**
-   * Returns the current position of the mouse.
+   * Returns the current x-position of the mouse.
    */
-  @arguments([])
-  fn get_position(self) {
-    return self.mod.getPosition();
-  }
-  /**
-   * Checks if the cursor is visible.
-   */
-  @arguments([])
-  fn is_visible(self) {
-    return self.mod.isVisible();
-  }
-  /**
-   * Sets the current visibility of the cursor.
-   */
-  @arguments([("visible", "any")])
-  fn set_visible(self, visible) {
-    return self.mod.setVisible(visible);
+  @arguments()
+  fn get_x() {
+    return love.mouse.getX();
   }
   /**
    * Sets the current X position of the mouse.
    * Non-integer values are floored.
    */
-  @arguments([("x", "any")])
-  fn set_x(self, x) {
-    return self.mod.setX(x);
+  @arguments(("x", "any"))
+  fn set_x(x) {
+    return love.mouse.setX(x);
   }
   /**
-   * Grabs the mouse and confines it to the window.
+   * Gets a Cursor object representing a system-native hardware cursor.
+   * Hardware cursors are framerate-independent and work the same way as normal operating system cursors. Unlike drawing an image at the mouse's current coordinates, hardware cursors never have visible lag between when the mouse is moved and when the cursor position updates, even at low framerates.
    */
-  @arguments([("grab", "any")])
-  fn set_grabbed(self, grab) {
-    return self.mod.setGrabbed(grab);
+  @arguments(("ctype", "any"))
+  fn get_system_cursor(ctype) {
+    return love.mouse.getSystemCursor(ctype);
   }
   /**
-   * Returns the current y-position of the mouse.
+   * Gets the current Cursor.
    */
-  @arguments([])
-  fn get_y(self) {
-    return self.mod.getY();
+  @arguments()
+  fn get_cursor() {
+    return love.mouse.getCursor();
+  }
+  /**
+   * Sets the current Y position of the mouse.
+   * Non-integer values are floored.
+   */
+  @arguments(("y", "any"))
+  fn set_y(y) {
+    return love.mouse.setY(y);
+  }
+  /**
+   * Checks whether a certain mouse button is down.
+   * This function does not detect mouse wheel scrolling; you must use the love.wheelmoved (or love.mousepressed in version 0.9.2 and older) callback for that. 
+   */
+  @arguments(("button", "any"), ("...", "any"))
+  fn is_down(button, *args) {
+    return love.mouse.isDown(button, ...args);
   }
   /**
    * Creates a new hardware Cursor object from an image file or ImageData.
    * Hardware cursors are framerate-independent and work the same way as normal operating system cursors. Unlike drawing an image at the mouse's current coordinates, hardware cursors never have visible lag between when the mouse is moved and when the cursor position updates, even at low framerates.
    * The hot spot is the point the operating system uses to determine what was clicked and at what position the mouse cursor is. For example, the normal arrow pointer normally has its hot spot at the top left of the image, but a crosshair cursor might have it in the middle.
    */
-  @arguments([("imageData", "any"), ("hotx", "any"), ("hoty", "any")])
-  fn new_cursor(self, imageData, hotx, hoty) {
-    return self.mod.newCursor(imageData, hotx, hoty);
+  @arguments(("imageData", "any"), ("hotx", "any"), ("hoty", "any"))
+  fn new_cursor(imageData, hotx, hoty) {
+    return love.mouse.newCursor(imageData, hotx, hoty);
+  }
+  /**
+   * Returns the current position of the mouse.
+   */
+  @arguments()
+  fn get_position() {
+    return love.mouse.getPosition();
+  }
+  /**
+   * Gets whether cursor functionality is supported.
+   * If it isn't supported, calling love.mouse.newCursor and love.mouse.getSystemCursor will cause an error. Mobile devices do not support cursors.
+   */
+  @arguments()
+  fn is_cursor_supported() {
+    return love.mouse.isCursorSupported();
+  }
+  /**
+   * Sets whether relative mode is enabled for the mouse.
+   * When relative mode is enabled, the cursor is hidden and doesn't move when the mouse does, but relative mouse motion events are still generated via love.mousemoved. This lets the mouse move in any direction indefinitely without the cursor getting stuck at the edges of the screen.
+   * The reported position of the mouse may not be updated while relative mode is enabled, even when relative mouse motion events are generated.
+   */
+  @arguments(("enable", "any"))
+  fn set_relative_mode(enable) {
+    return love.mouse.setRelativeMode(enable);
   }
   /**
    * Checks if the mouse is grabbed.
    */
-  @arguments([])
-  fn is_grabbed(self) {
-    return self.mod.isGrabbed();
+  @arguments()
+  fn is_grabbed() {
+    return love.mouse.isGrabbed();
+  }
+  /**
+   * Grabs the mouse and confines it to the window.
+   */
+  @arguments(("grab", "any"))
+  fn set_grabbed(grab) {
+    return love.mouse.setGrabbed(grab);
   }
 }
 
-let mouse = Mouse.new(love.mouse);
-mouse.Mouse = Mouse;
-
-return mouse;
+return Mouse;

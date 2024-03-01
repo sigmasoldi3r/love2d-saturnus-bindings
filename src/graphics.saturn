@@ -1,152 +1,175 @@
 // Generated module: Graphics
+use { rtti: { arguments } } in std;
 
 class Graphics {
-  fn new(mod) {
-    return Graphics { mod };
+  /**
+   * Sets whether wireframe lines will be used when drawing.
+   */
+  @arguments(("enable", "any"))
+  fn set_wireframe(enable) {
+    return love.graphics.setWireframe(enable);
   }
   /**
-   * Sets whether back-facing triangles in a Mesh are culled.
-   * This is designed for use with low level custom hardware-accelerated 3D rendering via custom vertex attributes on Meshes, custom vertex shaders, and depth testing with a depth buffer.
-   * By default, both front- and back-facing triangles in Meshes are rendered.
+   * Returns the default scaling filters used with Images, Canvases, and Fonts.
    */
-  @arguments([("mode", "any")])
-  fn set_mesh_cull_mode(self, mode) {
-    return self.mod.setMeshCullMode(mode);
+  @arguments()
+  fn get_default_filter() {
+    return love.graphics.getDefaultFilter();
   }
   /**
-   * Creates a new specifically formatted image.
-   * In versions prior to 0.9.0, LÖVE expects ISO 8859-1 encoding for the glyphs string.
+   * Gets the current target Canvas.
    */
-  @arguments([("filename", "any"), ("glyphs", "any")])
-  fn new_image_font(self, filename, glyphs) {
-    return self.mod.newImageFont(filename, glyphs);
-  }
-  /**
-   * Draws an ellipse.
-   */
-  @arguments([("mode", "any"), ("x", "any"), ("y", "any"), ("radiusx", "any"), ("radiusy", "any")])
-  fn ellipse(self, mode, x, y, radiusx, radiusy) {
-    return self.mod.ellipse(mode, x, y, radiusx, radiusy);
-  }
-  /**
-   * Gets the width in pixels of the window.
-   * The graphics coordinate system and DPI scale factor, rather than raw pixels. Use getWidth for calculations related to drawing to the screen and using the coordinate system (calculating the center of the screen, for example), and getPixelWidth only when dealing specifically with underlying pixels (pixel-related calculations in a pixel Shader, for example).
-   */
-  @arguments([])
-  fn get_pixel_width(self) {
-    return self.mod.getPixelWidth();
-  }
-  /**
-   * Gets the current Shader. Returns nil if none is set.
-   */
-  @arguments([])
-  fn get_shader(self) {
-    return self.mod.getShader();
-  }
-  /**
-   * Sets the point size.
-   */
-  @arguments([("size", "any")])
-  fn set_point_size(self, size) {
-    return self.mod.setPointSize(size);
-  }
-  /**
-   * Resets the current graphics settings.
-   * Calling reset makes the current drawing color white, the current background color black, disables any active color component masks, disables wireframe mode and resets the current graphics transformation to the origin. It also sets both the point and line drawing modes to smooth and their sizes to 1.0.
-   */
-  @arguments([])
-  fn reset(self) {
-    return self.mod.reset();
-  }
-  /**
-   * Creates a new SpriteBatch object.
-   */
-  @arguments([("image", "any"), ("maxsprites", "any")])
-  fn new_sprite_batch(self, image, maxsprites) {
-    return self.mod.newSpriteBatch(image, maxsprites);
-  }
-  /**
-   * Draws a rectangle.
-   */
-  @arguments([("mode", "any"), ("x", "any"), ("y", "any"), ("width", "any"), ("height", "any")])
-  fn rectangle(self, mode, x, y, width, height) {
-    return self.mod.rectangle(mode, x, y, width, height);
-  }
-  /**
-   * Gets the available Canvas formats, and whether each is supported.
-   */
-  @arguments([])
-  fn get_canvas_formats(self) {
-    return self.mod.getCanvasFormats();
-  }
-  /**
-   * Draws a circle.
-   */
-  @arguments([("mode", "any"), ("x", "any"), ("y", "any"), ("radius", "any")])
-  fn circle(self, mode, x, y, radius) {
-    return self.mod.circle(mode, x, y, radius);
-  }
-  /**
-   * Pops the current coordinate transformation from the transformation stack.
-   * This function is always used to reverse a previous push operation. It returns the current transformation state to what it was before the last preceding push.
-   */
-  @arguments([])
-  fn pop(self) {
-    return self.mod.pop();
+  @arguments()
+  fn get_canvas() {
+    return love.graphics.getCanvas();
   }
   /**
    * Gets the active color components used when drawing. Normally all 4 components are active unless love.graphics.setColorMask has been used.
    * The color mask determines whether individual components of the colors of drawn objects will affect the color of the screen. They affect love.graphics.clear and Canvas:clear as well.
    */
-  @arguments([])
-  fn get_color_mask(self) {
-    return self.mod.getColorMask();
+  @arguments()
+  fn get_color_mask() {
+    return love.graphics.getColorMask();
   }
   /**
-   * Gets the point size.
+   * Gets the width in pixels of the window.
+   * The graphics coordinate system and DPI scale factor, rather than raw pixels. Use getWidth for calculations related to drawing to the screen and using the coordinate system (calculating the center of the screen, for example), and getPixelWidth only when dealing specifically with underlying pixels (pixel-related calculations in a pixel Shader, for example).
    */
-  @arguments([])
-  fn get_point_size(self) {
-    return self.mod.getPointSize();
+  @arguments()
+  fn get_pixel_width() {
+    return love.graphics.getPixelWidth();
   }
   /**
-   * Applies the given Transform object to the current coordinate transformation.
-   * This effectively multiplies the existing coordinate transformation's matrix with the Transform object's internal matrix to produce the new coordinate transformation.
+   * Gets the available texture types, and whether each is supported.
    */
-  @arguments([("transform", "any")])
-  fn apply_transform(self, transform) {
-    return self.mod.applyTransform(transform);
+  @arguments()
+  fn get_texture_types() {
+    return love.graphics.getTextureTypes();
+  }
+  /**
+   * Sets the blending mode.
+   */
+  @arguments(("mode", "any"))
+  fn set_blend_mode(mode) {
+    return love.graphics.setBlendMode(mode);
+  }
+  /**
+   * Pops the current coordinate transformation from the transformation stack.
+   * This function is always used to reverse a previous push operation. It returns the current transformation state to what it was before the last preceding push.
+   */
+  @arguments()
+  fn pop() {
+    return love.graphics.pop();
+  }
+  /**
+   * Sets the line width.
+   */
+  @arguments(("width", "any"))
+  fn set_line_width(width) {
+    return love.graphics.setLineWidth(width);
+  }
+  /**
+   * Sets the default scaling filters used with Images, Canvases, and Fonts.
+   */
+  @arguments(("min", "any"), ("mag", "any"), ("anisotropy", "any"))
+  fn set_default_filter(min, mag, anisotropy) {
+    return love.graphics.setDefaultFilter(min, mag, anisotropy);
+  }
+  /**
+   * Sets the point size.
+   */
+  @arguments(("size", "any"))
+  fn set_point_size(size) {
+    return love.graphics.setPointSize(size);
+  }
+  /**
+   * Creates a new Font from a TrueType Font or BMFont file. Created fonts are not cached, in that calling this function with the same arguments will always create a new Font object.
+   * All variants which accept a filename can also accept a Data object instead.
+   */
+  @arguments(("filename", "any"))
+  fn new_font(filename) {
+    return love.graphics.newFont(filename);
   }
   /**
    * Converts the given 2D position from global coordinates into screen-space.
    * This effectively applies the current graphics transformations to the given position. A similar Transform:transformPoint method exists for Transform objects.
    */
-  @arguments([("globalX", "any"), ("globalY", "any")])
-  fn transform_point(self, globalX, globalY) {
-    return self.mod.transformPoint(globalX, globalY);
+  @arguments(("globalX", "any"), ("globalY", "any"))
+  fn transform_point(globalX, globalY) {
+    return love.graphics.transformPoint(globalX, globalY);
   }
   /**
-   * Sets the color mask. Enables or disables specific color components when rendering and clearing the screen. For example, if '''red''' is set to '''false''', no further changes will be made to the red component of any pixels.
+   * Creates a new SpriteBatch object.
    */
-  @arguments([("red", "any"), ("green", "any"), ("blue", "any"), ("alpha", "any")])
-  fn set_color_mask(self, red, green, blue, alpha) {
-    return self.mod.setColorMask(red, green, blue, alpha);
+  @arguments(("image", "any"), ("maxsprites", "any"))
+  fn new_sprite_batch(image, maxsprites) {
+    return love.graphics.newSpriteBatch(image, maxsprites);
   }
   /**
-   * Creates a new Mesh.
-   * Use Mesh:setTexture if the Mesh should be textured with an Image or Canvas when it's drawn.
-   * In versions prior to 11.0, color and byte component values were within the range of 0 to 255 instead of 0 to 1.
+   * Gets the height in pixels of the window.
+   * The graphics coordinate system and DPI scale factor, rather than raw pixels. Use getHeight for calculations related to drawing to the screen and using the coordinate system (calculating the center of the screen, for example), and getPixelHeight only when dealing specifically with underlying pixels (pixel-related calculations in a pixel Shader, for example).
    */
-  @arguments([("vertices", "any"), ("mode", "any"), ("usage", "any")])
-  fn new_mesh(self, vertices, mode, usage) {
-    return self.mod.newMesh(vertices, mode, usage);
+  @arguments()
+  fn get_pixel_height() {
+    return love.graphics.getPixelHeight();
   }
   /**
-   * Creates a new drawable Video. Currently only Ogg Theora video files are supported.
+   * Sets the background color.
    */
-  @arguments([("filename", "any")])
-  fn new_video(self, filename) {
-    return self.mod.newVideo(filename);
+  @arguments(("red", "any"), ("green", "any"), ("blue", "any"), ("alpha", "any"))
+  fn set_background_color(red, green, blue, alpha) {
+    return love.graphics.setBackgroundColor(red, green, blue, alpha);
+  }
+  /**
+   * Gets the point size.
+   */
+  @arguments()
+  fn get_point_size() {
+    return love.graphics.getPointSize();
+  }
+  /**
+   * Draws a circle.
+   */
+  @arguments(("mode", "any"), ("x", "any"), ("y", "any"), ("radius", "any"))
+  fn circle(mode, x, y, radius) {
+    return love.graphics.circle(mode, x, y, radius);
+  }
+  /**
+   * Gets the line style.
+   */
+  @arguments()
+  fn get_line_style() {
+    return love.graphics.getLineStyle();
+  }
+  /**
+   * Gets information about the system's video card and drivers.
+   */
+  @arguments()
+  fn get_renderer_info() {
+    return love.graphics.getRendererInfo();
+  }
+  /**
+   * Gets the optional graphics features and whether they're supported on the system.
+   * Some older or low-end systems don't always support all graphics features.
+   */
+  @arguments()
+  fn get_supported() {
+    return love.graphics.getSupported();
+  }
+  /**
+   * Gets the current depth test mode and whether writing to the depth buffer is enabled.
+   * This is low-level functionality designed for use with custom vertex shaders and Meshes with custom vertex attributes. No higher level APIs are provided to set the depth of 2D graphics such as shapes, lines, and Images.
+   */
+  @arguments()
+  fn get_depth_mode() {
+    return love.graphics.getDepthMode();
+  }
+  /**
+   * Gets performance-related rendering statistics. 
+   */
+  @arguments()
+  fn get_stats() {
+    return love.graphics.getStats();
   }
   /**
    * Creates a new cubemap Image.
@@ -172,113 +195,75 @@ class Graphics {
    * or:
    * +x -x +y -y +z -z
    */
-  @arguments([("filename", "any"), ("settings", "any")])
-  fn new_cube_image(self, filename, settings) {
-    return self.mod.newCubeImage(filename, settings);
-  }
-  /**
-   * Discards (trashes) the contents of the screen or active Canvas. This is a performance optimization function with niche use cases.
-   * If the active Canvas has just been changed and the 'replace' BlendMode is about to be used to draw something which covers the entire screen, calling love.graphics.discard rather than calling love.graphics.clear or doing nothing may improve performance on mobile devices.
-   * On some desktop systems this function may do nothing.
-   */
-  @arguments([("discardcolor", "any"), ("discardstencil", "any")])
-  fn discard(self, discardcolor, discardstencil) {
-    return self.mod.discard(discardcolor, discardstencil);
-  }
-  /**
-   * Gets the width and height in pixels of the window.
-   * love.graphics.getDimensions gets the dimensions of the window in units scaled by the screen's DPI scale factor, rather than pixels. Use getDimensions for calculations related to drawing to the screen and using the graphics coordinate system (calculating the center of the screen, for example), and getPixelDimensions only when dealing specifically with underlying pixels (pixel-related calculations in a pixel Shader, for example).
-   */
-  @arguments([])
-  fn get_pixel_dimensions(self) {
-    return self.mod.getPixelDimensions();
+  @arguments(("filename", "any"), ("settings", "any"))
+  fn new_cube_image(filename, settings) {
+    return love.graphics.newCubeImage(filename, settings);
   }
   /**
    * Creates a new Image from a filepath, FileData, an ImageData, or a CompressedImageData, and optionally generates or specifies mipmaps for the image.
    */
-  @arguments([("filename", "any"), ("settings", "any")])
-  fn new_image(self, filename, settings) {
-    return self.mod.newImage(filename, settings);
+  @arguments(("filename", "any"), ("settings", "any"))
+  fn new_image(filename, settings) {
+    return love.graphics.newImage(filename, settings);
   }
   /**
-   * Gets the optional graphics features and whether they're supported on the system.
-   * Some older or low-end systems don't always support all graphics features.
+   * Gets the current Shader. Returns nil if none is set.
    */
-  @arguments([])
-  fn get_supported(self) {
-    return self.mod.getSupported();
+  @arguments()
+  fn get_shader() {
+    return love.graphics.getShader();
   }
   /**
-   * Draws many instances of a Mesh with a single draw call, using hardware geometry instancing.
-   * Each instance can have unique properties (positions, colors, etc.) but will not by default unless a custom per-instance vertex attributes or the love_InstanceID GLSL 3 vertex shader variable is used, otherwise they will all render at the same position on top of each other.
-   * Instancing is not supported by some older GPUs that are only capable of using OpenGL ES 2 or OpenGL 2. Use love.graphics.getSupported to check.
+   * Creates a new ParticleSystem.
    */
-  @arguments([("mesh", "any"), ("instancecount", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any")])
-  fn draw_instanced(self, mesh, instancecount, x, y, r, sx, sy, ox, oy, kx, ky) {
-    return self.mod.drawInstanced(mesh, instancecount, x, y, r, sx, sy, ox, oy, kx, ky);
+  @arguments(("image", "any"), ("buffer", "any"))
+  fn new_particle_system(image, buffer) {
+    return love.graphics.newParticleSystem(image, buffer);
   }
   /**
-   * Gets whether triangles with clockwise- or counterclockwise-ordered vertices are considered front-facing.
-   * This is designed for use in combination with Mesh face culling. Other love.graphics shapes, lines, and sprites are not guaranteed to have a specific winding order to their internal vertices.
+   * Sets or resets a Shader as the current pixel effect or vertex shaders. All drawing operations until the next ''love.graphics.setShader'' will be drawn using the Shader object specified.
    */
-  @arguments([])
-  fn get_front_face_winding(self) {
-    return self.mod.getFrontFaceWinding();
+  @arguments(("shader", "any"))
+  fn set_shader(shader) {
+    return love.graphics.setShader(shader);
+  }
+  /**
+   * Creates a new Shader object for hardware-accelerated vertex and pixel effects. A Shader contains either vertex shader code, pixel shader code, or both.
+   * Shaders are small programs which are run on the graphics card when drawing. Vertex shaders are run once for each vertex (for example, an image has 4 vertices - one at each corner. A Mesh might have many more.) Pixel shaders are run once for each pixel on the screen which the drawn object touches. Pixel shader code is executed after all the object's vertices have been processed by the vertex shader.
+   */
+  @arguments(("code", "any"))
+  fn new_shader(code) {
+    return love.graphics.newShader(code);
+  }
+  /**
+   * Captures drawing operations to a Canvas.
+   */
+  @arguments(("canvas", "any"), ("mipmap", "any"))
+  fn set_canvas(canvas, mipmap) {
+    return love.graphics.setCanvas(canvas, mipmap);
   }
   /**
    * Creates a new Quad.
    * The purpose of a Quad is to use a fraction of an image to draw objects, as opposed to drawing entire image. It is most useful for sprite sheets and atlases: in a sprite atlas, multiple sprites reside in same image, quad is used to draw a specific sprite from that image; in animated sprites with all frames residing in the same image, quad is used to draw specific frame from the animation.
    */
-  @arguments([("x", "any"), ("y", "any"), ("width", "any"), ("height", "any"), ("sw", "any"), ("sh", "any")])
-  fn new_quad(self, x, y, width, height, sw, sh) {
-    return self.mod.newQuad(x, y, width, height, sw, sh);
+  @arguments(("x", "any"), ("y", "any"), ("width", "any"), ("height", "any"), ("sw", "any"), ("sh", "any"))
+  fn new_quad(x, y, width, height, sw, sh) {
+    return love.graphics.newQuad(x, y, width, height, sw, sh);
   }
   /**
-   * Sets the scissor to the rectangle created by the intersection of the specified rectangle with the existing scissor.  If no scissor is active yet, it behaves like love.graphics.setScissor.
-   * The scissor limits the drawing area to a specified rectangle. This affects all graphics calls, including love.graphics.clear.
-   * The dimensions of the scissor is unaffected by graphical transformations (translate, scale, ...).
+   * Draws a layer of an Array Texture.
    */
-  @arguments([("x", "any"), ("y", "any"), ("width", "any"), ("height", "any")])
-  fn intersect_scissor(self, x, y, width, height) {
-    return self.mod.intersectScissor(x, y, width, height);
+  @arguments(("texture", "any"), ("layerindex", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any"))
+  fn draw_layer(texture, layerindex, x, y, r, sx, sy, ox, oy, kx, ky) {
+    return love.graphics.drawLayer(texture, layerindex, x, y, r, sx, sy, ox, oy, kx, ky);
   }
   /**
-   * Set an already-loaded Font as the current font or create and load a new one from the file and size.
-   * It's recommended that Font objects are created with love.graphics.newFont in the loading stage and then passed to this function in the drawing stage.
+   * Converts the given 2D position from screen-space into global coordinates.
+   * This effectively applies the reverse of the current graphics transformations to the given position. A similar Transform:inverseTransformPoint method exists for Transform objects.
    */
-  @arguments([("font", "any")])
-  fn set_font(self, font) {
-    return self.mod.setFont(font);
-  }
-  /**
-   * Displays the results of drawing operations on the screen.
-   * This function is used when writing your own love.run function. It presents all the results of your drawing operations on the screen. See the example in love.run for a typical use of this function.
-   */
-  @arguments([])
-  fn present(self) {
-    return self.mod.present();
-  }
-  /**
-   * Resets the current coordinate transformation.
-   * This function is always used to reverse any previous calls to love.graphics.rotate, love.graphics.scale, love.graphics.shear or love.graphics.translate. It returns the current transformation state to its defaults.
-   */
-  @arguments([])
-  fn origin(self) {
-    return self.mod.origin();
-  }
-  /**
-   * Validates shader code. Check if specified shader code does not contain any errors.
-   */
-  @arguments([("gles", "any"), ("code", "any")])
-  fn validate_shader(self, gles, code) {
-    return self.mod.validateShader(gles, code);
-  }
-  /**
-   * Sets or resets a Shader as the current pixel effect or vertex shaders. All drawing operations until the next ''love.graphics.setShader'' will be drawn using the Shader object specified.
-   */
-  @arguments([("shader", "any")])
-  fn set_shader(self, shader) {
-    return self.mod.setShader(shader);
+  @arguments(("screenX", "any"), ("screenY", "any"))
+  fn inverse_transform_point(screenX, screenY) {
+    return love.graphics.inverseTransformPoint(screenX, screenY);
   }
   /**
    * Creates a new array Image.
@@ -286,119 +271,86 @@ class Graphics {
    * A specific layer of an array image can be drawn with love.graphics.drawLayer / SpriteBatch:addLayer, or with the Quad variant of love.graphics.draw and Quad:setLayer, or via a custom Shader.
    * To use an array image in a Shader, it must be declared as a ArrayImage or sampler2DArray type (instead of Image or sampler2D). The Texel(ArrayImage image, vec3 texturecoord) shader function must be used to get pixel colors from a slice of the array image. The vec3 argument contains the texture coordinate in the first two components, and the 0-based slice index in the third component.
    */
-  @arguments([("slices", "any"), ("settings", "any")])
-  fn new_array_image(self, slices, settings) {
-    return self.mod.newArrayImage(slices, settings);
+  @arguments(("slices", "any"), ("settings", "any"))
+  fn new_array_image(slices, settings) {
+    return love.graphics.newArrayImage(slices, settings);
   }
   /**
-   * Shears the coordinate system.
+   * Gets the blending mode.
    */
-  @arguments([("kx", "any"), ("ky", "any")])
-  fn shear(self, kx, ky) {
-    return self.mod.shear(kx, ky);
+  @arguments()
+  fn get_blend_mode() {
+    return love.graphics.getBlendMode();
   }
   /**
-   * Creates a screenshot once the current frame is done (after love.draw has finished).
-   * Since this function enqueues a screenshot capture rather than executing it immediately, it can be called from an input callback or love.update and it will still capture all of what's drawn to the screen in that frame.
+   * Configures depth testing and writing to the depth buffer.
+   * This is low-level functionality designed for use with custom vertex shaders and Meshes with custom vertex attributes. No higher level APIs are provided to set the depth of 2D graphics such as shapes, lines, and Images.
    */
-  @arguments([("filename", "any")])
-  fn capture_screenshot(self, filename) {
-    return self.mod.captureScreenshot(filename);
+  @arguments(("comparemode", "any"), ("write", "any"))
+  fn set_depth_mode(comparemode, write) {
+    return love.graphics.setDepthMode(comparemode, write);
   }
   /**
-   * Sets whether wireframe lines will be used when drawing.
+   * Gets the current line width.
    */
-  @arguments([("enable", "any")])
-  fn set_wireframe(self, enable) {
-    return self.mod.setWireframe(enable);
+  @arguments()
+  fn get_line_width() {
+    return love.graphics.getLineWidth();
   }
   /**
-   * Gets whether gamma-correct rendering is supported and enabled. It can be enabled by setting t.gammacorrect = true in love.conf.
-   * Not all devices support gamma-correct rendering, in which case it will be automatically disabled and this function will return false. It is supported on desktop systems which have graphics cards that are capable of using OpenGL 3 / DirectX 10, and iOS devices that can use OpenGL ES 3.
+   * Sets the line join style. See LineJoin for the possible options.
    */
-  @arguments([])
-  fn is_gamma_correct(self) {
-    return self.mod.isGammaCorrect();
+  @arguments(("join", "any"))
+  fn set_line_join(join) {
+    return love.graphics.setLineJoin(join);
   }
   /**
-   * Gets the DPI scale factor of the window.
-   * The DPI scale factor represents relative pixel density. The pixel density inside the window might be greater (or smaller) than the 'size' of the window. For example on a retina screen in Mac OS X with the highdpi window flag enabled, the window may take up the same physical size as an 800x600 window, but the area inside the window uses 1600x1200 pixels. love.graphics.getDPIScale() would return 2 in that case.
-   * The love.window.fromPixels and love.window.toPixels functions can also be used to convert between units.
-   * The highdpi window flag must be enabled to use the full pixel density of a Retina screen on Mac OS X and iOS. The flag currently does nothing on Windows and Linux, and on Android it is effectively always enabled.
+   * Validates shader code. Check if specified shader code does not contain any errors.
    */
-  @arguments([])
-  fn get_d_p_i_scale(self) {
-    return self.mod.getDPIScale();
+  @arguments(("gles", "any"), ("code", "any"))
+  fn validate_shader(gles, code) {
+    return love.graphics.validateShader(gles, code);
   }
   /**
-   * Configures or disables stencil testing.
-   * When stencil testing is enabled, the geometry of everything that is drawn afterward will be clipped / stencilled out based on a comparison between the arguments of this function and the stencil value of each pixel that the geometry touches. The stencil values of pixels are affected via love.graphics.stencil.
+   * Gets whether wireframe mode is used when drawing.
    */
-  @arguments([("comparemode", "any"), ("comparevalue", "any")])
-  fn set_stencil_test(self, comparemode, comparevalue) {
-    return self.mod.setStencilTest(comparemode, comparevalue);
+  @arguments()
+  fn is_wireframe() {
+    return love.graphics.isWireframe();
   }
   /**
-   * Gets the width in pixels of the window.
+   * Translates the coordinate system in two dimensions.
+   * When this function is called with two numbers, dx, and dy, all the following drawing operations take effect as if their x and y coordinates were x+dx and y+dy. 
+   * Scale and translate are not commutative operations, therefore, calling them in different orders will change the outcome.
+   * This change lasts until love.draw() exits or else a love.graphics.pop reverts to a previous love.graphics.push.
+   * Translating using whole numbers will prevent tearing/blurring of images and fonts draw after translating.
    */
-  @arguments([])
-  fn get_width(self) {
-    return self.mod.getWidth();
+  @arguments(("dx", "any"), ("dy", "any"))
+  fn translate(dx, dy) {
+    return love.graphics.translate(dx, dy);
+  }
+  /**
+   * Gets whether the graphics module is able to be used. If it is not active, love.graphics function and method calls will not work correctly and may cause the program to crash.
+   * The graphics module is inactive if a window is not open, or if the app is in the background on iOS. Typically the app's execution will be automatically paused by the system, in the latter case.
+   */
+  @arguments()
+  fn is_active() {
+    return love.graphics.isActive();
   }
   /**
    * Gets the current depth of the transform / state stack (the number of pushes without corresponding pops).
    */
-  @arguments([])
-  fn get_stack_depth(self) {
-    return self.mod.getStackDepth();
+  @arguments()
+  fn get_stack_depth() {
+    return love.graphics.getStackDepth();
   }
   /**
-   * Gets the current scissor box.
+   * Creates a new specifically formatted image.
+   * In versions prior to 0.9.0, LÖVE expects ISO 8859-1 encoding for the glyphs string.
    */
-  @arguments([])
-  fn get_scissor(self) {
-    return self.mod.getScissor();
-  }
-  /**
-   * Creates a new ParticleSystem.
-   */
-  @arguments([("image", "any"), ("buffer", "any")])
-  fn new_particle_system(self, image, buffer) {
-    return self.mod.newParticleSystem(image, buffer);
-  }
-  /**
-   * Gets the current background color.
-   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
-   */
-  @arguments([])
-  fn get_background_color(self) {
-    return self.mod.getBackgroundColor();
-  }
-  /**
-   * Gets the current color.
-   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
-   */
-  @arguments([])
-  fn get_color(self) {
-    return self.mod.getColor();
-  }
-  /**
-   * Draws geometry as a stencil.
-   * The geometry drawn by the supplied function sets invisible stencil values of pixels, instead of setting pixel colors. The stencil buffer (which contains those stencil values) can act like a mask / stencil - love.graphics.setStencilTest can be used afterward to determine how further rendering is affected by the stencil values in each pixel.
-   * Stencil values are integers within the range of 255.
-   */
-  @arguments([("stencilfunction", "any"), ("action", "any"), ("value", "any"), ("keepvalues", "any")])
-  fn stencil(self, stencilfunction, action, value, keepvalues) {
-    return self.mod.stencil(stencilfunction, action, value, keepvalues);
-  }
-  /**
-   * Gets the current stencil test configuration.
-   * When stencil testing is enabled, the geometry of everything that is drawn afterward will be clipped / stencilled out based on a comparison between the arguments of this function and the stencil value of each pixel that the geometry touches. The stencil values of pixels are affected via love.graphics.stencil.
-   * Each Canvas has its own per-pixel stencil values.
-   */
-  @arguments([])
-  fn get_stencil_test(self) {
-    return self.mod.getStencilTest();
+  @arguments(("filename", "any"), ("glyphs", "any"))
+  fn new_image_font(filename, glyphs) {
+    return love.graphics.newImageFont(filename, glyphs);
   }
   /**
    * Creates a new volume (3D) Image.
@@ -407,99 +359,180 @@ class Graphics {
    * Volume images are typically used as lookup tables in shaders for color grading, for example, because sampling using a texture coordinate that is partway in between two pixels can interpolate across all 3 dimensions in the volume image, resulting in a smooth gradient even when a small-sized volume image is used as the lookup table.
    * Array images are a much better choice than volume images for storing multiple different sprites in a single array image for directly drawing them.
    */
-  @arguments([("layers", "any"), ("settings", "any")])
-  fn new_volume_image(self, layers, settings) {
-    return self.mod.newVolumeImage(layers, settings);
+  @arguments(("layers", "any"), ("settings", "any"))
+  fn new_volume_image(layers, settings) {
+    return love.graphics.newVolumeImage(layers, settings);
+  }
+  /**
+   * Shears the coordinate system.
+   */
+  @arguments(("kx", "any"), ("ky", "any"))
+  fn shear(kx, ky) {
+    return love.graphics.shear(kx, ky);
+  }
+  /**
+   * Gets whether triangles with clockwise- or counterclockwise-ordered vertices are considered front-facing.
+   * This is designed for use in combination with Mesh face culling. Other love.graphics shapes, lines, and sprites are not guaranteed to have a specific winding order to their internal vertices.
+   */
+  @arguments()
+  fn get_front_face_winding() {
+    return love.graphics.getFrontFaceWinding();
+  }
+  /**
+   * Configures or disables stencil testing.
+   * When stencil testing is enabled, the geometry of everything that is drawn afterward will be clipped / stencilled out based on a comparison between the arguments of this function and the stencil value of each pixel that the geometry touches. The stencil values of pixels are affected via love.graphics.stencil.
+   */
+  @arguments(("comparemode", "any"), ("comparevalue", "any"))
+  fn set_stencil_test(comparemode, comparevalue) {
+    return love.graphics.setStencilTest(comparemode, comparevalue);
+  }
+  /**
+   * Draws formatted text, with word wrap and alignment.
+   * See additional notes in love.graphics.print.
+   * The word wrap limit is applied before any scaling, rotation, and other coordinate transformations. Therefore the amount of text per line stays constant given the same wrap limit, even if the scale arguments change.
+   * In version 0.9.2 and earlier, wrapping was implemented by breaking up words by spaces and putting them back together to make sure things fit nicely within the limit provided. However, due to the way this is done, extra spaces between words would end up missing when printed on the screen, and some lines could overflow past the provided wrap limit. In version 0.10.0 and newer this is no longer the case.
+   * In versions prior to 11.0, color and byte component values were within the range of 0 to 255 instead of 0 to 1.
+   */
+  @arguments(("text", "any"), ("x", "any"), ("y", "any"), ("limit", "any"), ("align", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any"))
+  fn printf(text, x, y, limit, align, r, sx, sy, ox, oy, kx, ky) {
+    return love.graphics.printf(text, x, y, limit, align, r, sx, sy, ox, oy, kx, ky);
+  }
+  /**
+   * Clears the screen or active Canvas to the specified color.
+   * This function is called automatically before love.draw in the default love.run function. See the example in love.run for a typical use of this function.
+   * Note that the scissor area bounds the cleared region.
+   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   * In versions prior to background color instead.
+   */
+  @arguments()
+  fn clear() {
+    return love.graphics.clear();
+  }
+  /**
+   * Draws geometry as a stencil.
+   * The geometry drawn by the supplied function sets invisible stencil values of pixels, instead of setting pixel colors. The stencil buffer (which contains those stencil values) can act like a mask / stencil - love.graphics.setStencilTest can be used afterward to determine how further rendering is affected by the stencil values in each pixel.
+   * Stencil values are integers within the range of 255.
+   */
+  @arguments(("stencilfunction", "any"), ("action", "any"), ("value", "any"), ("keepvalues", "any"))
+  fn stencil(stencilfunction, action, value, keepvalues) {
+    return love.graphics.stencil(stencilfunction, action, value, keepvalues);
+  }
+  /**
+   * Sets whether back-facing triangles in a Mesh are culled.
+   * This is designed for use with low level custom hardware-accelerated 3D rendering via custom vertex attributes on Meshes, custom vertex shaders, and depth testing with a depth buffer.
+   * By default, both front- and back-facing triangles in Meshes are rendered.
+   */
+  @arguments(("mode", "any"))
+  fn set_mesh_cull_mode(mode) {
+    return love.graphics.setMeshCullMode(mode);
+  }
+  /**
+   * Gets the current Font object.
+   */
+  @arguments()
+  fn get_font() {
+    return love.graphics.getFont();
+  }
+  /**
+   * Gets the current color.
+   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   */
+  @arguments()
+  fn get_color() {
+    return love.graphics.getColor();
+  }
+  /**
+   * Sets whether triangles with clockwise- or counterclockwise-ordered vertices are considered front-facing.
+   * This is designed for use in combination with Mesh face culling. Other love.graphics shapes, lines, and sprites are not guaranteed to have a specific winding order to their internal vertices.
+   */
+  @arguments(("winding", "any"))
+  fn set_front_face_winding(winding) {
+    return love.graphics.setFrontFaceWinding(winding);
+  }
+  /**
+   * Gets whether back-facing triangles in a Mesh are culled.
+   * Mesh face culling is designed for use with low level custom hardware-accelerated 3D rendering via custom vertex attributes on Meshes, custom vertex shaders, and depth testing with a depth buffer.
+   */
+  @arguments()
+  fn get_mesh_cull_mode() {
+    return love.graphics.getMeshCullMode();
+  }
+  /**
+   * Sets the color mask. Enables or disables specific color components when rendering and clearing the screen. For example, if '''red''' is set to '''false''', no further changes will be made to the red component of any pixels.
+   */
+  @arguments(("red", "any"), ("green", "any"), ("blue", "any"), ("alpha", "any"))
+  fn set_color_mask(red, green, blue, alpha) {
+    return love.graphics.setColorMask(red, green, blue, alpha);
+  }
+  /**
+   * Creates a new Canvas object for offscreen rendering.
+   */
+  @arguments()
+  fn new_canvas() {
+    return love.graphics.newCanvas();
+  }
+  /**
+   * Sets the color used for drawing.
+   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   */
+  @arguments(("red", "any"), ("green", "any"), ("blue", "any"), ("alpha", "any"))
+  fn set_color(red, green, blue, alpha) {
+    return love.graphics.setColor(red, green, blue, alpha);
   }
   /**
    * Sets or disables scissor.
    * The scissor limits the drawing area to a specified rectangle. This affects all graphics calls, including love.graphics.clear. 
    * The dimensions of the scissor is unaffected by graphical transformations (translate, scale, ...).
    */
-  @arguments([("x", "any"), ("y", "any"), ("width", "any"), ("height", "any")])
-  fn set_scissor(self, x, y, width, height) {
-    return self.mod.setScissor(x, y, width, height);
-  }
-  /**
-   * Copies and pushes the current coordinate transformation to the transformation stack.
-   * This function is always used to prepare for a corresponding pop operation later. It stores the current coordinate transformation state into the transformation stack and keeps it active. Later changes to the transformation can be undone by using the pop operation, which returns the coordinate transform to the state it was in before calling push.
-   */
-  @arguments([])
-  fn push(self) {
-    return self.mod.push();
-  }
-  /**
-   * Creates and sets a new Font.
-   */
-  @arguments([("size", "any")])
-  fn set_new_font(self, size) {
-    return self.mod.setNewFont(size);
+  @arguments(("x", "any"), ("y", "any"), ("width", "any"), ("height", "any"))
+  fn set_scissor(x, y, width, height) {
+    return love.graphics.setScissor(x, y, width, height);
   }
   /**
    * Rotates the coordinate system in two dimensions.
    * Calling this function affects all future drawing operations by rotating the coordinate system around the origin by the given amount of radians. This change lasts until love.draw() exits.
    */
-  @arguments([("angle", "any")])
-  fn rotate(self, angle) {
-    return self.mod.rotate(angle);
+  @arguments(("angle", "any"))
+  fn rotate(angle) {
+    return love.graphics.rotate(angle);
   }
   /**
-   * Gets the current target Canvas.
+   * Draws lines between points.
    */
-  @arguments([])
-  fn get_canvas(self) {
-    return self.mod.getCanvas();
+  @arguments(("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("...", "any"))
+  fn line(x1, y1, x2, y2, *args) {
+    return love.graphics.line(x1, y1, x2, y2, ...args);
   }
   /**
-   * Sets the background color.
+   * Creates a new drawable Video. Currently only Ogg Theora video files are supported.
    */
-  @arguments([("red", "any"), ("green", "any"), ("blue", "any"), ("alpha", "any")])
-  fn set_background_color(self, red, green, blue, alpha) {
-    return self.mod.setBackgroundColor(red, green, blue, alpha);
+  @arguments(("filename", "any"))
+  fn new_video(filename) {
+    return love.graphics.newVideo(filename);
   }
   /**
-   * Sets whether triangles with clockwise- or counterclockwise-ordered vertices are considered front-facing.
-   * This is designed for use in combination with Mesh face culling. Other love.graphics shapes, lines, and sprites are not guaranteed to have a specific winding order to their internal vertices.
+   * Gets the current scissor box.
    */
-  @arguments([("winding", "any")])
-  fn set_front_face_winding(self, winding) {
-    return self.mod.setFrontFaceWinding(winding);
+  @arguments()
+  fn get_scissor() {
+    return love.graphics.getScissor();
   }
   /**
-   * Sets the blending mode.
+   * Resets the current coordinate transformation.
+   * This function is always used to reverse any previous calls to love.graphics.rotate, love.graphics.scale, love.graphics.shear or love.graphics.translate. It returns the current transformation state to its defaults.
    */
-  @arguments([("mode", "any")])
-  fn set_blend_mode(self, mode) {
-    return self.mod.setBlendMode(mode);
+  @arguments()
+  fn origin() {
+    return love.graphics.origin();
   }
   /**
-   * Gets the height in pixels of the window.
+   * Draws many instances of a Mesh with a single draw call, using hardware geometry instancing.
+   * Each instance can have unique properties (positions, colors, etc.) but will not by default unless a custom per-instance vertex attributes or the love_InstanceID GLSL 3 vertex shader variable is used, otherwise they will all render at the same position on top of each other.
+   * Instancing is not supported by some older GPUs that are only capable of using OpenGL ES 2 or OpenGL 2. Use love.graphics.getSupported to check.
    */
-  @arguments([])
-  fn get_height(self) {
-    return self.mod.getHeight();
-  }
-  /**
-   * Draws a layer of an Array Texture.
-   */
-  @arguments([("texture", "any"), ("layerindex", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any")])
-  fn draw_layer(self, texture, layerindex, x, y, r, sx, sy, ox, oy, kx, ky) {
-    return self.mod.drawLayer(texture, layerindex, x, y, r, sx, sy, ox, oy, kx, ky);
-  }
-  /**
-   * Configures depth testing and writing to the depth buffer.
-   * This is low-level functionality designed for use with custom vertex shaders and Meshes with custom vertex attributes. No higher level APIs are provided to set the depth of 2D graphics such as shapes, lines, and Images.
-   */
-  @arguments([("comparemode", "any"), ("write", "any")])
-  fn set_depth_mode(self, comparemode, write) {
-    return self.mod.setDepthMode(comparemode, write);
-  }
-  /**
-   * Replaces the current coordinate transformation with the given Transform object.
-   */
-  @arguments([("transform", "any")])
-  fn replace_transform(self, transform) {
-    return self.mod.replaceTransform(transform);
+  @arguments(("mesh", "any"), ("instancecount", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any"))
+  fn draw_instanced(mesh, instancecount, x, y, r, sx, sy, ox, oy, kx, ky) {
+    return love.graphics.drawInstanced(mesh, instancecount, x, y, r, sx, sy, ox, oy, kx, ky);
   }
   /**
    * Draws a Drawable object (an Image, Canvas, SpriteBatch, ParticleSystem, Mesh, Text object, or Video) on the screen with optional rotation, scaling and shearing.
@@ -509,236 +542,30 @@ class Graphics {
    * The right and bottom edges of the object are shifted at an angle defined by the shearing factors.
    * When using the default shader anything drawn with this function will be tinted according to the currently selected color.  Set it to pure white to preserve the object's original colors.
    */
-  @arguments([("drawable", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any")])
-  fn draw(self, drawable, x, y, r, sx, sy, ox, oy, kx, ky) {
-    return self.mod.draw(drawable, x, y, r, sx, sy, ox, oy, kx, ky);
+  @arguments(("drawable", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any"))
+  fn draw(drawable, x, y, r, sx, sy, ox, oy, kx, ky) {
+    return love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy, kx, ky);
   }
   /**
-   * Gets the current Font object.
+   * Replaces the current coordinate transformation with the given Transform object.
    */
-  @arguments([])
-  fn get_font(self) {
-    return self.mod.getFont();
+  @arguments(("transform", "any"))
+  fn replace_transform(transform) {
+    return love.graphics.replaceTransform(transform);
   }
   /**
-   * Captures drawing operations to a Canvas.
+   * Draws a rectangle.
    */
-  @arguments([("canvas", "any"), ("mipmap", "any")])
-  fn set_canvas(self, canvas, mipmap) {
-    return self.mod.setCanvas(canvas, mipmap);
+  @arguments(("mode", "any"), ("x", "any"), ("y", "any"), ("width", "any"), ("height", "any"))
+  fn rectangle(mode, x, y, width, height) {
+    return love.graphics.rectangle(mode, x, y, width, height);
   }
   /**
-   * Sets the line join style. See LineJoin for the possible options.
+   * Creates and sets a new Font.
    */
-  @arguments([("join", "any")])
-  fn set_line_join(self, join) {
-    return self.mod.setLineJoin(join);
-  }
-  /**
-   * Gets the current line width.
-   */
-  @arguments([])
-  fn get_line_width(self) {
-    return self.mod.getLineWidth();
-  }
-  /**
-   * Sets the line width.
-   */
-  @arguments([("width", "any")])
-  fn set_line_width(self, width) {
-    return self.mod.setLineWidth(width);
-  }
-  /**
-   * Returns the default scaling filters used with Images, Canvases, and Fonts.
-   */
-  @arguments([])
-  fn get_default_filter(self) {
-    return self.mod.getDefaultFilter();
-  }
-  /**
-   * Gets the blending mode.
-   */
-  @arguments([])
-  fn get_blend_mode(self) {
-    return self.mod.getBlendMode();
-  }
-  /**
-   * Draws text on screen. If no Font is set, one will be created and set (once) if needed.
-   * As of LOVE 0.7.1, when using translation and scaling functions while drawing text, this function assumes the scale occurs first.  If you don't script with this in mind, the text won't be in the right position, or possibly even on screen.
-   * love.graphics.print and love.graphics.printf both support UTF-8 encoding. You'll also need a proper Font for special characters.
-   * In versions prior to 11.0, color and byte component values were within the range of 0 to 255 instead of 0 to 1.
-   */
-  @arguments([("text", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any")])
-  fn print(self, text, x, y, r, sx, sy, ox, oy, kx, ky) {
-    return self.mod.print(text, x, y, r, sx, sy, ox, oy, kx, ky);
-  }
-  /**
-   * Immediately renders any pending automatically batched draws.
-   * LÖVE will call this function internally as needed when most state is changed, so it is not necessary to manually call it.
-   * The current batch will be automatically flushed by love.graphics state changes (except for the transform stack and the current color), as well as Shader:send and methods on Textures which change their state. Using a different Image in consecutive love.graphics.draw calls will also flush the current batch.
-   * SpriteBatches, ParticleSystems, Meshes, and Text objects do their own batching and do not affect automatic batching of other draws, aside from flushing the current batch when they're drawn.
-   */
-  @arguments([])
-  fn flush_batch(self) {
-    return self.mod.flushBatch();
-  }
-  /**
-   * Gets the height in pixels of the window.
-   * The graphics coordinate system and DPI scale factor, rather than raw pixels. Use getHeight for calculations related to drawing to the screen and using the coordinate system (calculating the center of the screen, for example), and getPixelHeight only when dealing specifically with underlying pixels (pixel-related calculations in a pixel Shader, for example).
-   */
-  @arguments([])
-  fn get_pixel_height(self) {
-    return self.mod.getPixelHeight();
-  }
-  /**
-   * Draw a polygon.
-   * Following the mode argument, this function can accept multiple numeric arguments or a single table of numeric arguments. In either case the arguments are interpreted as alternating x and y coordinates of the polygon's vertices.
-   */
-  @arguments([("mode", "any"), ("...", "any")])
-  fn polygon(self, mode) {
-    return self.mod.polygon(mode, table.unpack(argv));
-  }
-  /**
-   * Gets the system-dependent maximum values for love.graphics features.
-   */
-  @arguments([])
-  fn get_system_limits(self) {
-    return self.mod.getSystemLimits();
-  }
-  /**
-   * Draws one or more points.
-   */
-  @arguments([("x", "any"), ("y", "any"), ("...", "any")])
-  fn points(self, x, y) {
-    return self.mod.points(x, y, table.unpack(argv));
-  }
-  /**
-   * Gets the line join style.
-   */
-  @arguments([])
-  fn get_line_join(self) {
-    return self.mod.getLineJoin();
-  }
-  /**
-   * Gets whether back-facing triangles in a Mesh are culled.
-   * Mesh face culling is designed for use with low level custom hardware-accelerated 3D rendering via custom vertex attributes on Meshes, custom vertex shaders, and depth testing with a depth buffer.
-   */
-  @arguments([])
-  fn get_mesh_cull_mode(self) {
-    return self.mod.getMeshCullMode();
-  }
-  /**
-   * Sets the default scaling filters used with Images, Canvases, and Fonts.
-   */
-  @arguments([("min", "any"), ("mag", "any"), ("anisotropy", "any")])
-  fn set_default_filter(self, min, mag, anisotropy) {
-    return self.mod.setDefaultFilter(min, mag, anisotropy);
-  }
-  /**
-   * Draws formatted text, with word wrap and alignment.
-   * See additional notes in love.graphics.print.
-   * The word wrap limit is applied before any scaling, rotation, and other coordinate transformations. Therefore the amount of text per line stays constant given the same wrap limit, even if the scale arguments change.
-   * In version 0.9.2 and earlier, wrapping was implemented by breaking up words by spaces and putting them back together to make sure things fit nicely within the limit provided. However, due to the way this is done, extra spaces between words would end up missing when printed on the screen, and some lines could overflow past the provided wrap limit. In version 0.10.0 and newer this is no longer the case.
-   * In versions prior to 11.0, color and byte component values were within the range of 0 to 255 instead of 0 to 1.
-   */
-  @arguments([("text", "any"), ("x", "any"), ("y", "any"), ("limit", "any"), ("align", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any")])
-  fn printf(self, text, x, y, limit, align, r, sx, sy, ox, oy, kx, ky) {
-    return self.mod.printf(text, x, y, limit, align, r, sx, sy, ox, oy, kx, ky);
-  }
-  /**
-   * Translates the coordinate system in two dimensions.
-   * When this function is called with two numbers, dx, and dy, all the following drawing operations take effect as if their x and y coordinates were x+dx and y+dy. 
-   * Scale and translate are not commutative operations, therefore, calling them in different orders will change the outcome.
-   * This change lasts until love.draw() exits or else a love.graphics.pop reverts to a previous love.graphics.push.
-   * Translating using whole numbers will prevent tearing/blurring of images and fonts draw after translating.
-   */
-  @arguments([("dx", "any"), ("dy", "any")])
-  fn translate(self, dx, dy) {
-    return self.mod.translate(dx, dy);
-  }
-  /**
-   * Gets the raw and compressed pixel formats usable for Images, and whether each is supported.
-   */
-  @arguments([])
-  fn get_image_formats(self) {
-    return self.mod.getImageFormats();
-  }
-  /**
-   * Gets whether the graphics module is able to be used. If it is not active, love.graphics function and method calls will not work correctly and may cause the program to crash.
-   * The graphics module is inactive if a window is not open, or if the app is in the background on iOS. Typically the app's execution will be automatically paused by the system, in the latter case.
-   */
-  @arguments([])
-  fn is_active(self) {
-    return self.mod.isActive();
-  }
-  /**
-   * Sets the line style.
-   */
-  @arguments([("style", "any")])
-  fn set_line_style(self, style) {
-    return self.mod.setLineStyle(style);
-  }
-  /**
-   * Converts the given 2D position from screen-space into global coordinates.
-   * This effectively applies the reverse of the current graphics transformations to the given position. A similar Transform:inverseTransformPoint method exists for Transform objects.
-   */
-  @arguments([("screenX", "any"), ("screenY", "any")])
-  fn inverse_transform_point(self, screenX, screenY) {
-    return self.mod.inverseTransformPoint(screenX, screenY);
-  }
-  /**
-   * Gets the available texture types, and whether each is supported.
-   */
-  @arguments([])
-  fn get_texture_types(self) {
-    return self.mod.getTextureTypes();
-  }
-  /**
-   * Gets the line style.
-   */
-  @arguments([])
-  fn get_line_style(self) {
-    return self.mod.getLineStyle();
-  }
-  /**
-   * Draws a filled or unfilled arc at position (x, y). The arc is drawn from angle1 to angle2 in radians. The segments parameter determines how many segments are used to draw the arc. The more segments, the smoother the edge.
-   */
-  @arguments([("drawmode", "any"), ("x", "any"), ("y", "any"), ("radius", "any"), ("angle1", "any"), ("angle2", "any"), ("segments", "any")])
-  fn arc(self, drawmode, x, y, radius, angle1, angle2, segments) {
-    return self.mod.arc(drawmode, x, y, radius, angle1, angle2, segments);
-  }
-  /**
-   * Clears the screen or active Canvas to the specified color.
-   * This function is called automatically before love.draw in the default love.run function. See the example in love.run for a typical use of this function.
-   * Note that the scissor area bounds the cleared region.
-   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
-   * In versions prior to background color instead.
-   */
-  @arguments([])
-  fn clear(self) {
-    return self.mod.clear();
-  }
-  /**
-   * Gets the width and height in pixels of the window.
-   */
-  @arguments([])
-  fn get_dimensions(self) {
-    return self.mod.getDimensions();
-  }
-  /**
-   * Sets the color used for drawing.
-   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
-   */
-  @arguments([("red", "any"), ("green", "any"), ("blue", "any"), ("alpha", "any")])
-  fn set_color(self, red, green, blue, alpha) {
-    return self.mod.setColor(red, green, blue, alpha);
-  }
-  /**
-   * Gets information about the system's video card and drivers.
-   */
-  @arguments([])
-  fn get_renderer_info(self) {
-    return self.mod.getRendererInfo();
+  @arguments(("size", "any"))
+  fn set_new_font(size) {
+    return love.graphics.setNewFont(size);
   }
   /**
    * Scales the coordinate system in two dimensions.
@@ -747,72 +574,240 @@ class Graphics {
    * Scale and translate are not commutative operations, therefore, calling them in different orders will change the outcome.
    * Scaling lasts until love.draw() exits.
    */
-  @arguments([("sx", "any"), ("sy", "any")])
-  fn scale(self, sx, sy) {
-    return self.mod.scale(sx, sy);
+  @arguments(("sx", "any"), ("sy", "any"))
+  fn scale(sx, sy) {
+    return love.graphics.scale(sx, sy);
   }
   /**
-   * Creates a new Font from a TrueType Font or BMFont file. Created fonts are not cached, in that calling this function with the same arguments will always create a new Font object.
-   * All variants which accept a filename can also accept a Data object instead.
+   * Gets the available Canvas formats, and whether each is supported.
    */
-  @arguments([("filename", "any")])
-  fn new_font(self, filename) {
-    return self.mod.newFont(filename);
+  @arguments()
+  fn get_canvas_formats() {
+    return love.graphics.getCanvasFormats();
   }
   /**
-   * Creates a new Shader object for hardware-accelerated vertex and pixel effects. A Shader contains either vertex shader code, pixel shader code, or both.
-   * Shaders are small programs which are run on the graphics card when drawing. Vertex shaders are run once for each vertex (for example, an image has 4 vertices - one at each corner. A Mesh might have many more.) Pixel shaders are run once for each pixel on the screen which the drawn object touches. Pixel shader code is executed after all the object's vertices have been processed by the vertex shader.
+   * Draws text on screen. If no Font is set, one will be created and set (once) if needed.
+   * As of LOVE 0.7.1, when using translation and scaling functions while drawing text, this function assumes the scale occurs first.  If you don't script with this in mind, the text won't be in the right position, or possibly even on screen.
+   * love.graphics.print and love.graphics.printf both support UTF-8 encoding. You'll also need a proper Font for special characters.
+   * In versions prior to 11.0, color and byte component values were within the range of 0 to 255 instead of 0 to 1.
    */
-  @arguments([("code", "any")])
-  fn new_shader(self, code) {
-    return self.mod.newShader(code);
+  @arguments(("text", "any"), ("x", "any"), ("y", "any"), ("r", "any"), ("sx", "any"), ("sy", "any"), ("ox", "any"), ("oy", "any"), ("kx", "any"), ("ky", "any"))
+  fn print(text, x, y, r, sx, sy, ox, oy, kx, ky) {
+    return love.graphics.print(text, x, y, r, sx, sy, ox, oy, kx, ky);
   }
   /**
-   * Draws lines between points.
+   * Displays the results of drawing operations on the screen.
+   * This function is used when writing your own love.run function. It presents all the results of your drawing operations on the screen. See the example in love.run for a typical use of this function.
    */
-  @arguments([("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("...", "any")])
-  fn line(self, x1, y1, x2, y2) {
-    return self.mod.line(x1, y1, x2, y2, table.unpack(argv));
+  @arguments()
+  fn present() {
+    return love.graphics.present();
   }
   /**
-   * Creates a new Canvas object for offscreen rendering.
+   * Draw a polygon.
+   * Following the mode argument, this function can accept multiple numeric arguments or a single table of numeric arguments. In either case the arguments are interpreted as alternating x and y coordinates of the polygon's vertices.
    */
-  @arguments([])
-  fn new_canvas(self) {
-    return self.mod.newCanvas();
-  }
-  /**
-   * Gets whether wireframe mode is used when drawing.
-   */
-  @arguments([])
-  fn is_wireframe(self) {
-    return self.mod.isWireframe();
-  }
-  /**
-   * Gets performance-related rendering statistics. 
-   */
-  @arguments([])
-  fn get_stats(self) {
-    return self.mod.getStats();
+  @arguments(("mode", "any"), ("...", "any"))
+  fn polygon(mode, *args) {
+    return love.graphics.polygon(mode, ...args);
   }
   /**
    * Creates a new drawable Text object.
    */
-  @arguments([("font", "any"), ("textstring", "any")])
-  fn new_text(self, font, textstring) {
-    return self.mod.newText(font, textstring);
+  @arguments(("font", "any"), ("textstring", "any"))
+  fn new_text(font, textstring) {
+    return love.graphics.newText(font, textstring);
   }
   /**
-   * Gets the current depth test mode and whether writing to the depth buffer is enabled.
-   * This is low-level functionality designed for use with custom vertex shaders and Meshes with custom vertex attributes. No higher level APIs are provided to set the depth of 2D graphics such as shapes, lines, and Images.
+   * Draws one or more points.
    */
-  @arguments([])
-  fn get_depth_mode(self) {
-    return self.mod.getDepthMode();
+  @arguments(("x", "any"), ("y", "any"), ("...", "any"))
+  fn points(x, y, *args) {
+    return love.graphics.points(x, y, ...args);
+  }
+  /**
+   * Sets the line style.
+   */
+  @arguments(("style", "any"))
+  fn set_line_style(style) {
+    return love.graphics.setLineStyle(style);
+  }
+  /**
+   * Gets the line join style.
+   */
+  @arguments()
+  fn get_line_join() {
+    return love.graphics.getLineJoin();
+  }
+  /**
+   * Discards (trashes) the contents of the screen or active Canvas. This is a performance optimization function with niche use cases.
+   * If the active Canvas has just been changed and the 'replace' BlendMode is about to be used to draw something which covers the entire screen, calling love.graphics.discard rather than calling love.graphics.clear or doing nothing may improve performance on mobile devices.
+   * On some desktop systems this function may do nothing.
+   */
+  @arguments(("discardcolor", "any"), ("discardstencil", "any"))
+  fn discard(discardcolor, discardstencil) {
+    return love.graphics.discard(discardcolor, discardstencil);
+  }
+  /**
+   * Set an already-loaded Font as the current font or create and load a new one from the file and size.
+   * It's recommended that Font objects are created with love.graphics.newFont in the loading stage and then passed to this function in the drawing stage.
+   */
+  @arguments(("font", "any"))
+  fn set_font(font) {
+    return love.graphics.setFont(font);
+  }
+  /**
+   * Applies the given Transform object to the current coordinate transformation.
+   * This effectively multiplies the existing coordinate transformation's matrix with the Transform object's internal matrix to produce the new coordinate transformation.
+   */
+  @arguments(("transform", "any"))
+  fn apply_transform(transform) {
+    return love.graphics.applyTransform(transform);
+  }
+  /**
+   * Gets the width and height in pixels of the window.
+   * love.graphics.getDimensions gets the dimensions of the window in units scaled by the screen's DPI scale factor, rather than pixels. Use getDimensions for calculations related to drawing to the screen and using the graphics coordinate system (calculating the center of the screen, for example), and getPixelDimensions only when dealing specifically with underlying pixels (pixel-related calculations in a pixel Shader, for example).
+   */
+  @arguments()
+  fn get_pixel_dimensions() {
+    return love.graphics.getPixelDimensions();
+  }
+  /**
+   * Draws an ellipse.
+   */
+  @arguments(("mode", "any"), ("x", "any"), ("y", "any"), ("radiusx", "any"), ("radiusy", "any"))
+  fn ellipse(mode, x, y, radiusx, radiusy) {
+    return love.graphics.ellipse(mode, x, y, radiusx, radiusy);
+  }
+  /**
+   * Gets the raw and compressed pixel formats usable for Images, and whether each is supported.
+   */
+  @arguments()
+  fn get_image_formats() {
+    return love.graphics.getImageFormats();
+  }
+  /**
+   * Draws a filled or unfilled arc at position (x, y). The arc is drawn from angle1 to angle2 in radians. The segments parameter determines how many segments are used to draw the arc. The more segments, the smoother the edge.
+   */
+  @arguments(("drawmode", "any"), ("x", "any"), ("y", "any"), ("radius", "any"), ("angle1", "any"), ("angle2", "any"), ("segments", "any"))
+  fn arc(drawmode, x, y, radius, angle1, angle2, segments) {
+    return love.graphics.arc(drawmode, x, y, radius, angle1, angle2, segments);
+  }
+  /**
+   * Resets the current graphics settings.
+   * Calling reset makes the current drawing color white, the current background color black, disables any active color component masks, disables wireframe mode and resets the current graphics transformation to the origin. It also sets both the point and line drawing modes to smooth and their sizes to 1.0.
+   */
+  @arguments()
+  fn reset() {
+    return love.graphics.reset();
+  }
+  /**
+   * Gets the DPI scale factor of the window.
+   * The DPI scale factor represents relative pixel density. The pixel density inside the window might be greater (or smaller) than the 'size' of the window. For example on a retina screen in Mac OS X with the highdpi window flag enabled, the window may take up the same physical size as an 800x600 window, but the area inside the window uses 1600x1200 pixels. love.graphics.getDPIScale() would return 2 in that case.
+   * The love.window.fromPixels and love.window.toPixels functions can also be used to convert between units.
+   * The highdpi window flag must be enabled to use the full pixel density of a Retina screen on Mac OS X and iOS. The flag currently does nothing on Windows and Linux, and on Android it is effectively always enabled.
+   */
+  @arguments()
+  fn get_d_p_i_scale() {
+    return love.graphics.getDPIScale();
+  }
+  /**
+   * Gets the width in pixels of the window.
+   */
+  @arguments()
+  fn get_width() {
+    return love.graphics.getWidth();
+  }
+  /**
+   * Copies and pushes the current coordinate transformation to the transformation stack.
+   * This function is always used to prepare for a corresponding pop operation later. It stores the current coordinate transformation state into the transformation stack and keeps it active. Later changes to the transformation can be undone by using the pop operation, which returns the coordinate transform to the state it was in before calling push.
+   */
+  @arguments()
+  fn push() {
+    return love.graphics.push();
+  }
+  /**
+   * Gets the width and height in pixels of the window.
+   */
+  @arguments()
+  fn get_dimensions() {
+    return love.graphics.getDimensions();
+  }
+  /**
+   * Sets the scissor to the rectangle created by the intersection of the specified rectangle with the existing scissor.  If no scissor is active yet, it behaves like love.graphics.setScissor.
+   * The scissor limits the drawing area to a specified rectangle. This affects all graphics calls, including love.graphics.clear.
+   * The dimensions of the scissor is unaffected by graphical transformations (translate, scale, ...).
+   */
+  @arguments(("x", "any"), ("y", "any"), ("width", "any"), ("height", "any"))
+  fn intersect_scissor(x, y, width, height) {
+    return love.graphics.intersectScissor(x, y, width, height);
+  }
+  /**
+   * Gets the current background color.
+   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   */
+  @arguments()
+  fn get_background_color() {
+    return love.graphics.getBackgroundColor();
+  }
+  /**
+   * Creates a screenshot once the current frame is done (after love.draw has finished).
+   * Since this function enqueues a screenshot capture rather than executing it immediately, it can be called from an input callback or love.update and it will still capture all of what's drawn to the screen in that frame.
+   */
+  @arguments(("filename", "any"))
+  fn capture_screenshot(filename) {
+    return love.graphics.captureScreenshot(filename);
+  }
+  /**
+   * Gets the system-dependent maximum values for love.graphics features.
+   */
+  @arguments()
+  fn get_system_limits() {
+    return love.graphics.getSystemLimits();
+  }
+  /**
+   * Gets whether gamma-correct rendering is supported and enabled. It can be enabled by setting t.gammacorrect = true in love.conf.
+   * Not all devices support gamma-correct rendering, in which case it will be automatically disabled and this function will return false. It is supported on desktop systems which have graphics cards that are capable of using OpenGL 3 / DirectX 10, and iOS devices that can use OpenGL ES 3.
+   */
+  @arguments()
+  fn is_gamma_correct() {
+    return love.graphics.isGammaCorrect();
+  }
+  /**
+   * Immediately renders any pending automatically batched draws.
+   * LÖVE will call this function internally as needed when most state is changed, so it is not necessary to manually call it.
+   * The current batch will be automatically flushed by love.graphics state changes (except for the transform stack and the current color), as well as Shader:send and methods on Textures which change their state. Using a different Image in consecutive love.graphics.draw calls will also flush the current batch.
+   * SpriteBatches, ParticleSystems, Meshes, and Text objects do their own batching and do not affect automatic batching of other draws, aside from flushing the current batch when they're drawn.
+   */
+  @arguments()
+  fn flush_batch() {
+    return love.graphics.flushBatch();
+  }
+  /**
+   * Creates a new Mesh.
+   * Use Mesh:setTexture if the Mesh should be textured with an Image or Canvas when it's drawn.
+   * In versions prior to 11.0, color and byte component values were within the range of 0 to 255 instead of 0 to 1.
+   */
+  @arguments(("vertices", "any"), ("mode", "any"), ("usage", "any"))
+  fn new_mesh(vertices, mode, usage) {
+    return love.graphics.newMesh(vertices, mode, usage);
+  }
+  /**
+   * Gets the current stencil test configuration.
+   * When stencil testing is enabled, the geometry of everything that is drawn afterward will be clipped / stencilled out based on a comparison between the arguments of this function and the stencil value of each pixel that the geometry touches. The stencil values of pixels are affected via love.graphics.stencil.
+   * Each Canvas has its own per-pixel stencil values.
+   */
+  @arguments()
+  fn get_stencil_test() {
+    return love.graphics.getStencilTest();
+  }
+  /**
+   * Gets the height in pixels of the window.
+   */
+  @arguments()
+  fn get_height() {
+    return love.graphics.getHeight();
   }
 }
 
-let graphics = Graphics.new(love.graphics);
-graphics.Graphics = Graphics;
-
-return graphics;
+return Graphics;

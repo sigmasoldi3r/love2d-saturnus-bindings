@@ -1,47 +1,42 @@
 // Generated module: Font
+use { rtti: { arguments } } in std;
 
 class Font {
-  fn new(mod) {
-    return Font { mod };
-  }
   /**
    * Creates a new GlyphData.
    */
-  @arguments([("rasterizer", "any"), ("glyph", "any")])
-  fn new_glyph_data(self, rasterizer, glyph) {
-    return self.mod.newGlyphData(rasterizer, glyph);
-  }
-  /**
-   * Creates a new Image Rasterizer.
-   */
-  @arguments([("imageData", "any"), ("glyphs", "any"), ("extraSpacing", "any"), ("dpiscale", "any")])
-  fn new_image_rasterizer(self, imageData, glyphs, extraSpacing, dpiscale) {
-    return self.mod.newImageRasterizer(imageData, glyphs, extraSpacing, dpiscale);
-  }
-  /**
-   * Creates a new BMFont Rasterizer.
-   */
-  @arguments([("imageData", "any"), ("glyphs", "any"), ("dpiscale", "any")])
-  fn new_b_m_font_rasterizer(self, imageData, glyphs, dpiscale) {
-    return self.mod.newBMFontRasterizer(imageData, glyphs, dpiscale);
-  }
-  /**
-   * Creates a new TrueType Rasterizer.
-   */
-  @arguments([("size", "any"), ("hinting", "any"), ("dpiscale", "any")])
-  fn new_true_type_rasterizer(self, size, hinting, dpiscale) {
-    return self.mod.newTrueTypeRasterizer(size, hinting, dpiscale);
+  @arguments(("rasterizer", "any"), ("glyph", "any"))
+  fn new_glyph_data(rasterizer, glyph) {
+    return love.font.newGlyphData(rasterizer, glyph);
   }
   /**
    * Creates a new Rasterizer.
    */
-  @arguments([("filename", "any")])
-  fn new_rasterizer(self, filename) {
-    return self.mod.newRasterizer(filename);
+  @arguments(("filename", "any"))
+  fn new_rasterizer(filename) {
+    return love.font.newRasterizer(filename);
+  }
+  /**
+   * Creates a new BMFont Rasterizer.
+   */
+  @arguments(("imageData", "any"), ("glyphs", "any"), ("dpiscale", "any"))
+  fn new_b_m_font_rasterizer(imageData, glyphs, dpiscale) {
+    return love.font.newBMFontRasterizer(imageData, glyphs, dpiscale);
+  }
+  /**
+   * Creates a new Image Rasterizer.
+   */
+  @arguments(("imageData", "any"), ("glyphs", "any"), ("extraSpacing", "any"), ("dpiscale", "any"))
+  fn new_image_rasterizer(imageData, glyphs, extraSpacing, dpiscale) {
+    return love.font.newImageRasterizer(imageData, glyphs, extraSpacing, dpiscale);
+  }
+  /**
+   * Creates a new TrueType Rasterizer.
+   */
+  @arguments(("size", "any"), ("hinting", "any"), ("dpiscale", "any"))
+  fn new_true_type_rasterizer(size, hinting, dpiscale) {
+    return love.font.newTrueTypeRasterizer(size, hinting, dpiscale);
   }
 }
 
-let font = Font.new(love.font);
-font.Font = Font;
-
-return font;
+return Font;

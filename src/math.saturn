@@ -1,60 +1,49 @@
 // Generated module: Math
+use { rtti: { arguments } } in std;
 
 class Math {
-  fn new(mod) {
-    return Math { mod };
+  /**
+   * Converts a color from 0..255 to 0..1 range.
+   */
+  @arguments(("rb", "any"), ("gb", "any"), ("bb", "any"), ("ab", "any"))
+  fn color_from_bytes(rb, gb, bb, ab) {
+    return love.math.colorFromBytes(rb, gb, bb, ab);
   }
   /**
-   * Converts a color from gamma-space (sRGB) to linear-space (RGB). This is useful when doing gamma-correct rendering and you need to do math in linear RGB in the few cases where LÖVE doesn't handle conversions automatically.
-   * Read more about gamma-correct rendering here, here, and here.
-   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   * Creates a new RandomGenerator object which is completely independent of other RandomGenerator objects and random functions.
    */
-  @arguments([("r", "any"), ("g", "any"), ("b", "any")])
-  fn gamma_to_linear(self, r, g, b) {
-    return self.mod.gammaToLinear(r, g, b);
-  }
-  /**
-   * Sets the seed of the random number generator using the specified integer number. This is called internally at startup, so you generally don't need to call it yourself.
-   */
-  @arguments([("seed", "any")])
-  fn set_random_seed(self, seed) {
-    return self.mod.setRandomSeed(seed);
-  }
-  /**
-   * Creates a new Transform object.
-   */
-  @arguments([])
-  fn new_transform(self) {
-    return self.mod.newTransform();
-  }
-  /**
-   * Converts a color from 0..1 to 0..255 range.
-   */
-  @arguments([("r", "any"), ("g", "any"), ("b", "any"), ("a", "any")])
-  fn color_to_bytes(self, r, g, b, a) {
-    return self.mod.colorToBytes(r, g, b, a);
-  }
-  /**
-   * Gets the current state of the random number generator. This returns an opaque implementation-dependent string which is only useful for later use with love.math.setRandomState or RandomGenerator:setState.
-   * This is different from love.math.getRandomSeed in that getRandomState gets the random number generator's current state, whereas getRandomSeed gets the previously set seed number.
-   */
-  @arguments([])
-  fn get_random_state(self) {
-    return self.mod.getRandomState();
+  @arguments()
+  fn new_random_generator() {
+    return love.math.newRandomGenerator();
   }
   /**
    * Get a normally distributed pseudo random number.
    */
-  @arguments([("stddev", "any"), ("mean", "any")])
-  fn random_normal(self, stddev, mean) {
-    return self.mod.randomNormal(stddev, mean);
+  @arguments(("stddev", "any"), ("mean", "any"))
+  fn random_normal(stddev, mean) {
+    return love.math.randomNormal(stddev, mean);
   }
   /**
    * Compresses a string or data using a specific compression algorithm.
    */
-  @arguments([("rawstring", "any"), ("format", "any"), ("level", "any")])
-  fn compress(self, rawstring, format, level) {
-    return self.mod.compress(rawstring, format, level);
+  @arguments(("rawstring", "any"), ("format", "any"), ("level", "any"))
+  fn compress(rawstring, format, level) {
+    return love.math.compress(rawstring, format, level);
+  }
+  /**
+   * Creates a new BezierCurve object.
+   * The number of vertices in the control polygon determines the degree of the curve, e.g. three vertices define a quadratic (degree 2) Bézier curve, four vertices define a cubic (degree 3) Bézier curve, etc.
+   */
+  @arguments(("vertices", "any"))
+  fn new_bezier_curve(vertices) {
+    return love.math.newBezierCurve(vertices);
+  }
+  /**
+   * Sets the seed of the random number generator using the specified integer number. This is called internally at startup, so you generally don't need to call it yourself.
+   */
+  @arguments(("seed", "any"))
+  fn set_random_seed(seed) {
+    return love.math.setRandomSeed(seed);
   }
   /**
    * Converts a color from linear-space (RGB) to gamma-space (sRGB). This is useful when storing linear RGB color values in an image, because the linear RGB color space has less precision than sRGB for dark colors, which can result in noticeable color banding when drawing.
@@ -62,89 +51,95 @@ class Math {
    * Read more about gamma-correct rendering here, here, and here.
    * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
    */
-  @arguments([("lr", "any"), ("lg", "any"), ("lb", "any")])
-  fn linear_to_gamma(self, lr, lg, lb) {
-    return self.mod.linearToGamma(lr, lg, lb);
-  }
-  /**
-   * Generates a pseudo-random number in a platform independent manner. The default love.run seeds this function at startup, so you generally don't need to seed it yourself.
-   */
-  @arguments([])
-  fn random(self) {
-    return self.mod.random();
-  }
-  /**
-   * Creates a new RandomGenerator object which is completely independent of other RandomGenerator objects and random functions.
-   */
-  @arguments([])
-  fn new_random_generator(self) {
-    return self.mod.newRandomGenerator();
+  @arguments(("lr", "any"), ("lg", "any"), ("lb", "any"))
+  fn linear_to_gamma(lr, lg, lb) {
+    return love.math.linearToGamma(lr, lg, lb);
   }
   /**
    * Decompresses a CompressedData or previously compressed string or Data object.
    */
-  @arguments([("compressedData", "any")])
-  fn decompress(self, compressedData) {
-    return self.mod.decompress(compressedData);
+  @arguments(("compressedData", "any"))
+  fn decompress(compressedData) {
+    return love.math.decompress(compressedData);
   }
   /**
-   * Gets the seed of the random number generator.
-   * The seed is split into two numbers due to Lua's use of doubles for all number values - doubles can't accurately represent integer  values above 2^53, but the seed can be an integer value up to 2^64.
+   * Decomposes a simple convex or concave polygon into triangles.
    */
-  @arguments([])
-  fn get_random_seed(self) {
-    return self.mod.getRandomSeed();
+  @arguments(("polygon", "any"))
+  fn triangulate(polygon) {
+    return love.math.triangulate(polygon);
+  }
+  /**
+   * Converts a color from gamma-space (sRGB) to linear-space (RGB). This is useful when doing gamma-correct rendering and you need to do math in linear RGB in the few cases where LÖVE doesn't handle conversions automatically.
+   * Read more about gamma-correct rendering here, here, and here.
+   * In versions prior to 11.0, color component values were within the range of 0 to 255 instead of 0 to 1.
+   */
+  @arguments(("r", "any"), ("g", "any"), ("b", "any"))
+  fn gamma_to_linear(r, g, b) {
+    return love.math.gammaToLinear(r, g, b);
   }
   /**
    * Sets the current state of the random number generator. The value used as an argument for this function is an opaque implementation-dependent string and should only originate from a previous call to love.math.getRandomState.
    * This is different from love.math.setRandomSeed in that setRandomState directly sets the random number generator's current implementation-dependent state, whereas setRandomSeed gives it a new seed value.
    */
-  @arguments([("state", "any")])
-  fn set_random_state(self, state) {
-    return self.mod.setRandomState(state);
+  @arguments(("state", "any"))
+  fn set_random_state(state) {
+    return love.math.setRandomState(state);
+  }
+  /**
+   * Gets the current state of the random number generator. This returns an opaque implementation-dependent string which is only useful for later use with love.math.setRandomState or RandomGenerator:setState.
+   * This is different from love.math.getRandomSeed in that getRandomState gets the random number generator's current state, whereas getRandomSeed gets the previously set seed number.
+   */
+  @arguments()
+  fn get_random_state() {
+    return love.math.getRandomState();
+  }
+  /**
+   * Creates a new Transform object.
+   */
+  @arguments()
+  fn new_transform() {
+    return love.math.newTransform();
   }
   /**
    * Checks whether a polygon is convex.
    * PolygonShapes in love.physics, some forms of Meshes, and polygons drawn with love.graphics.polygon must be simple convex polygons.
    */
-  @arguments([("vertices", "any")])
-  fn is_convex(self, vertices) {
-    return self.mod.isConvex(vertices);
+  @arguments(("vertices", "any"))
+  fn is_convex(vertices) {
+    return love.math.isConvex(vertices);
   }
   /**
-   * Creates a new BezierCurve object.
-   * The number of vertices in the control polygon determines the degree of the curve, e.g. three vertices define a quadratic (degree 2) Bézier curve, four vertices define a cubic (degree 3) Bézier curve, etc.
+   * Gets the seed of the random number generator.
+   * The seed is split into two numbers due to Lua's use of doubles for all number values - doubles can't accurately represent integer  values above 2^53, but the seed can be an integer value up to 2^64.
    */
-  @arguments([("vertices", "any")])
-  fn new_bezier_curve(self, vertices) {
-    return self.mod.newBezierCurve(vertices);
-  }
-  /**
-   * Converts a color from 0..255 to 0..1 range.
-   */
-  @arguments([("rb", "any"), ("gb", "any"), ("bb", "any"), ("ab", "any")])
-  fn color_from_bytes(self, rb, gb, bb, ab) {
-    return self.mod.colorFromBytes(rb, gb, bb, ab);
-  }
-  /**
-   * Decomposes a simple convex or concave polygon into triangles.
-   */
-  @arguments([("polygon", "any")])
-  fn triangulate(self, polygon) {
-    return self.mod.triangulate(polygon);
+  @arguments()
+  fn get_random_seed() {
+    return love.math.getRandomSeed();
   }
   /**
    * Generates a Simplex or Perlin noise value in 1-4 dimensions. The return value will always be the same, given the same arguments.
    * Simplex noise is closely related to Perlin noise. It is widely used for procedural content generation.
    * There are many webpages which discuss Perlin and Simplex noise in detail.
    */
-  @arguments([("x", "any")])
-  fn noise(self, x) {
-    return self.mod.noise(x);
+  @arguments(("x", "any"))
+  fn noise(x) {
+    return love.math.noise(x);
+  }
+  /**
+   * Converts a color from 0..1 to 0..255 range.
+   */
+  @arguments(("r", "any"), ("g", "any"), ("b", "any"), ("a", "any"))
+  fn color_to_bytes(r, g, b, a) {
+    return love.math.colorToBytes(r, g, b, a);
+  }
+  /**
+   * Generates a pseudo-random number in a platform independent manner. The default love.run seeds this function at startup, so you generally don't need to seed it yourself.
+   */
+  @arguments()
+  fn random() {
+    return love.math.random();
   }
 }
 
-let math = Math.new(love.math);
-math.Math = Math;
-
-return math;
+return Math;

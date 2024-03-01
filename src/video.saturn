@@ -1,19 +1,14 @@
 // Generated module: Video
+use { rtti: { arguments } } in std;
 
 class Video {
-  fn new(mod) {
-    return Video { mod };
-  }
   /**
    * Creates a new VideoStream. Currently only Ogg Theora video files are supported. VideoStreams can't draw videos, see love.graphics.newVideo for that.
    */
-  @arguments([("filename", "any")])
-  fn new_video_stream(self, filename) {
-    return self.mod.newVideoStream(filename);
+  @arguments(("filename", "any"))
+  fn new_video_stream(filename) {
+    return love.video.newVideoStream(filename);
   }
 }
 
-let video = Video.new(love.video);
-video.Video = Video;
-
-return video;
+return Video;

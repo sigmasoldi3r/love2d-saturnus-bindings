@@ -1,86 +1,81 @@
 // Generated module: Data
+use { rtti: { arguments } } in std;
 
 class Data {
-  fn new(mod) {
-    return Data { mod };
-  }
-  /**
-   * Decode Data or a string from any of the EncodeFormats to Data or string.
-   */
-  @arguments([("container", "any"), ("format", "any"), ("sourceString", "any")])
-  fn decode(self, container, format, sourceString) {
-    return self.mod.decode(container, format, sourceString);
-  }
-  /**
-   * Unpacks (deserializes) a byte-string or Data into simple Lua values.
-   * This function behaves the same as Lua 5.3's string.unpack.
-   */
-  @arguments([("format", "any"), ("datastring", "any"), ("pos", "any")])
-  fn unpack(self, format, datastring, pos) {
-    return self.mod.unpack(format, datastring, pos);
-  }
   /**
    * Decompresses a CompressedData or previously compressed string or Data object.
    */
-  @arguments([("container", "any"), ("compressedData", "any")])
-  fn decompress(self, container, compressedData) {
-    return self.mod.decompress(container, compressedData);
-  }
-  /**
-   * Encode Data or a string to a Data or string in one of the EncodeFormats.
-   */
-  @arguments([("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any")])
-  fn encode(self, container, format, sourceString, linelength) {
-    return self.mod.encode(container, format, sourceString, linelength);
-  }
-  /**
-   * Creates a new Data object containing arbitrary bytes.
-   * Data:getPointer along with LuaJIT's FFI can be used to manipulate the contents of the ByteData object after it has been created.
-   */
-  @arguments([("datastring", "any")])
-  fn new_byte_data(self, datastring) {
-    return self.mod.newByteData(datastring);
-  }
-  /**
-   * Packs (serializes) simple Lua values.
-   * This function behaves the same as Lua 5.3's string.pack.
-   */
-  @arguments([("container", "any"), ("format", "any"), ("v1", "any"), ("...", "any")])
-  fn pack(self, container, format, v1) {
-    return self.mod.pack(container, format, v1, table.unpack(argv));
-  }
-  /**
-   * Compresses a string or data using a specific compression algorithm.
-   */
-  @arguments([("container", "any"), ("format", "any"), ("rawstring", "any"), ("level", "any")])
-  fn compress(self, container, format, rawstring, level) {
-    return self.mod.compress(container, format, rawstring, level);
+  @arguments(("container", "any"), ("compressedData", "any"))
+  fn decompress(container, compressedData) {
+    return love.data.decompress(container, compressedData);
   }
   /**
    * Gets the size in bytes that a given format used with love.data.pack will use.
    * This function behaves the same as Lua 5.3's string.packsize.
    */
-  @arguments([("format", "any")])
-  fn get_packed_size(self, format) {
-    return self.mod.getPackedSize(format);
+  @arguments(("format", "any"))
+  fn get_packed_size(format) {
+    return love.data.getPackedSize(format);
   }
   /**
    * Compute the message digest of a string using a specified hash algorithm.
    */
-  @arguments([("hashFunction", "any"), ("string", "any")])
-  fn hash(self, hashFunction, string) {
-    return self.mod.hash(hashFunction, string);
+  @arguments(("hashFunction", "any"), ("string", "any"))
+  fn hash(hashFunction, string) {
+    return love.data.hash(hashFunction, string);
+  }
+  /**
+   * Creates a new Data object containing arbitrary bytes.
+   * Data:getPointer along with LuaJIT's FFI can be used to manipulate the contents of the ByteData object after it has been created.
+   */
+  @arguments(("datastring", "any"))
+  fn new_byte_data(datastring) {
+    return love.data.newByteData(datastring);
+  }
+  /**
+   * Compresses a string or data using a specific compression algorithm.
+   */
+  @arguments(("container", "any"), ("format", "any"), ("rawstring", "any"), ("level", "any"))
+  fn compress(container, format, rawstring, level) {
+    return love.data.compress(container, format, rawstring, level);
+  }
+  /**
+   * Unpacks (deserializes) a byte-string or Data into simple Lua values.
+   * This function behaves the same as Lua 5.3's string.unpack.
+   */
+  @arguments(("format", "any"), ("datastring", "any"), ("pos", "any"))
+  fn unpack(format, datastring, pos) {
+    return love.data.unpack(format, datastring, pos);
   }
   /**
    * Creates a new Data referencing a subsection of an existing Data object.
    */
-  @arguments([("data", "any"), ("offset", "any"), ("size", "any")])
-  fn new_data_view(self, data, offset, size) {
-    return self.mod.newDataView(data, offset, size);
+  @arguments(("data", "any"), ("offset", "any"), ("size", "any"))
+  fn new_data_view(data, offset, size) {
+    return love.data.newDataView(data, offset, size);
+  }
+  /**
+   * Packs (serializes) simple Lua values.
+   * This function behaves the same as Lua 5.3's string.pack.
+   */
+  @arguments(("container", "any"), ("format", "any"), ("v1", "any"), ("...", "any"))
+  fn pack(container, format, v1, *args) {
+    return love.data.pack(container, format, v1, ...args);
+  }
+  /**
+   * Encode Data or a string to a Data or string in one of the EncodeFormats.
+   */
+  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any"))
+  fn encode(container, format, sourceString, linelength) {
+    return love.data.encode(container, format, sourceString, linelength);
+  }
+  /**
+   * Decode Data or a string from any of the EncodeFormats to Data or string.
+   */
+  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"))
+  fn decode(container, format, sourceString) {
+    return love.data.decode(container, format, sourceString);
   }
 }
 
-let data = Data.new(love.data);
-data.Data = Data;
-
-return data;
+return Data;

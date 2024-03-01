@@ -1,6 +1,7 @@
 #!saturnus
 // This script scraps the Löve2D API definition
 // in order to create and update bindings.
+use { Object } in std;
 
 print("Starting API walker...");
 
@@ -57,16 +58,14 @@ class CodeGen {
   fn build(self, info) {
     self
       ->line("// Generated module: " ++ info.name)
+      ->line("use { rtti: { arguments } } in std;")
       ->line("")
       ->line("class " ++ info.name ++ " {")
-      ->push()->line("fn new(mod) {")
-      ->push()->line("return " ++ info.name ++ " { mod };")
-      ->pop()->line("}");
-    for k in pairs(info.methods) {
-      let func = info.methods[k];
+        ->push();
+    for (_, func) in Object.entries(info.methods) {
       self
         ->line("/**");
-      for str in string.gmatch(func->description, "([^\n]+)") {
+      for str in func.description->gmatch("([^\n]+)") {
         if #?str > 0 {
           self->line(" * " ++ str);
         }
@@ -74,53 +73,48 @@ class CodeGen {
       self
         ->line(" */");
       let args = [];
-      if func.variants[1]->arguments <> () {
-        for arg_key in pairs(func.variants[1].arguments) {
+      if func.variants[1].arguments <> () {
+        for (arg_key, _) in Object.entries(func.variants[1].arguments) {
           let arg = func.variants[1].arguments[arg_key];
           args[#?args+1] = arg.name;
         }
       }
       let arg_src = "";
-      for key in pairs(args) {
-        let arg = args[key];
+      for (_, arg) in Object.entries(args) {
         arg_src = arg_src ++ ", (\"" ++ arg ++ "\", \"any\")";
       }
       arg_src = arg_src->sub(3);
       self
-        ->line("@arguments([" ++ arg_src ++ "])");
+        ->line("@arguments(" ++ arg_src ++ ")");
       arg_src = "";
-      for key in pairs(args) {
-        let arg = args[key];
+      for (_, arg) in Object.entries(args) {
         if arg <> "..." {
-          arg_src = arg_src ++ ", " ++ arg;
-        }
-      }
-      self
-        ->line("fn " ++ func->name ++ "(self" ++ arg_src ++ ") {");
-      arg_src = "";
-      for key in pairs(args) {
-        let arg = args[key];
-        if arg <> "..." {
-          arg_src = arg_src ++ ", " ++ arg;
+          arg_src ++= arg ++ ", ";
         } else {
-          arg_src = arg_src ++ ", table.unpack(argv)";
+          arg_src ++= "*args, ";
         }
       }
-      arg_src = arg_src->sub(3);
+      arg_src = arg_src->sub(1, -3);
       self
-        ->push()->line("return self.mod." ++ func->original_name ++ "(" ++ arg_src ++ ");")
+        ->line("fn " ++ func.name ++ "(" ++ arg_src ++ ") {");
+      arg_src = "";
+      for (_, arg) in Object.entries(args) {
+        if arg <> "..." {
+          arg_src ++= arg ++ ", ";
+        } else {
+          arg_src ++= "...args, ";
+        }
+      }
+      arg_src = arg_src->sub(1, -3);
+      self
+        ->push()
+          ->line("return love." ++ info.original_name ++ "." ++ func.original_name ++ "(" ++ arg_src ++ ");")
         ->pop()->line("}");
     }
     self
       ->pop()->line("}")
       ->line("")
-      ->line(
-        "let " ++ info.var_name ++ " = " ++ info.name
-        ++ ".new(love." ++ info.original_name ++ ");"
-      )
-      ->line(info.var_name ++ "." ++ info.name ++ " = " ++ info.name ++ ";")
-      ->line("")
-      ->line("return " ++ info.var_name ++ ";");
+      ->line("return " ++ info.name ++ ";");
     return self.src;
   }
 }

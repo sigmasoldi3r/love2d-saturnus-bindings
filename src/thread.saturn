@@ -1,34 +1,29 @@
 // Generated module: Thread
+use { rtti: { arguments } } in std;
 
 class Thread {
-  fn new(mod) {
-    return Thread { mod };
+  /**
+   * Creates a new Thread from a filename, string or FileData object containing Lua code.
+   */
+  @arguments(("filename", "any"))
+  fn new_thread(filename) {
+    return love.thread.newThread(filename);
   }
   /**
    * Creates or retrieves a named thread channel.
    */
-  @arguments([("name", "any")])
-  fn get_channel(self, name) {
-    return self.mod.getChannel(name);
-  }
-  /**
-   * Creates a new Thread from a filename, string or FileData object containing Lua code.
-   */
-  @arguments([("filename", "any")])
-  fn new_thread(self, filename) {
-    return self.mod.newThread(filename);
+  @arguments(("name", "any"))
+  fn get_channel(name) {
+    return love.thread.getChannel(name);
   }
   /**
    * Create a new unnamed thread channel.
    * One use for them is to pass new unnamed channels to other threads via Channel:push on a named channel.
    */
-  @arguments([])
-  fn new_channel(self) {
-    return self.mod.newChannel();
+  @arguments()
+  fn new_channel() {
+    return love.thread.newChannel();
   }
 }
 
-let thread = Thread.new(love.thread);
-thread.Thread = Thread;
-
-return thread;
+return Thread;

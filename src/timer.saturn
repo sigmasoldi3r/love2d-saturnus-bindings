@@ -1,56 +1,51 @@
 // Generated module: Timer
+use { rtti: { arguments } } in std;
 
 class Timer {
-  fn new(mod) {
-    return Timer { mod };
-  }
   /**
-   * Measures the time between two frames.
-   * Calling this changes the return value of love.timer.getDelta.
+   * Returns the current frames per second.
    */
-  @arguments([])
-  fn step(self) {
-    return self.mod.step();
+  @arguments()
+  fn get_f_p_s() {
+    return love.timer.getFPS();
   }
   /**
    * Returns the value of a timer with an unspecified starting time.
    * This function should only be used to calculate differences between points in time, as the starting time of the timer is unknown.
    */
-  @arguments([])
-  fn get_time(self) {
-    return self.mod.getTime();
+  @arguments()
+  fn get_time() {
+    return love.timer.getTime();
   }
   /**
-   * Returns the average delta time (seconds per frame) over the last second.
+   * Measures the time between two frames.
+   * Calling this changes the return value of love.timer.getDelta.
    */
-  @arguments([])
-  fn get_average_delta(self) {
-    return self.mod.getAverageDelta();
-  }
-  /**
-   * Returns the current frames per second.
-   */
-  @arguments([])
-  fn get_f_p_s(self) {
-    return self.mod.getFPS();
-  }
-  /**
-   * Pauses the current thread for the specified amount of time.
-   */
-  @arguments([("s", "any")])
-  fn sleep(self, s) {
-    return self.mod.sleep(s);
+  @arguments()
+  fn step() {
+    return love.timer.step();
   }
   /**
    * Returns the time between the last two frames.
    */
-  @arguments([])
-  fn get_delta(self) {
-    return self.mod.getDelta();
+  @arguments()
+  fn get_delta() {
+    return love.timer.getDelta();
+  }
+  /**
+   * Pauses the current thread for the specified amount of time.
+   */
+  @arguments(("s", "any"))
+  fn sleep(s) {
+    return love.timer.sleep(s);
+  }
+  /**
+   * Returns the average delta time (seconds per frame) over the last second.
+   */
+  @arguments()
+  fn get_average_delta() {
+    return love.timer.getAverageDelta();
   }
 }
 
-let timer = Timer.new(love.timer);
-timer.Timer = Timer;
-
-return timer;
+return Timer;
