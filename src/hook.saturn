@@ -1,15 +1,8 @@
 // Hook module
-
-
 fn hook(name, doc) {
-
   return (target, name) => {
-
     love[name] = target;
-
   };
-
 }
-
 
 return hook;

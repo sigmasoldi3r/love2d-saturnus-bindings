@@ -3,41 +3,11 @@ use { rtti: { arguments } } in std;
 
 class Keyboard {
   /**
-   * Gets the hardware scancode corresponding to the given key.
-   * Unlike key constants, Scancodes are keyboard layout-independent. For example the scancode 'w' will be generated if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
-   * Scancodes are useful for creating default controls that have the same physical locations on on all systems.
-   */
-  @arguments(("key", "any"))
-  fn get_scancode_from_key(key) {
-    return love.keyboard.getScancodeFromKey(key);
-  }
-  /**
    * Gets whether screen keyboard is supported.
    */
   @arguments()
   fn has_screen_keyboard() {
     return love.keyboard.hasScreenKeyboard();
-  }
-  /**
-   * Enables or disables key repeat for love.keypressed. It is disabled by default.
-   */
-  @arguments(("enable", "any"))
-  fn set_key_repeat(enable) {
-    return love.keyboard.setKeyRepeat(enable);
-  }
-  /**
-   * Checks whether a certain key is down. Not to be confused with love.keypressed or love.keyreleased.
-   */
-  @arguments(("key", "any"))
-  fn is_down(key) {
-    return love.keyboard.isDown(key);
-  }
-  /**
-   * Gets whether key repeat is enabled.
-   */
-  @arguments()
-  fn has_key_repeat() {
-    return love.keyboard.hasKeyRepeat();
   }
   /**
    * Gets whether text input events are enabled.
@@ -47,12 +17,11 @@ class Keyboard {
     return love.keyboard.hasTextInput();
   }
   /**
-   * Checks whether the specified Scancodes are pressed. Not to be confused with love.keypressed or love.keyreleased.
-   * Unlike regular KeyConstants, Scancodes are keyboard layout-independent. The scancode 'w' is used if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
+   * Gets whether key repeat is enabled.
    */
-  @arguments(("scancode", "any"), ("...", "any"))
-  fn is_scancode_down(scancode, *args) {
-    return love.keyboard.isScancodeDown(scancode, ...args);
+  @arguments()
+  fn has_key_repeat() {
+    return love.keyboard.hasKeyRepeat();
   }
   /**
    * Enables or disables text input events. It is enabled by default on Windows, Mac, and Linux, and disabled by default on iOS and Android.
@@ -63,6 +32,13 @@ class Keyboard {
     return love.keyboard.setTextInput(enable);
   }
   /**
+   * Enables or disables key repeat for love.keypressed. It is disabled by default.
+   */
+  @arguments(("enable", "any"))
+  fn set_key_repeat(enable) {
+    return love.keyboard.setKeyRepeat(enable);
+  }
+  /**
    * Gets the key corresponding to the given hardware scancode.
    * Unlike key constants, Scancodes are keyboard layout-independent. For example the scancode 'w' will be generated if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
    * Scancodes are useful for creating default controls that have the same physical locations on on all systems.
@@ -70,6 +46,30 @@ class Keyboard {
   @arguments(("scancode", "any"))
   fn get_key_from_scancode(scancode) {
     return love.keyboard.getKeyFromScancode(scancode);
+  }
+  /**
+   * Checks whether a certain key is down. Not to be confused with love.keypressed or love.keyreleased.
+   */
+  @arguments(("key", "any"))
+  fn is_down(key) {
+    return love.keyboard.isDown(key);
+  }
+  /**
+   * Gets the hardware scancode corresponding to the given key.
+   * Unlike key constants, Scancodes are keyboard layout-independent. For example the scancode 'w' will be generated if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
+   * Scancodes are useful for creating default controls that have the same physical locations on on all systems.
+   */
+  @arguments(("key", "any"))
+  fn get_scancode_from_key(key) {
+    return love.keyboard.getScancodeFromKey(key);
+  }
+  /**
+   * Checks whether the specified Scancodes are pressed. Not to be confused with love.keypressed or love.keyreleased.
+   * Unlike regular KeyConstants, Scancodes are keyboard layout-independent. The scancode 'w' is used if the key in the same place as the 'w' key on an American keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
+   */
+  @arguments(("scancode", "any"), ("...", "any"))
+  fn is_scancode_down(scancode, *args) {
+    return love.keyboard.isScancodeDown(scancode, ...args);
   }
 }
 

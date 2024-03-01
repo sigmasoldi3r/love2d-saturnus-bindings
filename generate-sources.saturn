@@ -160,8 +160,8 @@ for k in pairs(modules) {
   init->write("use love2d." ++ data.name ++ ";\n");
 }
 
-// Extra import: hooks
-init->write("use love2d.hooks;\n");
+// Extra import: hook function
+init->write("use love2d.hook;\n");
 
 // Generate core module
 init->write("\nlet core = {\n");
@@ -187,20 +187,22 @@ for k in pairs(modules) {
   print("Exporting module " ++ data.name ++ "...");
   init->write("  " ++ data.name ++ ",\n");
 }
-init->write("  hooks,\n");
+init->write("  hook,\n");
 init->write("  core\n");
 init->write("};\n");
 init->close();
 
 // Hooks module
-let hooks = io.open("src/hooks.saturn", "w");
-hooks->write(
-  "// Hook module\n\n
-fn hook(name, doc) {\n
-  return (target, name) => {\n
-    love[name] = target;\n
-  };\n
-}\n\n
-return hook;\n"
+let hook = io.open("src/hook.saturn", "w");
+hook->write(
+  "// Hook module
+fn hook(name, doc) {
+  return (target, name) => {
+    love[name] = target;
+  };
+}
+
+return hook;
+"
 );
-hooks->close();
+hook->close();

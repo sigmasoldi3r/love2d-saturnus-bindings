@@ -3,25 +3,90 @@ use { rtti: { arguments } } in std;
 
 class Window {
   /**
-   * Gets whether the window is fullscreen.
-   */
-  @arguments()
-  fn get_fullscreen() {
-    return love.window.getFullscreen();
-  }
-  /**
-   * Gets current device display orientation.
-   */
-  @arguments(("displayindex", "any"))
-  fn get_display_orientation(displayindex) {
-    return love.window.getDisplayOrientation(displayindex);
-  }
-  /**
    * Sets vertical synchronization mode.
    */
   @arguments(("vsync", "any"))
   fn set_v_sync(vsync) {
     return love.window.setVSync(vsync);
+  }
+  /**
+   * Checks if the window is open.
+   */
+  @arguments()
+  fn is_open() {
+    return love.window.isOpen();
+  }
+  /**
+   * Gets whether the Window is currently maximized.
+   * The window can be maximized if it is not fullscreen and is resizable, and either the user has pressed the window's Maximize button or love.window.maximize has been called.
+   */
+  @arguments()
+  fn is_maximized() {
+    return love.window.isMaximized();
+  }
+  /**
+   * Gets the position of the window on the screen.
+   * The window position is in the coordinate space of the display it is currently in.
+   */
+  @arguments()
+  fn get_position() {
+    return love.window.getPosition();
+  }
+  /**
+   * Sets the window icon until the game is quit. Not all operating systems support very large icon images.
+   */
+  @arguments(("imagedata", "any"))
+  fn set_icon(imagedata) {
+    return love.window.setIcon(imagedata);
+  }
+  /**
+   * Checks if the game window has mouse focus.
+   */
+  @arguments()
+  fn has_mouse_focus() {
+    return love.window.hasMouseFocus();
+  }
+  /**
+   * Sets the window title.
+   */
+  @arguments(("title", "any"))
+  fn set_title(title) {
+    return love.window.setTitle(title);
+  }
+  /**
+   * Gets whether the Window is currently minimized.
+   */
+  @arguments()
+  fn is_minimized() {
+    return love.window.isMinimized();
+  }
+  /**
+   * Gets the window title.
+   */
+  @arguments()
+  fn get_title() {
+    return love.window.getTitle();
+  }
+  /**
+   * Restores the size and position of the window if it was minimized or maximized.
+   */
+  @arguments()
+  fn restore() {
+    return love.window.restore();
+  }
+  /**
+   * Gets the window icon.
+   */
+  @arguments()
+  fn get_icon() {
+    return love.window.getIcon();
+  }
+  /**
+   * Gets the display mode and properties of the window.
+   */
+  @arguments()
+  fn get_mode() {
+    return love.window.getMode();
   }
   /**
    * Converts a number from density-independent units to pixels.
@@ -34,12 +99,12 @@ class Window {
     return love.window.toPixels(value);
   }
   /**
-   * Sets whether the display is allowed to sleep while the program is running.
-   * Display sleep is disabled by default. Some types of input (e.g. joystick button presses) might not prevent the display from sleeping, if display sleep is allowed.
+   * Makes the window as large as possible.
+   * This function has no effect if the window isn't resizable, since it essentially programmatically presses the window's 'maximize' button.
    */
-  @arguments(("enable", "any"))
-  fn set_display_sleep_enabled(enable) {
-    return love.window.setDisplaySleepEnabled(enable);
+  @arguments()
+  fn maximize() {
+    return love.window.maximize();
   }
   /**
    * Converts a number from pixels to density-independent units.
@@ -52,11 +117,88 @@ class Window {
     return love.window.fromPixels(pixelvalue);
   }
   /**
+   * Causes the window to request the attention of the user if it is not in the foreground.
+   * In Windows the taskbar icon will flash, and in OS X the dock icon will bounce.
+   */
+  @arguments(("continuous", "any"))
+  fn request_attention(continuous) {
+    return love.window.requestAttention(continuous);
+  }
+  /**
+   * Sets the display mode and properties of the window.
+   * If width or height is 0, setMode will use the width and height of the desktop. 
+   * Changing the display mode may have side effects: for example, canvases will be cleared and values sent to shaders with canvases beforehand or re-draw to them afterward if you need to.
+   */
+  @arguments(("width", "any"), ("height", "any"), ("flags", "any"))
+  fn set_mode(width, height, flags) {
+    return love.window.setMode(width, height, flags);
+  }
+  /**
+   * Checks if the game window is visible.
+   * The window is considered visible if it's not minimized and the program isn't hidden.
+   */
+  @arguments()
+  fn is_visible() {
+    return love.window.isVisible();
+  }
+  /**
+   * Gets a list of supported fullscreen modes.
+   */
+  @arguments(("displayindex", "any"))
+  fn get_fullscreen_modes(displayindex) {
+    return love.window.getFullscreenModes(displayindex);
+  }
+  /**
+   * Sets the display mode and properties of the window, without modifying unspecified properties.
+   * If width or height is 0, updateMode will use the width and height of the desktop. 
+   * Changing the display mode may have side effects: for example, canvases will be cleared. Make sure to save the contents of canvases beforehand or re-draw to them afterward if you need to.
+   */
+  @arguments(("width", "any"), ("height", "any"), ("settings", "any"))
+  fn update_mode(width, height, settings) {
+    return love.window.updateMode(width, height, settings);
+  }
+  /**
+   * Sets the position of the window on the screen.
+   * The window position is in the coordinate space of the specified display.
+   */
+  @arguments(("x", "any"), ("y", "any"), ("displayindex", "any"))
+  fn set_position(x, y, displayindex) {
+    return love.window.setPosition(x, y, displayindex);
+  }
+  /**
+   * Gets current vertical synchronization (vsync).
+   */
+  @arguments()
+  fn get_v_sync() {
+    return love.window.getVSync();
+  }
+  /**
+   * Enters or exits fullscreen. The display to use when entering fullscreen is chosen based on which display the window is currently in, if multiple monitors are connected.
+   */
+  @arguments(("fullscreen", "any"))
+  fn set_fullscreen(fullscreen) {
+    return love.window.setFullscreen(fullscreen);
+  }
+  /**
    * Gets the number of connected monitors.
    */
   @arguments()
   fn get_display_count() {
     return love.window.getDisplayCount();
+  }
+  /**
+   * Minimizes the window to the system's task bar / dock.
+   */
+  @arguments()
+  fn minimize() {
+    return love.window.minimize();
+  }
+  /**
+   * Gets the width and height of the desktop.
+   */
+  @arguments(("displayindex", "any"))
+  fn get_desktop_dimensions(displayindex) {
+    return love.window.getDesktopDimensions(displayindex);
   }
   /**
    * Gets whether the display is allowed to sleep while the program is running.
@@ -67,19 +209,26 @@ class Window {
     return love.window.isDisplaySleepEnabled();
   }
   /**
-   * Gets the window icon.
+   * Displays a message box dialog above the love window. The message box contains a title, optional text, and buttons.
    */
-  @arguments()
-  fn get_icon() {
-    return love.window.getIcon();
+  @arguments(("title", "any"), ("message", "any"), ("type", "any"), ("attachtowindow", "any"))
+  fn show_message_box(title, message, type, attachtowindow) {
+    return love.window.showMessageBox(title, message, type, attachtowindow);
   }
   /**
-   * Checks if the game window is visible.
-   * The window is considered visible if it's not minimized and the program isn't hidden.
+   * Sets whether the display is allowed to sleep while the program is running.
+   * Display sleep is disabled by default. Some types of input (e.g. joystick button presses) might not prevent the display from sleeping, if display sleep is allowed.
+   */
+  @arguments(("enable", "any"))
+  fn set_display_sleep_enabled(enable) {
+    return love.window.setDisplaySleepEnabled(enable);
+  }
+  /**
+   * Gets whether the window is fullscreen.
    */
   @arguments()
-  fn is_visible() {
-    return love.window.isVisible();
+  fn get_fullscreen() {
+    return love.window.getFullscreen();
   }
   /**
    * Gets the DPI scale factor associated with the window.
@@ -92,125 +241,6 @@ class Window {
     return love.window.getDPIScale();
   }
   /**
-   * Sets the display mode and properties of the window.
-   * If width or height is 0, setMode will use the width and height of the desktop. 
-   * Changing the display mode may have side effects: for example, canvases will be cleared and values sent to shaders with canvases beforehand or re-draw to them afterward if you need to.
-   */
-  @arguments(("width", "any"), ("height", "any"), ("flags", "any"))
-  fn set_mode(width, height, flags) {
-    return love.window.setMode(width, height, flags);
-  }
-  /**
-   * Gets current vertical synchronization (vsync).
-   */
-  @arguments()
-  fn get_v_sync() {
-    return love.window.getVSync();
-  }
-  /**
-   * Sets the position of the window on the screen.
-   * The window position is in the coordinate space of the specified display.
-   */
-  @arguments(("x", "any"), ("y", "any"), ("displayindex", "any"))
-  fn set_position(x, y, displayindex) {
-    return love.window.setPosition(x, y, displayindex);
-  }
-  /**
-   * Gets whether the Window is currently maximized.
-   * The window can be maximized if it is not fullscreen and is resizable, and either the user has pressed the window's Maximize button or love.window.maximize has been called.
-   */
-  @arguments()
-  fn is_maximized() {
-    return love.window.isMaximized();
-  }
-  /**
-   * Gets the display mode and properties of the window.
-   */
-  @arguments()
-  fn get_mode() {
-    return love.window.getMode();
-  }
-  /**
-   * Gets the name of a display.
-   */
-  @arguments(("displayindex", "any"))
-  fn get_display_name(displayindex) {
-    return love.window.getDisplayName(displayindex);
-  }
-  /**
-   * Restores the size and position of the window if it was minimized or maximized.
-   */
-  @arguments()
-  fn restore() {
-    return love.window.restore();
-  }
-  /**
-   * Gets the position of the window on the screen.
-   * The window position is in the coordinate space of the display it is currently in.
-   */
-  @arguments()
-  fn get_position() {
-    return love.window.getPosition();
-  }
-  /**
-   * Sets the display mode and properties of the window, without modifying unspecified properties.
-   * If width or height is 0, updateMode will use the width and height of the desktop. 
-   * Changing the display mode may have side effects: for example, canvases will be cleared. Make sure to save the contents of canvases beforehand or re-draw to them afterward if you need to.
-   */
-  @arguments(("width", "any"), ("height", "any"), ("settings", "any"))
-  fn update_mode(width, height, settings) {
-    return love.window.updateMode(width, height, settings);
-  }
-  /**
-   * Displays a message box dialog above the love window. The message box contains a title, optional text, and buttons.
-   */
-  @arguments(("title", "any"), ("message", "any"), ("type", "any"), ("attachtowindow", "any"))
-  fn show_message_box(title, message, type, attachtowindow) {
-    return love.window.showMessageBox(title, message, type, attachtowindow);
-  }
-  /**
-   * Gets the window title.
-   */
-  @arguments()
-  fn get_title() {
-    return love.window.getTitle();
-  }
-  /**
-   * Sets the window icon until the game is quit. Not all operating systems support very large icon images.
-   */
-  @arguments(("imagedata", "any"))
-  fn set_icon(imagedata) {
-    return love.window.setIcon(imagedata);
-  }
-  /**
-   * Gets the width and height of the desktop.
-   */
-  @arguments(("displayindex", "any"))
-  fn get_desktop_dimensions(displayindex) {
-    return love.window.getDesktopDimensions(displayindex);
-  }
-  /**
-   * Enters or exits fullscreen. The display to use when entering fullscreen is chosen based on which display the window is currently in, if multiple monitors are connected.
-   */
-  @arguments(("fullscreen", "any"))
-  fn set_fullscreen(fullscreen) {
-    return love.window.setFullscreen(fullscreen);
-  }
-  /**
-   * Checks if the window is open.
-   */
-  @arguments()
-  fn is_open() {
-    return love.window.isOpen();
-  }
-  /**
-   * Gets a list of supported fullscreen modes.
-   */
-  @arguments(("displayindex", "any"))
-  fn get_fullscreen_modes(displayindex) {
-    return love.window.getFullscreenModes(displayindex);
-  }
-  /**
    * Checks if the game window has keyboard focus.
    */
   @arguments()
@@ -218,11 +248,11 @@ class Window {
     return love.window.hasFocus();
   }
   /**
-   * Checks if the game window has mouse focus.
+   * Gets area inside the window which is known to be unobstructed by a system title bar, the iPhone X notch, etc. Useful for making sure UI elements can be seen by the user.
    */
   @arguments()
-  fn has_mouse_focus() {
-    return love.window.hasMouseFocus();
+  fn get_safe_area() {
+    return love.window.getSafeArea();
   }
   /**
    * Closes the window. It can be reopened with love.window.setMode.
@@ -232,48 +262,18 @@ class Window {
     return love.window.close();
   }
   /**
-   * Gets whether the Window is currently minimized.
+   * Gets the name of a display.
    */
-  @arguments()
-  fn is_minimized() {
-    return love.window.isMinimized();
+  @arguments(("displayindex", "any"))
+  fn get_display_name(displayindex) {
+    return love.window.getDisplayName(displayindex);
   }
   /**
-   * Makes the window as large as possible.
-   * This function has no effect if the window isn't resizable, since it essentially programmatically presses the window's 'maximize' button.
+   * Gets current device display orientation.
    */
-  @arguments()
-  fn maximize() {
-    return love.window.maximize();
-  }
-  /**
-   * Minimizes the window to the system's task bar / dock.
-   */
-  @arguments()
-  fn minimize() {
-    return love.window.minimize();
-  }
-  /**
-   * Sets the window title.
-   */
-  @arguments(("title", "any"))
-  fn set_title(title) {
-    return love.window.setTitle(title);
-  }
-  /**
-   * Causes the window to request the attention of the user if it is not in the foreground.
-   * In Windows the taskbar icon will flash, and in OS X the dock icon will bounce.
-   */
-  @arguments(("continuous", "any"))
-  fn request_attention(continuous) {
-    return love.window.requestAttention(continuous);
-  }
-  /**
-   * Gets area inside the window which is known to be unobstructed by a system title bar, the iPhone X notch, etc. Useful for making sure UI elements can be seen by the user.
-   */
-  @arguments()
-  fn get_safe_area() {
-    return love.window.getSafeArea();
+  @arguments(("displayindex", "any"))
+  fn get_display_orientation(displayindex) {
+    return love.window.getDisplayOrientation(displayindex);
   }
 }
 

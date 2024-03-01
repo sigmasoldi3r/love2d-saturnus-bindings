@@ -3,13 +3,6 @@ use { rtti: { arguments } } in std;
 
 class Mouse {
   /**
-   * Gets the current Cursor.
-   */
-  @arguments()
-  fn get_cursor() {
-    return love.mouse.getCursor();
-  }
-  /**
    * Creates a new hardware Cursor object from an image file or ImageData.
    * Hardware cursors are framerate-independent and work the same way as normal operating system cursors. Unlike drawing an image at the mouse's current coordinates, hardware cursors never have visible lag between when the mouse is moved and when the cursor position updates, even at low framerates.
    * The hot spot is the point the operating system uses to determine what was clicked and at what position the mouse cursor is. For example, the normal arrow pointer normally has its hot spot at the top left of the image, but a crosshair cursor might have it in the middle.
@@ -17,6 +10,13 @@ class Mouse {
   @arguments(("imageData", "any"), ("hotx", "any"), ("hoty", "any"))
   fn new_cursor(imageData, hotx, hoty) {
     return love.mouse.newCursor(imageData, hotx, hoty);
+  }
+  /**
+   * Returns the current position of the mouse.
+   */
+  @arguments()
+  fn get_position() {
+    return love.mouse.getPosition();
   }
   /**
    * Sets whether relative mode is enabled for the mouse.
@@ -28,13 +28,6 @@ class Mouse {
     return love.mouse.setRelativeMode(enable);
   }
   /**
-   * Checks if the mouse is grabbed.
-   */
-  @arguments()
-  fn is_grabbed() {
-    return love.mouse.isGrabbed();
-  }
-  /**
    * Gets a Cursor object representing a system-native hardware cursor.
    * Hardware cursors are framerate-independent and work the same way as normal operating system cursors. Unlike drawing an image at the mouse's current coordinates, hardware cursors never have visible lag between when the mouse is moved and when the cursor position updates, even at low framerates.
    */
@@ -43,12 +36,18 @@ class Mouse {
     return love.mouse.getSystemCursor(ctype);
   }
   /**
-   * Gets whether cursor functionality is supported.
-   * If it isn't supported, calling love.mouse.newCursor and love.mouse.getSystemCursor will cause an error. Mobile devices do not support cursors.
+   * Checks if the cursor is visible.
    */
   @arguments()
-  fn is_cursor_supported() {
-    return love.mouse.isCursorSupported();
+  fn is_visible() {
+    return love.mouse.isVisible();
+  }
+  /**
+   * Grabs the mouse and confines it to the window.
+   */
+  @arguments(("grab", "any"))
+  fn set_grabbed(grab) {
+    return love.mouse.setGrabbed(grab);
   }
   /**
    * Sets the current mouse cursor.
@@ -56,6 +55,20 @@ class Mouse {
   @arguments(("cursor", "any"))
   fn set_cursor(cursor) {
     return love.mouse.setCursor(cursor);
+  }
+  /**
+   * Sets the current position of the mouse. Non-integer values are floored.
+   */
+  @arguments(("x", "any"), ("y", "any"))
+  fn set_position(x, y) {
+    return love.mouse.setPosition(x, y);
+  }
+  /**
+   * Gets the current Cursor.
+   */
+  @arguments()
+  fn get_cursor() {
+    return love.mouse.getCursor();
   }
   /**
    * Sets the current Y position of the mouse.
@@ -66,34 +79,11 @@ class Mouse {
     return love.mouse.setY(y);
   }
   /**
-   * Sets the current visibility of the cursor.
+   * Checks if the mouse is grabbed.
    */
-  @arguments(("visible", "any"))
-  fn set_visible(visible) {
-    return love.mouse.setVisible(visible);
-  }
-  /**
-   * Checks whether a certain mouse button is down.
-   * This function does not detect mouse wheel scrolling; you must use the love.wheelmoved (or love.mousepressed in version 0.9.2 and older) callback for that. 
-   */
-  @arguments(("button", "any"), ("...", "any"))
-  fn is_down(button, *args) {
-    return love.mouse.isDown(button, ...args);
-  }
-  /**
-   * Sets the current X position of the mouse.
-   * Non-integer values are floored.
-   */
-  @arguments(("x", "any"))
-  fn set_x(x) {
-    return love.mouse.setX(x);
-  }
-  /**
-   * Sets the current position of the mouse. Non-integer values are floored.
-   */
-  @arguments(("x", "any"), ("y", "any"))
-  fn set_position(x, y) {
-    return love.mouse.setPosition(x, y);
+  @arguments()
+  fn is_grabbed() {
+    return love.mouse.isGrabbed();
   }
   /**
    * Returns the current y-position of the mouse.
@@ -101,27 +91,6 @@ class Mouse {
   @arguments()
   fn get_y() {
     return love.mouse.getY();
-  }
-  /**
-   * Checks if the cursor is visible.
-   */
-  @arguments()
-  fn is_visible() {
-    return love.mouse.isVisible();
-  }
-  /**
-   * Returns the current position of the mouse.
-   */
-  @arguments()
-  fn get_position() {
-    return love.mouse.getPosition();
-  }
-  /**
-   * Returns the current x-position of the mouse.
-   */
-  @arguments()
-  fn get_x() {
-    return love.mouse.getX();
   }
   /**
    * Gets whether relative mode is enabled for the mouse.
@@ -133,11 +102,42 @@ class Mouse {
     return love.mouse.getRelativeMode();
   }
   /**
-   * Grabs the mouse and confines it to the window.
+   * Sets the current visibility of the cursor.
    */
-  @arguments(("grab", "any"))
-  fn set_grabbed(grab) {
-    return love.mouse.setGrabbed(grab);
+  @arguments(("visible", "any"))
+  fn set_visible(visible) {
+    return love.mouse.setVisible(visible);
+  }
+  /**
+   * Returns the current x-position of the mouse.
+   */
+  @arguments()
+  fn get_x() {
+    return love.mouse.getX();
+  }
+  /**
+   * Sets the current X position of the mouse.
+   * Non-integer values are floored.
+   */
+  @arguments(("x", "any"))
+  fn set_x(x) {
+    return love.mouse.setX(x);
+  }
+  /**
+   * Gets whether cursor functionality is supported.
+   * If it isn't supported, calling love.mouse.newCursor and love.mouse.getSystemCursor will cause an error. Mobile devices do not support cursors.
+   */
+  @arguments()
+  fn is_cursor_supported() {
+    return love.mouse.isCursorSupported();
+  }
+  /**
+   * Checks whether a certain mouse button is down.
+   * This function does not detect mouse wheel scrolling; you must use the love.wheelmoved (or love.mousepressed in version 0.9.2 and older) callback for that. 
+   */
+  @arguments(("button", "any"), ("...", "any"))
+  fn is_down(button, *args) {
+    return love.mouse.isDown(button, ...args);
   }
 }
 

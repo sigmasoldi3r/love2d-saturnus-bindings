@@ -18,7 +18,7 @@ use love2d.timer;
 use love2d.touch;
 use love2d.video;
 use love2d.window;
-use love2d.hooks;
+use love2d.hook;
 
 let core = {
   get_version: love.getVersion,
@@ -49,6 +49,6 @@ return {
   touch,
   video,
   window,
-  hooks,
+  hook,
   core
 };

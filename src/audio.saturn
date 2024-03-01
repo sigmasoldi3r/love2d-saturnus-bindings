@@ -3,25 +3,11 @@ use { rtti: { arguments } } in std;
 
 class Audio {
   /**
-   * Gets the maximum number of active Effects in a single Source object, that the system can support.
+   * Returns the orientation of the listener.
    */
   @arguments()
-  fn get_max_source_effects() {
-    return love.audio.getMaxSourceEffects();
-  }
-  /**
-   * Gets the current global scale factor for velocity-based doppler effects.
-   */
-  @arguments()
-  fn get_doppler_scale() {
-    return love.audio.getDopplerScale();
-  }
-  /**
-   * Returns the master volume.
-   */
-  @arguments()
-  fn get_volume() {
-    return love.audio.getVolume();
+  fn get_orientation() {
+    return love.audio.getOrientation();
   }
   /**
    * Stops currently played sources.
@@ -31,20 +17,18 @@ class Audio {
     return love.audio.stop();
   }
   /**
-   * Gets a list of RecordingDevices on the system.
-   * The first device in the list is the user's default recording device. The list may be empty if there are no microphones connected to the system.
-   * Audio recording is currently not supported on iOS.
+   * Returns the position of the listener. Please note that positional audio only works for mono (i.e. non-stereo) sources.
    */
   @arguments()
-  fn get_recording_devices() {
-    return love.audio.getRecordingDevices();
+  fn get_position() {
+    return love.audio.getPosition();
   }
   /**
-   * Pauses specific or all currently played Sources.
+   * Returns the master volume.
    */
   @arguments()
-  fn pause() {
-    return love.audio.pause();
+  fn get_volume() {
+    return love.audio.getVolume();
   }
   /**
    * Sets the master volume.
@@ -54,25 +38,11 @@ class Audio {
     return love.audio.setVolume(volume);
   }
   /**
-   * Returns the velocity of the listener.
+   * Sets the velocity of the listener.
    */
-  @arguments()
-  fn get_velocity() {
-    return love.audio.getVelocity();
-  }
-  /**
-   * Creates a new Source usable for real-time generated sound playback with Source:queue.
-   */
-  @arguments(("samplerate", "any"), ("bitdepth", "any"), ("channels", "any"), ("buffercount", "any"))
-  fn new_queueable_source(samplerate, bitdepth, channels, buffercount) {
-    return love.audio.newQueueableSource(samplerate, bitdepth, channels, buffercount);
-  }
-  /**
-   * Sets a global scale factor for velocity-based doppler effects. The default scale value is 1.
-   */
-  @arguments(("scale", "any"))
-  fn set_doppler_scale(scale) {
-    return love.audio.setDopplerScale(scale);
+  @arguments(("x", "any"), ("y", "any"), ("z", "any"))
+  fn set_velocity(x, y, z) {
+    return love.audio.setVelocity(x, y, z);
   }
   /**
    * Sets the position of the listener, which determines how sounds play.
@@ -82,90 +52,11 @@ class Audio {
     return love.audio.setPosition(x, y, z);
   }
   /**
-   * Sets the velocity of the listener.
-   */
-  @arguments(("x", "any"), ("y", "any"), ("z", "any"))
-  fn set_velocity(x, y, z) {
-    return love.audio.setVelocity(x, y, z);
-  }
-  /**
-   * Returns the position of the listener. Please note that positional audio only works for mono (i.e. non-stereo) sources.
+   * Gets the maximum number of active Effects in a single Source object, that the system can support.
    */
   @arguments()
-  fn get_position() {
-    return love.audio.getPosition();
-  }
-  /**
-   * Sets whether the system should mix the audio with the system's audio.
-   */
-  @arguments(("mix", "any"))
-  fn set_mix_with_system(mix) {
-    return love.audio.setMixWithSystem(mix);
-  }
-  /**
-   * Defines an effect that can be applied to a Source.
-   * Not all system supports audio effects. Use love.audio.isEffectsSupported to check.
-   */
-  @arguments(("name", "any"), ("settings", "any"))
-  fn set_effect(name, settings) {
-    return love.audio.setEffect(name, settings);
-  }
-  /**
-   * Sets the distance attenuation model.
-   */
-  @arguments(("model", "any"))
-  fn set_distance_model(model) {
-    return love.audio.setDistanceModel(model);
-  }
-  /**
-   * Sets the orientation of the listener.
-   */
-  @arguments(("fx, fy, fz", "any"), ("ux, uy, uz", "any"))
-  fn set_orientation(fx, fy, fz, ux, uy, uz) {
-    return love.audio.setOrientation(fx, fy, fz, ux, uy, uz);
-  }
-  /**
-   * Gets whether audio effects are supported in the system.
-   */
-  @arguments()
-  fn is_effects_supported() {
-    return love.audio.isEffectsSupported();
-  }
-  /**
-   * Creates a new Source from a filepath, File, Decoder or SoundData.
-   * Sources created from SoundData are always static.
-   */
-  @arguments(("filename", "any"), ("type", "any"))
-  fn new_source(filename, type) {
-    return love.audio.newSource(filename, type);
-  }
-  /**
-   * Plays the specified Source.
-   */
-  @arguments(("source", "any"))
-  fn play(source) {
-    return love.audio.play(source);
-  }
-  /**
-   * Gets a list of the names of the currently enabled effects.
-   */
-  @arguments()
-  fn get_active_effects() {
-    return love.audio.getActiveEffects();
-  }
-  /**
-   * Gets the maximum number of active effects supported by the system.
-   */
-  @arguments()
-  fn get_max_scene_effects() {
-    return love.audio.getMaxSceneEffects();
-  }
-  /**
-   * Gets the current number of simultaneously playing sources.
-   */
-  @arguments()
-  fn get_active_source_count() {
-    return love.audio.getActiveSourceCount();
+  fn get_max_source_effects() {
+    return love.audio.getMaxSourceEffects();
   }
   /**
    * Returns the distance attenuation model.
@@ -182,11 +73,68 @@ class Audio {
     return love.audio.getSourceCount();
   }
   /**
-   * Returns the orientation of the listener.
+   * Defines an effect that can be applied to a Source.
+   * Not all system supports audio effects. Use love.audio.isEffectsSupported to check.
+   */
+  @arguments(("name", "any"), ("settings", "any"))
+  fn set_effect(name, settings) {
+    return love.audio.setEffect(name, settings);
+  }
+  /**
+   * Gets the maximum number of active effects supported by the system.
    */
   @arguments()
-  fn get_orientation() {
-    return love.audio.getOrientation();
+  fn get_max_scene_effects() {
+    return love.audio.getMaxSceneEffects();
+  }
+  /**
+   * Returns the velocity of the listener.
+   */
+  @arguments()
+  fn get_velocity() {
+    return love.audio.getVelocity();
+  }
+  /**
+   * Sets whether the system should mix the audio with the system's audio.
+   */
+  @arguments(("mix", "any"))
+  fn set_mix_with_system(mix) {
+    return love.audio.setMixWithSystem(mix);
+  }
+  /**
+   * Sets a global scale factor for velocity-based doppler effects. The default scale value is 1.
+   */
+  @arguments(("scale", "any"))
+  fn set_doppler_scale(scale) {
+    return love.audio.setDopplerScale(scale);
+  }
+  /**
+   * Sets the orientation of the listener.
+   */
+  @arguments(("fx, fy, fz", "any"), ("ux, uy, uz", "any"))
+  fn set_orientation(fx, fy, fz, ux, uy, uz) {
+    return love.audio.setOrientation(fx, fy, fz, ux, uy, uz);
+  }
+  /**
+   * Sets the distance attenuation model.
+   */
+  @arguments(("model", "any"))
+  fn set_distance_model(model) {
+    return love.audio.setDistanceModel(model);
+  }
+  /**
+   * Plays the specified Source.
+   */
+  @arguments(("source", "any"))
+  fn play(source) {
+    return love.audio.play(source);
+  }
+  /**
+   * Pauses specific or all currently played Sources.
+   */
+  @arguments()
+  fn pause() {
+    return love.audio.pause();
   }
   /**
    * Gets the settings associated with an effect.
@@ -194,6 +142,58 @@ class Audio {
   @arguments(("name", "any"))
   fn get_effect(name) {
     return love.audio.getEffect(name);
+  }
+  /**
+   * Gets whether audio effects are supported in the system.
+   */
+  @arguments()
+  fn is_effects_supported() {
+    return love.audio.isEffectsSupported();
+  }
+  /**
+   * Gets the current global scale factor for velocity-based doppler effects.
+   */
+  @arguments()
+  fn get_doppler_scale() {
+    return love.audio.getDopplerScale();
+  }
+  /**
+   * Gets the current number of simultaneously playing sources.
+   */
+  @arguments()
+  fn get_active_source_count() {
+    return love.audio.getActiveSourceCount();
+  }
+  /**
+   * Gets a list of the names of the currently enabled effects.
+   */
+  @arguments()
+  fn get_active_effects() {
+    return love.audio.getActiveEffects();
+  }
+  /**
+   * Creates a new Source from a filepath, File, Decoder or SoundData.
+   * Sources created from SoundData are always static.
+   */
+  @arguments(("filename", "any"), ("type", "any"))
+  fn new_source(filename, type) {
+    return love.audio.newSource(filename, type);
+  }
+  /**
+   * Creates a new Source usable for real-time generated sound playback with Source:queue.
+   */
+  @arguments(("samplerate", "any"), ("bitdepth", "any"), ("channels", "any"), ("buffercount", "any"))
+  fn new_queueable_source(samplerate, bitdepth, channels, buffercount) {
+    return love.audio.newQueueableSource(samplerate, bitdepth, channels, buffercount);
+  }
+  /**
+   * Gets a list of RecordingDevices on the system.
+   * The first device in the list is the user's default recording device. The list may be empty if there are no microphones connected to the system.
+   * Audio recording is currently not supported on iOS.
+   */
+  @arguments()
+  fn get_recording_devices() {
+    return love.audio.getRecordingDevices();
   }
 }
 

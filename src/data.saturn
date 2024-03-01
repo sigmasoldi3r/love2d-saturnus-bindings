@@ -3,12 +3,11 @@ use { rtti: { arguments } } in std;
 
 class Data {
   /**
-   * Unpacks (deserializes) a byte-string or Data into simple Lua values.
-   * This function behaves the same as Lua 5.3's string.unpack.
+   * Decompresses a CompressedData or previously compressed string or Data object.
    */
-  @arguments(("format", "any"), ("datastring", "any"), ("pos", "any"))
-  fn unpack(format, datastring, pos) {
-    return love.data.unpack(format, datastring, pos);
+  @arguments(("container", "any"), ("compressedData", "any"))
+  fn decompress(container, compressedData) {
+    return love.data.decompress(container, compressedData);
   }
   /**
    * Gets the size in bytes that a given format used with love.data.pack will use.
@@ -19,11 +18,34 @@ class Data {
     return love.data.getPackedSize(format);
   }
   /**
-   * Decompresses a CompressedData or previously compressed string or Data object.
+   * Compute the message digest of a string using a specified hash algorithm.
    */
-  @arguments(("container", "any"), ("compressedData", "any"))
-  fn decompress(container, compressedData) {
-    return love.data.decompress(container, compressedData);
+  @arguments(("hashFunction", "any"), ("string", "any"))
+  fn hash(hashFunction, string) {
+    return love.data.hash(hashFunction, string);
+  }
+  /**
+   * Unpacks (deserializes) a byte-string or Data into simple Lua values.
+   * This function behaves the same as Lua 5.3's string.unpack.
+   */
+  @arguments(("format", "any"), ("datastring", "any"), ("pos", "any"))
+  fn unpack(format, datastring, pos) {
+    return love.data.unpack(format, datastring, pos);
+  }
+  /**
+   * Packs (serializes) simple Lua values.
+   * This function behaves the same as Lua 5.3's string.pack.
+   */
+  @arguments(("container", "any"), ("format", "any"), ("v1", "any"), ("...", "any"))
+  fn pack(container, format, v1, *args) {
+    return love.data.pack(container, format, v1, ...args);
+  }
+  /**
+   * Decode Data or a string from any of the EncodeFormats to Data or string.
+   */
+  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"))
+  fn decode(container, format, sourceString) {
+    return love.data.decode(container, format, sourceString);
   }
   /**
    * Creates a new Data object containing arbitrary bytes.
@@ -34,20 +56,6 @@ class Data {
     return love.data.newByteData(datastring);
   }
   /**
-   * Compute the message digest of a string using a specified hash algorithm.
-   */
-  @arguments(("hashFunction", "any"), ("string", "any"))
-  fn hash(hashFunction, string) {
-    return love.data.hash(hashFunction, string);
-  }
-  /**
-   * Encode Data or a string to a Data or string in one of the EncodeFormats.
-   */
-  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any"))
-  fn encode(container, format, sourceString, linelength) {
-    return love.data.encode(container, format, sourceString, linelength);
-  }
-  /**
    * Creates a new Data referencing a subsection of an existing Data object.
    */
   @arguments(("data", "any"), ("offset", "any"), ("size", "any"))
@@ -55,19 +63,11 @@ class Data {
     return love.data.newDataView(data, offset, size);
   }
   /**
-   * Decode Data or a string from any of the EncodeFormats to Data or string.
+   * Encode Data or a string to a Data or string in one of the EncodeFormats.
    */
-  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"))
-  fn decode(container, format, sourceString) {
-    return love.data.decode(container, format, sourceString);
-  }
-  /**
-   * Packs (serializes) simple Lua values.
-   * This function behaves the same as Lua 5.3's string.pack.
-   */
-  @arguments(("container", "any"), ("format", "any"), ("v1", "any"), ("...", "any"))
-  fn pack(container, format, v1, *args) {
-    return love.data.pack(container, format, v1, ...args);
+  @arguments(("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any"))
+  fn encode(container, format, sourceString, linelength) {
+    return love.data.encode(container, format, sourceString, linelength);
   }
   /**
    * Compresses a string or data using a specific compression algorithm.
