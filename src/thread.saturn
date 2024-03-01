@@ -12,19 +12,19 @@ class Thread {
     return self.mod.getChannel(name);
   }
   /**
+   * Creates a new Thread from a filename, string or FileData object containing Lua code.
+   */
+  @arguments([("filename", "any")])
+  fn new_thread(self, filename) {
+    return self.mod.newThread(filename);
+  }
+  /**
    * Create a new unnamed thread channel.
    * One use for them is to pass new unnamed channels to other threads via Channel:push on a named channel.
    */
   @arguments([])
   fn new_channel(self) {
     return self.mod.newChannel();
-  }
-  /**
-   * Creates a new Thread from a filename, string or FileData object containing Lua code.
-   */
-  @arguments([("filename", "any")])
-  fn new_thread(self, filename) {
-    return self.mod.newThread(filename);
   }
 }
 

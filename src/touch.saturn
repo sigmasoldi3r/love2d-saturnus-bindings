@@ -5,11 +5,11 @@ class Touch {
     return Touch { mod };
   }
   /**
-   * Gets a list of all active touch-presses.
+   * Gets the current pressure of the specified touch-press.
    */
-  @arguments([])
-  fn get_touches(self) {
-    return self.mod.getTouches();
+  @arguments([("id", "any")])
+  fn get_pressure(self, id) {
+    return self.mod.getPressure(id);
   }
   /**
    * Gets the current position of the specified touch-press, in pixels.
@@ -19,11 +19,11 @@ class Touch {
     return self.mod.getPosition(id);
   }
   /**
-   * Gets the current pressure of the specified touch-press.
+   * Gets a list of all active touch-presses.
    */
-  @arguments([("id", "any")])
-  fn get_pressure(self, id) {
-    return self.mod.getPressure(id);
+  @arguments([])
+  fn get_touches(self) {
+    return self.mod.getTouches();
   }
 }
 

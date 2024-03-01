@@ -5,13 +5,6 @@ class Image {
     return Image { mod };
   }
   /**
-   * Create a new CompressedImageData object from a compressed image file. LÖVE supports several compressed texture formats, enumerated in the CompressedImageFormat page.
-   */
-  @arguments([("filename", "any")])
-  fn new_compressed_data(self, filename) {
-    return self.mod.newCompressedData(filename);
-  }
-  /**
    * Determines whether a file can be loaded as CompressedImageData.
    */
   @arguments([("filename", "any")])
@@ -24,6 +17,13 @@ class Image {
   @arguments([("width", "any"), ("height", "any")])
   fn new_image_data(self, width, height) {
     return self.mod.newImageData(width, height);
+  }
+  /**
+   * Create a new CompressedImageData object from a compressed image file. LÖVE supports several compressed texture formats, enumerated in the CompressedImageFormat page.
+   */
+  @arguments([("filename", "any")])
+  fn new_compressed_data(self, filename) {
+    return self.mod.newCompressedData(filename);
   }
 }
 

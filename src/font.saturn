@@ -5,11 +5,11 @@ class Font {
     return Font { mod };
   }
   /**
-   * Creates a new TrueType Rasterizer.
+   * Creates a new GlyphData.
    */
-  @arguments([("size", "any"), ("hinting", "any"), ("dpiscale", "any")])
-  fn new_true_type_rasterizer(self, size, hinting, dpiscale) {
-    return self.mod.newTrueTypeRasterizer(size, hinting, dpiscale);
+  @arguments([("rasterizer", "any"), ("glyph", "any")])
+  fn new_glyph_data(self, rasterizer, glyph) {
+    return self.mod.newGlyphData(rasterizer, glyph);
   }
   /**
    * Creates a new Image Rasterizer.
@@ -19,11 +19,18 @@ class Font {
     return self.mod.newImageRasterizer(imageData, glyphs, extraSpacing, dpiscale);
   }
   /**
-   * Creates a new GlyphData.
+   * Creates a new BMFont Rasterizer.
    */
-  @arguments([("rasterizer", "any"), ("glyph", "any")])
-  fn new_glyph_data(self, rasterizer, glyph) {
-    return self.mod.newGlyphData(rasterizer, glyph);
+  @arguments([("imageData", "any"), ("glyphs", "any"), ("dpiscale", "any")])
+  fn new_b_m_font_rasterizer(self, imageData, glyphs, dpiscale) {
+    return self.mod.newBMFontRasterizer(imageData, glyphs, dpiscale);
+  }
+  /**
+   * Creates a new TrueType Rasterizer.
+   */
+  @arguments([("size", "any"), ("hinting", "any"), ("dpiscale", "any")])
+  fn new_true_type_rasterizer(self, size, hinting, dpiscale) {
+    return self.mod.newTrueTypeRasterizer(size, hinting, dpiscale);
   }
   /**
    * Creates a new Rasterizer.
@@ -31,13 +38,6 @@ class Font {
   @arguments([("filename", "any")])
   fn new_rasterizer(self, filename) {
     return self.mod.newRasterizer(filename);
-  }
-  /**
-   * Creates a new BMFont Rasterizer.
-   */
-  @arguments([("imageData", "any"), ("glyphs", "any"), ("dpiscale", "any")])
-  fn new_b_m_font_rasterizer(self, imageData, glyphs, dpiscale) {
-    return self.mod.newBMFontRasterizer(imageData, glyphs, dpiscale);
   }
 }
 

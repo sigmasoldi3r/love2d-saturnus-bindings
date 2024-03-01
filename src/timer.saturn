@@ -5,6 +5,14 @@ class Timer {
     return Timer { mod };
   }
   /**
+   * Measures the time between two frames.
+   * Calling this changes the return value of love.timer.getDelta.
+   */
+  @arguments([])
+  fn step(self) {
+    return self.mod.step();
+  }
+  /**
    * Returns the value of a timer with an unspecified starting time.
    * This function should only be used to calculate differences between points in time, as the starting time of the timer is unknown.
    */
@@ -39,14 +47,6 @@ class Timer {
   @arguments([])
   fn get_delta(self) {
     return self.mod.getDelta();
-  }
-  /**
-   * Measures the time between two frames.
-   * Calling this changes the return value of love.timer.getDelta.
-   */
-  @arguments([])
-  fn step(self) {
-    return self.mod.step();
   }
 }
 

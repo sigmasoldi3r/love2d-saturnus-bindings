@@ -5,13 +5,12 @@ class Joystick {
     return Joystick { mod };
   }
   /**
-   * Binds a virtual gamepad input to a button, axis or hat for all Joysticks of a certain type. For example, if this function is used with a GUID returned by a Dualshock 3 controller in OS X, the binding will affect Joystick:getGamepadAxis and Joystick:isGamepadDown for ''all'' Dualshock 3 controllers used with the game when run in OS X.
-   * LÖVE includes built-in gamepad bindings for many common controllers. This function lets you change the bindings or add new ones for types of Joysticks which aren't recognized as gamepads by default.
-   * The virtual gamepad buttons and axes are designed around the Xbox 360 controller layout.
+   * Loads a gamepad mappings string or file created with love.joystick.saveGamepadMappings.
+   * It also recognizes any SDL gamecontroller mapping string, such as those created with Steam's Big Picture controller configure interface, or this nice database. If a new mapping is loaded for an already known controller GUID, the later version will overwrite the one currently loaded.
    */
-  @arguments([("guid", "any"), ("button", "any"), ("inputtype", "any"), ("inputindex", "any"), ("hatdir", "any")])
-  fn set_gamepad_mapping(self, guid, button, inputtype, inputindex, hatdir) {
-    return self.mod.setGamepadMapping(guid, button, inputtype, inputindex, hatdir);
+  @arguments([("filename", "any")])
+  fn load_gamepad_mappings(self, filename) {
+    return self.mod.loadGamepadMappings(filename);
   }
   /**
    * Gets a list of connected Joysticks.
@@ -19,14 +18,6 @@ class Joystick {
   @arguments([])
   fn get_joysticks(self) {
     return self.mod.getJoysticks();
-  }
-  /**
-   * Gets the full gamepad mapping string of the Joysticks which have the given GUID, or nil if the GUID isn't recognized as a gamepad.
-   * The mapping string contains binding information used to map the Joystick's buttons an axes to the standard gamepad layout, and can be used later with love.joystick.loadGamepadMappings.
-   */
-  @arguments([("guid", "any")])
-  fn get_gamepad_mapping_string(self, guid) {
-    return self.mod.getGamepadMappingString(guid);
   }
   /**
    * Gets the number of connected joysticks.
@@ -44,12 +35,21 @@ class Joystick {
     return self.mod.saveGamepadMappings(filename);
   }
   /**
-   * Loads a gamepad mappings string or file created with love.joystick.saveGamepadMappings.
-   * It also recognizes any SDL gamecontroller mapping string, such as those created with Steam's Big Picture controller configure interface, or this nice database. If a new mapping is loaded for an already known controller GUID, the later version will overwrite the one currently loaded.
+   * Gets the full gamepad mapping string of the Joysticks which have the given GUID, or nil if the GUID isn't recognized as a gamepad.
+   * The mapping string contains binding information used to map the Joystick's buttons an axes to the standard gamepad layout, and can be used later with love.joystick.loadGamepadMappings.
    */
-  @arguments([("filename", "any")])
-  fn load_gamepad_mappings(self, filename) {
-    return self.mod.loadGamepadMappings(filename);
+  @arguments([("guid", "any")])
+  fn get_gamepad_mapping_string(self, guid) {
+    return self.mod.getGamepadMappingString(guid);
+  }
+  /**
+   * Binds a virtual gamepad input to a button, axis or hat for all Joysticks of a certain type. For example, if this function is used with a GUID returned by a Dualshock 3 controller in OS X, the binding will affect Joystick:getGamepadAxis and Joystick:isGamepadDown for ''all'' Dualshock 3 controllers used with the game when run in OS X.
+   * LÖVE includes built-in gamepad bindings for many common controllers. This function lets you change the bindings or add new ones for types of Joysticks which aren't recognized as gamepads by default.
+   * The virtual gamepad buttons and axes are designed around the Xbox 360 controller layout.
+   */
+  @arguments([("guid", "any"), ("button", "any"), ("inputtype", "any"), ("inputindex", "any"), ("hatdir", "any")])
+  fn set_gamepad_mapping(self, guid, button, inputtype, inputindex, hatdir) {
+    return self.mod.setGamepadMapping(guid, button, inputtype, inputindex, hatdir);
   }
 }
 

@@ -5,46 +5,11 @@ class Window {
     return Window { mod };
   }
   /**
-   * Gets the number of connected monitors.
+   * Gets current device display orientation.
    */
-  @arguments([])
-  fn get_display_count(self) {
-    return self.mod.getDisplayCount();
-  }
-  /**
-   * Minimizes the window to the system's task bar / dock.
-   */
-  @arguments([])
-  fn minimize(self) {
-    return self.mod.minimize();
-  }
-  /**
-   * Checks if the game window has mouse focus.
-   */
-  @arguments([])
-  fn has_mouse_focus(self) {
-    return self.mod.hasMouseFocus();
-  }
-  /**
-   * Sets vertical synchronization mode.
-   */
-  @arguments([("vsync", "any")])
-  fn set_v_sync(self, vsync) {
-    return self.mod.setVSync(vsync);
-  }
-  /**
-   * Gets whether the Window is currently minimized.
-   */
-  @arguments([])
-  fn is_minimized(self) {
-    return self.mod.isMinimized();
-  }
-  /**
-   * Closes the window. It can be reopened with love.window.setMode.
-   */
-  @arguments([])
-  fn close(self) {
-    return self.mod.close();
+  @arguments([("displayindex", "any")])
+  fn get_display_orientation(self, displayindex) {
+    return self.mod.getDisplayOrientation(displayindex);
   }
   /**
    * Gets the DPI scale factor associated with the window.
@@ -57,52 +22,11 @@ class Window {
     return self.mod.getDPIScale();
   }
   /**
-   * Converts a number from density-independent units to pixels.
-   * The pixel density inside the window might be greater (or smaller) than the 'size' of the window. For example on a retina screen in Mac OS X with the highdpi window flag enabled, the window may take up the same physical size as an 800x600 window, but the area inside the window uses 1600x1200 pixels. love.window.toPixels(800) would return 1600 in that case.
-   * This is used to convert coordinates from the size users are expecting them to display at onscreen to pixels. love.window.fromPixels does the opposite. The highdpi window flag must be enabled to use the full pixel density of a Retina screen on Mac OS X and iOS. The flag currently does nothing on Windows and Linux, and on Android it is effectively always enabled.
-   * Most LÖVE functions return values and expect arguments in terms of pixels rather than density-independent units.
+   * Sets vertical synchronization mode.
    */
-  @arguments([("value", "any")])
-  fn to_pixels(self, value) {
-    return self.mod.toPixels(value);
-  }
-  /**
-   * Sets the position of the window on the screen.
-   * The window position is in the coordinate space of the specified display.
-   */
-  @arguments([("x", "any"), ("y", "any"), ("displayindex", "any")])
-  fn set_position(self, x, y, displayindex) {
-    return self.mod.setPosition(x, y, displayindex);
-  }
-  /**
-   * Gets the window icon.
-   */
-  @arguments([])
-  fn get_icon(self) {
-    return self.mod.getIcon();
-  }
-  /**
-   * Gets whether the Window is currently maximized.
-   * The window can be maximized if it is not fullscreen and is resizable, and either the user has pressed the window's Maximize button or love.window.maximize has been called.
-   */
-  @arguments([])
-  fn is_maximized(self) {
-    return self.mod.isMaximized();
-  }
-  /**
-   * Sets whether the display is allowed to sleep while the program is running.
-   * Display sleep is disabled by default. Some types of input (e.g. joystick button presses) might not prevent the display from sleeping, if display sleep is allowed.
-   */
-  @arguments([("enable", "any")])
-  fn set_display_sleep_enabled(self, enable) {
-    return self.mod.setDisplaySleepEnabled(enable);
-  }
-  /**
-   * Gets current vertical synchronization (vsync).
-   */
-  @arguments([])
-  fn get_v_sync(self) {
-    return self.mod.getVSync();
+  @arguments([("vsync", "any")])
+  fn set_v_sync(self, vsync) {
+    return self.mod.setVSync(vsync);
   }
   /**
    * Makes the window as large as possible.
@@ -113,116 +37,11 @@ class Window {
     return self.mod.maximize();
   }
   /**
-   * Restores the size and position of the window if it was minimized or maximized.
-   */
-  @arguments([])
-  fn restore(self) {
-    return self.mod.restore();
-  }
-  /**
-   * Gets the position of the window on the screen.
-   * The window position is in the coordinate space of the display it is currently in.
-   */
-  @arguments([])
-  fn get_position(self) {
-    return self.mod.getPosition();
-  }
-  /**
-   * Sets the window icon until the game is quit. Not all operating systems support very large icon images.
-   */
-  @arguments([("imagedata", "any")])
-  fn set_icon(self, imagedata) {
-    return self.mod.setIcon(imagedata);
-  }
-  /**
-   * Gets the window title.
-   */
-  @arguments([])
-  fn get_title(self) {
-    return self.mod.getTitle();
-  }
-  /**
-   * Causes the window to request the attention of the user if it is not in the foreground.
-   * In Windows the taskbar icon will flash, and in OS X the dock icon will bounce.
-   */
-  @arguments([("continuous", "any")])
-  fn request_attention(self, continuous) {
-    return self.mod.requestAttention(continuous);
-  }
-  /**
-   * Checks if the game window has keyboard focus.
-   */
-  @arguments([])
-  fn has_focus(self) {
-    return self.mod.hasFocus();
-  }
-  /**
-   * Sets the window title.
-   */
-  @arguments([("title", "any")])
-  fn set_title(self, title) {
-    return self.mod.setTitle(title);
-  }
-  /**
-   * Gets whether the window is fullscreen.
-   */
-  @arguments([])
-  fn get_fullscreen(self) {
-    return self.mod.getFullscreen();
-  }
-  /**
-   * Sets the display mode and properties of the window.
-   * If width or height is 0, setMode will use the width and height of the desktop. 
-   * Changing the display mode may have side effects: for example, canvases will be cleared and values sent to shaders with canvases beforehand or re-draw to them afterward if you need to.
-   */
-  @arguments([("width", "any"), ("height", "any"), ("flags", "any")])
-  fn set_mode(self, width, height, flags) {
-    return self.mod.setMode(width, height, flags);
-  }
-  /**
-   * Sets the display mode and properties of the window, without modifying unspecified properties.
-   * If width or height is 0, updateMode will use the width and height of the desktop. 
-   * Changing the display mode may have side effects: for example, canvases will be cleared. Make sure to save the contents of canvases beforehand or re-draw to them afterward if you need to.
-   */
-  @arguments([("width", "any"), ("height", "any"), ("settings", "any")])
-  fn update_mode(self, width, height, settings) {
-    return self.mod.updateMode(width, height, settings);
-  }
-  /**
-   * Displays a message box dialog above the love window. The message box contains a title, optional text, and buttons.
-   */
-  @arguments([("title", "any"), ("message", "any"), ("type", "any"), ("attachtowindow", "any")])
-  fn show_message_box(self, title, message, type, attachtowindow) {
-    return self.mod.showMessageBox(title, message, type, attachtowindow);
-  }
-  /**
-   * Gets area inside the window which is known to be unobstructed by a system title bar, the iPhone X notch, etc. Useful for making sure UI elements can be seen by the user.
-   */
-  @arguments([])
-  fn get_safe_area(self) {
-    return self.mod.getSafeArea();
-  }
-  /**
-   * Checks if the window is open.
-   */
-  @arguments([])
-  fn is_open(self) {
-    return self.mod.isOpen();
-  }
-  /**
-   * Gets current device display orientation.
+   * Gets the width and height of the desktop.
    */
   @arguments([("displayindex", "any")])
-  fn get_display_orientation(self, displayindex) {
-    return self.mod.getDisplayOrientation(displayindex);
-  }
-  /**
-   * Gets whether the display is allowed to sleep while the program is running.
-   * Display sleep is disabled by default. Some types of input (e.g. joystick button presses) might not prevent the display from sleeping, if display sleep is allowed.
-   */
-  @arguments([])
-  fn is_display_sleep_enabled(self) {
-    return self.mod.isDisplaySleepEnabled();
+  fn get_desktop_dimensions(self, displayindex) {
+    return self.mod.getDesktopDimensions(displayindex);
   }
   /**
    * Gets the display mode and properties of the window.
@@ -232,33 +51,19 @@ class Window {
     return self.mod.getMode();
   }
   /**
-   * Gets a list of supported fullscreen modes.
+   * Sets the position of the window on the screen.
+   * The window position is in the coordinate space of the specified display.
    */
-  @arguments([("displayindex", "any")])
-  fn get_fullscreen_modes(self, displayindex) {
-    return self.mod.getFullscreenModes(displayindex);
+  @arguments([("x", "any"), ("y", "any"), ("displayindex", "any")])
+  fn set_position(self, x, y, displayindex) {
+    return self.mod.setPosition(x, y, displayindex);
   }
   /**
-   * Gets the name of a display.
+   * Enters or exits fullscreen. The display to use when entering fullscreen is chosen based on which display the window is currently in, if multiple monitors are connected.
    */
-  @arguments([("displayindex", "any")])
-  fn get_display_name(self, displayindex) {
-    return self.mod.getDisplayName(displayindex);
-  }
-  /**
-   * Gets the width and height of the desktop.
-   */
-  @arguments([("displayindex", "any")])
-  fn get_desktop_dimensions(self, displayindex) {
-    return self.mod.getDesktopDimensions(displayindex);
-  }
-  /**
-   * Checks if the game window is visible.
-   * The window is considered visible if it's not minimized and the program isn't hidden.
-   */
-  @arguments([])
-  fn is_visible(self) {
-    return self.mod.isVisible();
+  @arguments([("fullscreen", "any")])
+  fn set_fullscreen(self, fullscreen) {
+    return self.mod.setFullscreen(fullscreen);
   }
   /**
    * Converts a number from pixels to density-independent units.
@@ -271,11 +76,206 @@ class Window {
     return self.mod.fromPixels(pixelvalue);
   }
   /**
-   * Enters or exits fullscreen. The display to use when entering fullscreen is chosen based on which display the window is currently in, if multiple monitors are connected.
+   * Closes the window. It can be reopened with love.window.setMode.
    */
-  @arguments([("fullscreen", "any")])
-  fn set_fullscreen(self, fullscreen) {
-    return self.mod.setFullscreen(fullscreen);
+  @arguments([])
+  fn close(self) {
+    return self.mod.close();
+  }
+  /**
+   * Sets the display mode and properties of the window.
+   * If width or height is 0, setMode will use the width and height of the desktop. 
+   * Changing the display mode may have side effects: for example, canvases will be cleared and values sent to shaders with canvases beforehand or re-draw to them afterward if you need to.
+   */
+  @arguments([("width", "any"), ("height", "any"), ("flags", "any")])
+  fn set_mode(self, width, height, flags) {
+    return self.mod.setMode(width, height, flags);
+  }
+  /**
+   * Gets the window title.
+   */
+  @arguments([])
+  fn get_title(self) {
+    return self.mod.getTitle();
+  }
+  /**
+   * Checks if the game window is visible.
+   * The window is considered visible if it's not minimized and the program isn't hidden.
+   */
+  @arguments([])
+  fn is_visible(self) {
+    return self.mod.isVisible();
+  }
+  /**
+   * Sets the window title.
+   */
+  @arguments([("title", "any")])
+  fn set_title(self, title) {
+    return self.mod.setTitle(title);
+  }
+  /**
+   * Restores the size and position of the window if it was minimized or maximized.
+   */
+  @arguments([])
+  fn restore(self) {
+    return self.mod.restore();
+  }
+  /**
+   * Gets the window icon.
+   */
+  @arguments([])
+  fn get_icon(self) {
+    return self.mod.getIcon();
+  }
+  /**
+   * Gets the number of connected monitors.
+   */
+  @arguments([])
+  fn get_display_count(self) {
+    return self.mod.getDisplayCount();
+  }
+  /**
+   * Sets the window icon until the game is quit. Not all operating systems support very large icon images.
+   */
+  @arguments([("imagedata", "any")])
+  fn set_icon(self, imagedata) {
+    return self.mod.setIcon(imagedata);
+  }
+  /**
+   * Gets the name of a display.
+   */
+  @arguments([("displayindex", "any")])
+  fn get_display_name(self, displayindex) {
+    return self.mod.getDisplayName(displayindex);
+  }
+  /**
+   * Checks if the window is open.
+   */
+  @arguments([])
+  fn is_open(self) {
+    return self.mod.isOpen();
+  }
+  /**
+   * Gets whether the window is fullscreen.
+   */
+  @arguments([])
+  fn get_fullscreen(self) {
+    return self.mod.getFullscreen();
+  }
+  /**
+   * Causes the window to request the attention of the user if it is not in the foreground.
+   * In Windows the taskbar icon will flash, and in OS X the dock icon will bounce.
+   */
+  @arguments([("continuous", "any")])
+  fn request_attention(self, continuous) {
+    return self.mod.requestAttention(continuous);
+  }
+  /**
+   * Sets the display mode and properties of the window, without modifying unspecified properties.
+   * If width or height is 0, updateMode will use the width and height of the desktop. 
+   * Changing the display mode may have side effects: for example, canvases will be cleared. Make sure to save the contents of canvases beforehand or re-draw to them afterward if you need to.
+   */
+  @arguments([("width", "any"), ("height", "any"), ("settings", "any")])
+  fn update_mode(self, width, height, settings) {
+    return self.mod.updateMode(width, height, settings);
+  }
+  /**
+   * Converts a number from density-independent units to pixels.
+   * The pixel density inside the window might be greater (or smaller) than the 'size' of the window. For example on a retina screen in Mac OS X with the highdpi window flag enabled, the window may take up the same physical size as an 800x600 window, but the area inside the window uses 1600x1200 pixels. love.window.toPixels(800) would return 1600 in that case.
+   * This is used to convert coordinates from the size users are expecting them to display at onscreen to pixels. love.window.fromPixels does the opposite. The highdpi window flag must be enabled to use the full pixel density of a Retina screen on Mac OS X and iOS. The flag currently does nothing on Windows and Linux, and on Android it is effectively always enabled.
+   * Most LÖVE functions return values and expect arguments in terms of pixels rather than density-independent units.
+   */
+  @arguments([("value", "any")])
+  fn to_pixels(self, value) {
+    return self.mod.toPixels(value);
+  }
+  /**
+   * Displays a message box dialog above the love window. The message box contains a title, optional text, and buttons.
+   */
+  @arguments([("title", "any"), ("message", "any"), ("type", "any"), ("attachtowindow", "any")])
+  fn show_message_box(self, title, message, type, attachtowindow) {
+    return self.mod.showMessageBox(title, message, type, attachtowindow);
+  }
+  /**
+   * Gets the position of the window on the screen.
+   * The window position is in the coordinate space of the display it is currently in.
+   */
+  @arguments([])
+  fn get_position(self) {
+    return self.mod.getPosition();
+  }
+  /**
+   * Gets area inside the window which is known to be unobstructed by a system title bar, the iPhone X notch, etc. Useful for making sure UI elements can be seen by the user.
+   */
+  @arguments([])
+  fn get_safe_area(self) {
+    return self.mod.getSafeArea();
+  }
+  /**
+   * Gets current vertical synchronization (vsync).
+   */
+  @arguments([])
+  fn get_v_sync(self) {
+    return self.mod.getVSync();
+  }
+  /**
+   * Checks if the game window has mouse focus.
+   */
+  @arguments([])
+  fn has_mouse_focus(self) {
+    return self.mod.hasMouseFocus();
+  }
+  /**
+   * Gets a list of supported fullscreen modes.
+   */
+  @arguments([("displayindex", "any")])
+  fn get_fullscreen_modes(self, displayindex) {
+    return self.mod.getFullscreenModes(displayindex);
+  }
+  /**
+   * Minimizes the window to the system's task bar / dock.
+   */
+  @arguments([])
+  fn minimize(self) {
+    return self.mod.minimize();
+  }
+  /**
+   * Gets whether the display is allowed to sleep while the program is running.
+   * Display sleep is disabled by default. Some types of input (e.g. joystick button presses) might not prevent the display from sleeping, if display sleep is allowed.
+   */
+  @arguments([])
+  fn is_display_sleep_enabled(self) {
+    return self.mod.isDisplaySleepEnabled();
+  }
+  /**
+   * Gets whether the Window is currently maximized.
+   * The window can be maximized if it is not fullscreen and is resizable, and either the user has pressed the window's Maximize button or love.window.maximize has been called.
+   */
+  @arguments([])
+  fn is_maximized(self) {
+    return self.mod.isMaximized();
+  }
+  /**
+   * Gets whether the Window is currently minimized.
+   */
+  @arguments([])
+  fn is_minimized(self) {
+    return self.mod.isMinimized();
+  }
+  /**
+   * Checks if the game window has keyboard focus.
+   */
+  @arguments([])
+  fn has_focus(self) {
+    return self.mod.hasFocus();
+  }
+  /**
+   * Sets whether the display is allowed to sleep while the program is running.
+   * Display sleep is disabled by default. Some types of input (e.g. joystick button presses) might not prevent the display from sleeping, if display sleep is allowed.
+   */
+  @arguments([("enable", "any")])
+  fn set_display_sleep_enabled(self, enable) {
+    return self.mod.setDisplaySleepEnabled(enable);
   }
 }
 

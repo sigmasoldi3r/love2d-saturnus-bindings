@@ -5,39 +5,19 @@ class System {
     return System { mod };
   }
   /**
+   * Gets whether another application on the system is playing music in the background.
+   * Currently this is implemented on iOS and Android, and will always return false on other operating systems. The t.audio.mixwithsystem flag in love.conf can be used to configure whether background audio / music from other apps should play while LÖVE is open.
+   */
+  @arguments([])
+  fn has_background_music(self) {
+    return self.mod.hasBackgroundMusic();
+  }
+  /**
    * Puts text in the clipboard.
    */
   @arguments([("text", "any")])
   fn set_clipboard_text(self, text) {
     return self.mod.setClipboardText(text);
-  }
-  /**
-   * Causes the device to vibrate, if possible. Currently this will only work on Android and iOS devices that have a built-in vibration motor.
-   */
-  @arguments([("seconds", "any")])
-  fn vibrate(self, seconds) {
-    return self.mod.vibrate(seconds);
-  }
-  /**
-   * Opens a URL with the user's web or file browser.
-   */
-  @arguments([("url", "any")])
-  fn open_u_r_l(self, url) {
-    return self.mod.openURL(url);
-  }
-  /**
-   * Gets the current operating system. In general, LÖVE abstracts away the need to know the current operating system, but there are a few cases where it can be useful (especially in combination with os.execute.)
-   */
-  @arguments([])
-  fn get_o_s(self) {
-    return self.mod.getOS();
-  }
-  /**
-   * Gets text from the clipboard.
-   */
-  @arguments([])
-  fn get_clipboard_text(self) {
-    return self.mod.getClipboardText();
   }
   /**
    * Gets the amount of logical processor in the system.
@@ -47,12 +27,32 @@ class System {
     return self.mod.getProcessorCount();
   }
   /**
-   * Gets whether another application on the system is playing music in the background.
-   * Currently this is implemented on iOS and Android, and will always return false on other operating systems. The t.audio.mixwithsystem flag in love.conf can be used to configure whether background audio / music from other apps should play while LÖVE is open.
+   * Opens a URL with the user's web or file browser.
+   */
+  @arguments([("url", "any")])
+  fn open_u_r_l(self, url) {
+    return self.mod.openURL(url);
+  }
+  /**
+   * Causes the device to vibrate, if possible. Currently this will only work on Android and iOS devices that have a built-in vibration motor.
+   */
+  @arguments([("seconds", "any")])
+  fn vibrate(self, seconds) {
+    return self.mod.vibrate(seconds);
+  }
+  /**
+   * Gets text from the clipboard.
    */
   @arguments([])
-  fn has_background_music(self) {
-    return self.mod.hasBackgroundMusic();
+  fn get_clipboard_text(self) {
+    return self.mod.getClipboardText();
+  }
+  /**
+   * Gets the current operating system. In general, LÖVE abstracts away the need to know the current operating system, but there are a few cases where it can be useful (especially in combination with os.execute.)
+   */
+  @arguments([])
+  fn get_o_s(self) {
+    return self.mod.getOS();
   }
   /**
    * Gets information about the system's power supply.

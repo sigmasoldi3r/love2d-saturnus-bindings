@@ -5,51 +5,21 @@ class Physics {
     return Physics { mod };
   }
   /**
-   * Creates a constraint joint between two bodies. A WeldJoint essentially glues two bodies together. The constraint is a bit soft, however, due to Box2D's iterative solver.
+   * Sets the pixels to meter scale factor.
+   * All coordinates in the physics module are divided by this number and converted to meters, and it creates a convenient way to draw the objects directly to the screen without the need for graphics transformations.
+   * It is recommended to create shapes no larger than 10 times the scale. This is important because Box2D is tuned to work well with shape sizes from 0.1 to 10 meters. The default meter scale is 30.
    */
-  @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("collideConnected", "any")])
-  fn new_weld_joint(self, body1, body2, x, y, collideConnected) {
-    return self.mod.newWeldJoint(body1, body2, x, y, collideConnected);
+  @arguments([("scale", "any")])
+  fn set_meter(self, scale) {
+    return self.mod.setMeter(scale);
   }
   /**
-   * Shorthand for creating rectangular PolygonShapes. 
-   * By default, the local origin is located at the '''center''' of the rectangle as opposed to the top left for graphics.
+   * Creates a DistanceJoint between two bodies.
+   * This joint constrains the distance between two points on two bodies to be constant. These two points are specified in world coordinates and the two bodies are assumed to be in place when this joint is created. The first anchor point is connected to the first body and the second to the second body, and the points define the length of the distance joint.
    */
-  @arguments([("width", "any"), ("height", "any")])
-  fn new_rectangle_shape(self, width, height) {
-    return self.mod.newRectangleShape(width, height);
-  }
-  /**
-   * Creates a joint between two bodies which controls the relative motion between them.
-   * Position and rotation offsets can be specified once the MotorJoint has been created, as well as the maximum motor force and torque that will be be applied to reach the target offsets.
-   */
-  @arguments([("body1", "any"), ("body2", "any"), ("correctionFactor", "any")])
-  fn new_motor_joint(self, body1, body2, correctionFactor) {
-    return self.mod.newMotorJoint(body1, body2, correctionFactor);
-  }
-  /**
-   * Creates a new CircleShape.
-   */
-  @arguments([("radius", "any")])
-  fn new_circle_shape(self, radius) {
-    return self.mod.newCircleShape(radius);
-  }
-  /**
-   * Creates a PrismaticJoint between two bodies.
-   * A prismatic joint constrains two bodies to move relatively to each other on a specified axis. It does not allow for relative rotation. Its definition and operation are similar to a  revolute joint, but with translation and force substituted for angle and torque.
-   */
-  @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("ax", "any"), ("ay", "any"), ("collideConnected", "any")])
-  fn new_prismatic_joint(self, body1, body2, x, y, ax, ay, collideConnected) {
-    return self.mod.newPrismaticJoint(body1, body2, x, y, ax, ay, collideConnected);
-  }
-  /**
-   * Returns the meter scale factor.
-   * All coordinates in the physics module are divided by this number, creating a convenient way to draw the objects directly to the screen without the need for graphics transformations.
-   * It is recommended to create shapes no larger than 10 times the scale. This is important because Box2D is tuned to work well with shape sizes from 0.1 to 10 meters.
-   */
-  @arguments([])
-  fn get_meter(self) {
-    return self.mod.getMeter();
+  @arguments([("body1", "any"), ("body2", "any"), ("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("collideConnected", "any")])
+  fn new_distance_joint(self, body1, body2, x1, y1, x2, y2, collideConnected) {
+    return self.mod.newDistanceJoint(body1, body2, x1, y1, x2, y2, collideConnected);
   }
   /**
    * Creates a joint between two bodies. Its only function is enforcing a max distance between these bodies.
@@ -59,30 +29,58 @@ class Physics {
     return self.mod.newRopeJoint(body1, body2, x1, y1, x2, y2, maxLength, collideConnected);
   }
   /**
-   * Create a GearJoint connecting two Joints.
-   * The gear joint connects two joints that must be either  prismatic or  revolute joints. Using this joint requires that the joints it uses connect their respective bodies to the ground and have the ground as the first body. When destroying the bodies and joints you must make sure you destroy the gear joint before the other joints.
-   * The gear joint has a ratio the determines how the angular or distance values of the connected joints relate to each other. The formula coordinate1 + ratio * coordinate2 always has a constant value that is set when the gear joint is created.
+   * Creates a pivot joint between two bodies.
+   * This joint connects two bodies to a point around which they can pivot.
    */
-  @arguments([("joint1", "any"), ("joint2", "any"), ("ratio", "any"), ("collideConnected", "any")])
-  fn new_gear_joint(self, joint1, joint2, ratio, collideConnected) {
-    return self.mod.newGearJoint(joint1, joint2, ratio, collideConnected);
+  @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("collideConnected", "any")])
+  fn new_revolute_joint(self, body1, body2, x, y, collideConnected) {
+    return self.mod.newRevoluteJoint(body1, body2, x, y, collideConnected);
   }
   /**
-   * Creates a PulleyJoint to join two bodies to each other and the ground.
-   * The pulley joint simulates a pulley with an optional block and tackle. If the ratio parameter has a value different from one, then the simulated rope extends faster on one side than the other. In a pulley joint the total length of the simulated rope is the constant length1 + ratio * length2, which is set when the pulley joint is created.
-   * Pulley joints can behave unpredictably if one side is fully extended. It is recommended that the method  setMaxLengths  be used to constrain the maximum lengths each side can attain.
+   * Creates and attaches a Fixture to a body.
+   * Note that the Shape object is copied rather than kept as a reference when the Fixture is created. To get the Shape object that the Fixture owns, use Fixture:getShape.
    */
-  @arguments([("body1", "any"), ("body2", "any"), ("gx1", "any"), ("gy1", "any"), ("gx2", "any"), ("gy2", "any"), ("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("ratio", "any"), ("collideConnected", "any")])
-  fn new_pulley_joint(self, body1, body2, gx1, gy1, gx2, gy2, x1, y1, x2, y2, ratio, collideConnected) {
-    return self.mod.newPulleyJoint(body1, body2, gx1, gy1, gx2, gy2, x1, y1, x2, y2, ratio, collideConnected);
+  @arguments([("body", "any"), ("shape", "any"), ("density", "any")])
+  fn new_fixture(self, body, shape, density) {
+    return self.mod.newFixture(body, shape, density);
   }
   /**
-   * Creates a new PolygonShape.
-   * This shape can have 8 vertices at most, and must form a convex shape.
+   * Creates a new CircleShape.
    */
-  @arguments([("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("x3", "any"), ("y3", "any"), ("...", "any")])
-  fn new_polygon_shape(self, x1, y1, x2, y2, x3, y3) {
-    return self.mod.newPolygonShape(x1, y1, x2, y2, x3, y3, table.unpack(argv));
+  @arguments([("radius", "any")])
+  fn new_circle_shape(self, radius) {
+    return self.mod.newCircleShape(radius);
+  }
+  /**
+   * Creates a wheel joint.
+   */
+  @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("ax", "any"), ("ay", "any"), ("collideConnected", "any")])
+  fn new_wheel_joint(self, body1, body2, x, y, ax, ay, collideConnected) {
+    return self.mod.newWheelJoint(body1, body2, x, y, ax, ay, collideConnected);
+  }
+  /**
+   * Creates a new World.
+   */
+  @arguments([("xg", "any"), ("yg", "any"), ("sleep", "any")])
+  fn new_world(self, xg, yg, sleep) {
+    return self.mod.newWorld(xg, yg, sleep);
+  }
+  /**
+   * Create a joint between a body and the mouse.
+   * This joint actually connects the body to a fixed point in the world. To make it follow the mouse, the fixed point must be updated every timestep (example below).
+   * The advantage of using a MouseJoint instead of just changing a body position directly is that collisions and reactions to other joints are handled by the physics engine. 
+   */
+  @arguments([("body", "any"), ("x", "any"), ("y", "any")])
+  fn new_mouse_joint(self, body, x, y) {
+    return self.mod.newMouseJoint(body, x, y);
+  }
+  /**
+   * Shorthand for creating rectangular PolygonShapes. 
+   * By default, the local origin is located at the '''center''' of the rectangle as opposed to the top left for graphics.
+   */
+  @arguments([("width", "any"), ("height", "any")])
+  fn new_rectangle_shape(self, width, height) {
+    return self.mod.newRectangleShape(width, height);
   }
   /**
    * Creates a new body.
@@ -97,51 +95,29 @@ class Physics {
     return self.mod.newBody(world, x, y, type);
   }
   /**
-   * Creates a new ChainShape.
-   */
-  @arguments([("loop", "any"), ("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("...", "any")])
-  fn new_chain_shape(self, loop, x1, y1, x2, y2) {
-    return self.mod.newChainShape(loop, x1, y1, x2, y2, table.unpack(argv));
-  }
-  /**
-   * Creates and attaches a Fixture to a body.
-   * Note that the Shape object is copied rather than kept as a reference when the Fixture is created. To get the Shape object that the Fixture owns, use Fixture:getShape.
-   */
-  @arguments([("body", "any"), ("shape", "any"), ("density", "any")])
-  fn new_fixture(self, body, shape, density) {
-    return self.mod.newFixture(body, shape, density);
-  }
-  /**
-   * Creates a pivot joint between two bodies.
-   * This joint connects two bodies to a point around which they can pivot.
+   * Creates a constraint joint between two bodies. A WeldJoint essentially glues two bodies together. The constraint is a bit soft, however, due to Box2D's iterative solver.
    */
   @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("collideConnected", "any")])
-  fn new_revolute_joint(self, body1, body2, x, y, collideConnected) {
-    return self.mod.newRevoluteJoint(body1, body2, x, y, collideConnected);
+  fn new_weld_joint(self, body1, body2, x, y, collideConnected) {
+    return self.mod.newWeldJoint(body1, body2, x, y, collideConnected);
   }
   /**
-   * Create a joint between a body and the mouse.
-   * This joint actually connects the body to a fixed point in the world. To make it follow the mouse, the fixed point must be updated every timestep (example below).
-   * The advantage of using a MouseJoint instead of just changing a body position directly is that collisions and reactions to other joints are handled by the physics engine. 
+   * Returns the meter scale factor.
+   * All coordinates in the physics module are divided by this number, creating a convenient way to draw the objects directly to the screen without the need for graphics transformations.
+   * It is recommended to create shapes no larger than 10 times the scale. This is important because Box2D is tuned to work well with shape sizes from 0.1 to 10 meters.
    */
-  @arguments([("body", "any"), ("x", "any"), ("y", "any")])
-  fn new_mouse_joint(self, body, x, y) {
-    return self.mod.newMouseJoint(body, x, y);
+  @arguments([])
+  fn get_meter(self) {
+    return self.mod.getMeter();
   }
   /**
-   * Creates a new World.
+   * Creates a PulleyJoint to join two bodies to each other and the ground.
+   * The pulley joint simulates a pulley with an optional block and tackle. If the ratio parameter has a value different from one, then the simulated rope extends faster on one side than the other. In a pulley joint the total length of the simulated rope is the constant length1 + ratio * length2, which is set when the pulley joint is created.
+   * Pulley joints can behave unpredictably if one side is fully extended. It is recommended that the method  setMaxLengths  be used to constrain the maximum lengths each side can attain.
    */
-  @arguments([("xg", "any"), ("yg", "any"), ("sleep", "any")])
-  fn new_world(self, xg, yg, sleep) {
-    return self.mod.newWorld(xg, yg, sleep);
-  }
-  /**
-   * Creates a DistanceJoint between two bodies.
-   * This joint constrains the distance between two points on two bodies to be constant. These two points are specified in world coordinates and the two bodies are assumed to be in place when this joint is created. The first anchor point is connected to the first body and the second to the second body, and the points define the length of the distance joint.
-   */
-  @arguments([("body1", "any"), ("body2", "any"), ("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("collideConnected", "any")])
-  fn new_distance_joint(self, body1, body2, x1, y1, x2, y2, collideConnected) {
-    return self.mod.newDistanceJoint(body1, body2, x1, y1, x2, y2, collideConnected);
+  @arguments([("body1", "any"), ("body2", "any"), ("gx1", "any"), ("gy1", "any"), ("gx2", "any"), ("gy2", "any"), ("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("ratio", "any"), ("collideConnected", "any")])
+  fn new_pulley_joint(self, body1, body2, gx1, gy1, gx2, gy2, x1, y1, x2, y2, ratio, collideConnected) {
+    return self.mod.newPulleyJoint(body1, body2, gx1, gy1, gx2, gy2, x1, y1, x2, y2, ratio, collideConnected);
   }
   /**
    * Returns the two closest points between two fixtures and their distance.
@@ -151,6 +127,37 @@ class Physics {
     return self.mod.getDistance(fixture1, fixture2);
   }
   /**
+   * Creates a joint between two bodies which controls the relative motion between them.
+   * Position and rotation offsets can be specified once the MotorJoint has been created, as well as the maximum motor force and torque that will be be applied to reach the target offsets.
+   */
+  @arguments([("body1", "any"), ("body2", "any"), ("correctionFactor", "any")])
+  fn new_motor_joint(self, body1, body2, correctionFactor) {
+    return self.mod.newMotorJoint(body1, body2, correctionFactor);
+  }
+  /**
+   * Creates a new ChainShape.
+   */
+  @arguments([("loop", "any"), ("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("...", "any")])
+  fn new_chain_shape(self, loop, x1, y1, x2, y2) {
+    return self.mod.newChainShape(loop, x1, y1, x2, y2, table.unpack(argv));
+  }
+  /**
+   * Creates a PrismaticJoint between two bodies.
+   * A prismatic joint constrains two bodies to move relatively to each other on a specified axis. It does not allow for relative rotation. Its definition and operation are similar to a  revolute joint, but with translation and force substituted for angle and torque.
+   */
+  @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("ax", "any"), ("ay", "any"), ("collideConnected", "any")])
+  fn new_prismatic_joint(self, body1, body2, x, y, ax, ay, collideConnected) {
+    return self.mod.newPrismaticJoint(body1, body2, x, y, ax, ay, collideConnected);
+  }
+  /**
+   * Creates a new PolygonShape.
+   * This shape can have 8 vertices at most, and must form a convex shape.
+   */
+  @arguments([("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any"), ("x3", "any"), ("y3", "any"), ("...", "any")])
+  fn new_polygon_shape(self, x1, y1, x2, y2, x3, y3) {
+    return self.mod.newPolygonShape(x1, y1, x2, y2, x3, y3, table.unpack(argv));
+  }
+  /**
    * Create a friction joint between two bodies. A FrictionJoint applies friction to a body.
    */
   @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("collideConnected", "any")])
@@ -158,27 +165,20 @@ class Physics {
     return self.mod.newFrictionJoint(body1, body2, x, y, collideConnected);
   }
   /**
-   * Creates a wheel joint.
-   */
-  @arguments([("body1", "any"), ("body2", "any"), ("x", "any"), ("y", "any"), ("ax", "any"), ("ay", "any"), ("collideConnected", "any")])
-  fn new_wheel_joint(self, body1, body2, x, y, ax, ay, collideConnected) {
-    return self.mod.newWheelJoint(body1, body2, x, y, ax, ay, collideConnected);
-  }
-  /**
-   * Sets the pixels to meter scale factor.
-   * All coordinates in the physics module are divided by this number and converted to meters, and it creates a convenient way to draw the objects directly to the screen without the need for graphics transformations.
-   * It is recommended to create shapes no larger than 10 times the scale. This is important because Box2D is tuned to work well with shape sizes from 0.1 to 10 meters. The default meter scale is 30.
-   */
-  @arguments([("scale", "any")])
-  fn set_meter(self, scale) {
-    return self.mod.setMeter(scale);
-  }
-  /**
    * Creates a new EdgeShape.
    */
   @arguments([("x1", "any"), ("y1", "any"), ("x2", "any"), ("y2", "any")])
   fn new_edge_shape(self, x1, y1, x2, y2) {
     return self.mod.newEdgeShape(x1, y1, x2, y2);
+  }
+  /**
+   * Create a GearJoint connecting two Joints.
+   * The gear joint connects two joints that must be either  prismatic or  revolute joints. Using this joint requires that the joints it uses connect their respective bodies to the ground and have the ground as the first body. When destroying the bodies and joints you must make sure you destroy the gear joint before the other joints.
+   * The gear joint has a ratio the determines how the angular or distance values of the connected joints relate to each other. The formula coordinate1 + ratio * coordinate2 always has a constant value that is set when the gear joint is created.
+   */
+  @arguments([("joint1", "any"), ("joint2", "any"), ("ratio", "any"), ("collideConnected", "any")])
+  fn new_gear_joint(self, joint1, joint2, ratio, collideConnected) {
+    return self.mod.newGearJoint(joint1, joint2, ratio, collideConnected);
   }
 }
 

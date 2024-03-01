@@ -5,12 +5,11 @@ class Data {
     return Data { mod };
   }
   /**
-   * Packs (serializes) simple Lua values.
-   * This function behaves the same as Lua 5.3's string.pack.
+   * Decode Data or a string from any of the EncodeFormats to Data or string.
    */
-  @arguments([("container", "any"), ("format", "any"), ("v1", "any"), ("...", "any")])
-  fn pack(self, container, format, v1) {
-    return self.mod.pack(container, format, v1, table.unpack(argv));
+  @arguments([("container", "any"), ("format", "any"), ("sourceString", "any")])
+  fn decode(self, container, format, sourceString) {
+    return self.mod.decode(container, format, sourceString);
   }
   /**
    * Unpacks (deserializes) a byte-string or Data into simple Lua values.
@@ -19,6 +18,43 @@ class Data {
   @arguments([("format", "any"), ("datastring", "any"), ("pos", "any")])
   fn unpack(self, format, datastring, pos) {
     return self.mod.unpack(format, datastring, pos);
+  }
+  /**
+   * Decompresses a CompressedData or previously compressed string or Data object.
+   */
+  @arguments([("container", "any"), ("compressedData", "any")])
+  fn decompress(self, container, compressedData) {
+    return self.mod.decompress(container, compressedData);
+  }
+  /**
+   * Encode Data or a string to a Data or string in one of the EncodeFormats.
+   */
+  @arguments([("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any")])
+  fn encode(self, container, format, sourceString, linelength) {
+    return self.mod.encode(container, format, sourceString, linelength);
+  }
+  /**
+   * Creates a new Data object containing arbitrary bytes.
+   * Data:getPointer along with LuaJIT's FFI can be used to manipulate the contents of the ByteData object after it has been created.
+   */
+  @arguments([("datastring", "any")])
+  fn new_byte_data(self, datastring) {
+    return self.mod.newByteData(datastring);
+  }
+  /**
+   * Packs (serializes) simple Lua values.
+   * This function behaves the same as Lua 5.3's string.pack.
+   */
+  @arguments([("container", "any"), ("format", "any"), ("v1", "any"), ("...", "any")])
+  fn pack(self, container, format, v1) {
+    return self.mod.pack(container, format, v1, table.unpack(argv));
+  }
+  /**
+   * Compresses a string or data using a specific compression algorithm.
+   */
+  @arguments([("container", "any"), ("format", "any"), ("rawstring", "any"), ("level", "any")])
+  fn compress(self, container, format, rawstring, level) {
+    return self.mod.compress(container, format, rawstring, level);
   }
   /**
    * Gets the size in bytes that a given format used with love.data.pack will use.
@@ -36,47 +72,11 @@ class Data {
     return self.mod.hash(hashFunction, string);
   }
   /**
-   * Encode Data or a string to a Data or string in one of the EncodeFormats.
-   */
-  @arguments([("container", "any"), ("format", "any"), ("sourceString", "any"), ("linelength", "any")])
-  fn encode(self, container, format, sourceString, linelength) {
-    return self.mod.encode(container, format, sourceString, linelength);
-  }
-  /**
-   * Compresses a string or data using a specific compression algorithm.
-   */
-  @arguments([("container", "any"), ("format", "any"), ("rawstring", "any"), ("level", "any")])
-  fn compress(self, container, format, rawstring, level) {
-    return self.mod.compress(container, format, rawstring, level);
-  }
-  /**
    * Creates a new Data referencing a subsection of an existing Data object.
    */
   @arguments([("data", "any"), ("offset", "any"), ("size", "any")])
   fn new_data_view(self, data, offset, size) {
     return self.mod.newDataView(data, offset, size);
-  }
-  /**
-   * Decompresses a CompressedData or previously compressed string or Data object.
-   */
-  @arguments([("container", "any"), ("compressedData", "any")])
-  fn decompress(self, container, compressedData) {
-    return self.mod.decompress(container, compressedData);
-  }
-  /**
-   * Decode Data or a string from any of the EncodeFormats to Data or string.
-   */
-  @arguments([("container", "any"), ("format", "any"), ("sourceString", "any")])
-  fn decode(self, container, format, sourceString) {
-    return self.mod.decode(container, format, sourceString);
-  }
-  /**
-   * Creates a new Data object containing arbitrary bytes.
-   * Data:getPointer along with LuaJIT's FFI can be used to manipulate the contents of the ByteData object after it has been created.
-   */
-  @arguments([("datastring", "any")])
-  fn new_byte_data(self, datastring) {
-    return self.mod.newByteData(datastring);
   }
 }
 
